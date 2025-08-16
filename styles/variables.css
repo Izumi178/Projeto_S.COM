@@ -1,0 +1,9 @@
+@font-face{
+    font-family: "fonte";
+    src: url('OpenSans-Regular.ttf') format("truetype");
+}
+
+:root{
+    --primary-color: #0094DE;
+    --main-font: "fonte", sans;
+}
