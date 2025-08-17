@@ -1,26 +1,59 @@
+@font-face{
+    font-family: "fonte";
+    src: url('OpenSans-Regular.ttf') format("truetype");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root{
+    --primary-color: #0094DE;
+    --main-font: "fonte", sans-serif;
+}
+
 header
 {
-    background-image: url() format;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary-color);
+    justify-content: space-between;
+    width: 100%;
+    height:10%;
+    padding: 8;
 }
 h1
 {
-    font-size: 50;
-    color: var(--primary-color);
+    font-size: 40;
+    color:white;
+    font-weight: bold;
     font-family: var(--main-font);
 }
-p{
-    font-family: var(--main-font);
-}
-ul{
+ .navbar{
     list-style-type: none;
     margin:0;
     padding: 0;
+    background-color: var(--primary-color);
 }
-li{
+.navbar li{
     float:left;
-    
+    color: white;
+    align-content: center;
+}
+.navbar li a{
+    flex: block;
+    font-weight: bold;
+    font-family: var(--main-font);
+    color: white;
+    font-size: 20;
+    text-align: center;
+    padding: 35 50;
+    text-decoration: none;
+}
+.navbar li a:hover{
+    background-color: blue;
 }
 img{
-    width: 10%;
+    width: 4%;
     height: auto;
 }
