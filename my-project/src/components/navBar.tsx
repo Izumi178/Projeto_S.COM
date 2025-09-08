@@ -52,7 +52,7 @@ function menuButtons(
 function NavBar({ changePage }: NavBarProps) {
   const logo = lightLogo;
   return (
-    <div className="p-10 flex flex-row h-20 w-200 bg-sky-500 justify-between items-center rounded-full">
+    <div className="p-10 flex flex-row h-20 w-200 bg-sky-500 shadow-xl justify-between items-center rounded-full">
       <img src={logo} className="w-35"></img>
       <div className="mr-5 flex flex-row w-130 h-100% justify-between items-center">
         {menuButtons("Meus Dados", changePage)}

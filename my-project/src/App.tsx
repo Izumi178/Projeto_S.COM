@@ -1,9 +1,11 @@
 import { useState } from "react";
 import NavBar from "./components/navBar";
 import ImageSlider from "./components/slider";
+import MyData from "./components/myData";
+import Settings from "./components/settings";
 
 function App() {
-  const [activePage, changePage] = useState("Meus dados");
+  const [activePage, changePage] = useState("Meus Dados");
   return (
     <div className="flex flex-col w-full h-full items-center">
       <div className="w-full h-100">
@@ -12,7 +14,9 @@ function App() {
       <div className="w-full flex justify-center mt-[-2rem]">
         <NavBar changePage={changePage} />
       </div>
-      <h1>{activePage}</h1>
+      <div className="h-10" />
+      {activePage === "Meus Dados" && <MyData></MyData>}
+      {activePage === "Configurações" && <Settings></Settings>}
     </div>
   );
 }

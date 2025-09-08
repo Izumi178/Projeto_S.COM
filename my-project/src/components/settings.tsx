@@ -2,12 +2,11 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   TableCellsIcon,
-  AcademicCapIcon,
-  ChartBarIcon,
+  AdjustmentsHorizontalIcon,
 } from "@heroicons/react/16/solid";
 import { useState } from "react";
 
-function MyData() {
+function Settings() {
   interface cards {
     title: string;
     expanded: boolean;
@@ -17,11 +16,10 @@ function MyData() {
     cardControl(): void;
   }
   const [cadastroExpanded, cadastroControl] = useState(false);
-  const [institucionalExpanded, institucionalControl] = useState(false);
-  const [notasExpanded, notasControl] = useState(false);
+  const [preferencesExpanded, preferencesControl] = useState(false);
   const dataCard: cards[] = [
     {
-      title: "Dados Cadastrais",
+      title: "Alterar Dados Cadastrais",
       expanded: cadastroExpanded,
       icon: TableCellsIcon,
       cardControl() {
@@ -29,19 +27,11 @@ function MyData() {
       },
     },
     {
-      title: "Dados Institucionais",
-      expanded: institucionalExpanded,
-      icon: AcademicCapIcon,
+      title: "Preferências",
+      expanded: preferencesExpanded,
+      icon: AdjustmentsHorizontalIcon,
       cardControl() {
-        institucionalControl(!institucionalExpanded);
-      },
-    },
-    {
-      title: "Notas e frequências",
-      expanded: notasExpanded,
-      icon: ChartBarIcon,
-      cardControl() {
-        notasControl(!notasExpanded);
+        preferencesControl(!preferencesExpanded);
       },
     },
   ];
@@ -72,4 +62,4 @@ function MyData() {
   );
 }
 
-export default MyData;
+export default Settings;
