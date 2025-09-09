@@ -1,63 +1,45 @@
 import lightLogo from "../assets/unesp_light.png";
-import { HomeIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
+import { UserIcon } from "@heroicons/react/16/solid";
 import { EnvelopeIcon } from "@heroicons/react/16/solid";
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
 
 type NavBarProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
+  activePage: string;
 };
 
-function menuButtons(
-  func: string,
-  changePage: React.Dispatch<React.SetStateAction<string>>
-) {
-  const iconCustomiztion = "text-white w-5 h-5";
-  function icon() {
-    switch (func) {
-      case "Meus Dados": {
-        return <HomeIcon className={iconCustomiztion}></HomeIcon>;
-        break;
-      }
-      case "Mensagens": {
-        return <EnvelopeIcon className={iconCustomiztion}></EnvelopeIcon>;
-        break;
-      }
-      case "Configurações": {
-        return (
-          <AdjustmentsHorizontalIcon
-            className={iconCustomiztion}
-          ></AdjustmentsHorizontalIcon>
-        );
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
-  return (
-    <button
-      type="button"
-      className="flex flex-row text-xl items-center text-white font-bold cursor-pointer gap-1 transition ease-in-out hover:"
-      onClick={() => {
-        changePage(func);
-      }}
-    >
-      {icon()}
-      {func}
-    </button>
-  );
-}
+const selectedButton =
+  "px-[30px] py-[20px] flex flex-shrink-0 flex-row whitespace-bowrap text-lg md:text-xl w-fit items-center text-white rounded-full font-bold cursor-pointer gap-[7px] bg-sky-400";
+const unselectedButton =
+  "px-[30px] py-[20px] flex flex-shrink-0 flex-row whitespace-bowrap text-lg md:text-xl w-fit items-center text-white rounded-full font-bold cursor-pointer gap-[7px] transition duration-200 ease-in-out hover:bg-sky-400";
 
-function NavBar({ changePage }: NavBarProps) {
+const items = ["Meus Dados", "Mensagens", "Configurações"];
+const iconCustomiztion = "text-white w-[20px]";
+function NavBar({ changePage, activePage }: NavBarProps) {
   const logo = lightLogo;
   return (
-    <div className="p-10 flex flex-row h-20 w-200 bg-sky-500 shadow-xl justify-between items-center rounded-full">
-      <img src={logo} className="w-35"></img>
-      <div className="mr-5 flex flex-row w-130 h-100% justify-between items-center">
-        {menuButtons("Meus Dados", changePage)}
-        {menuButtons("Mensagens", changePage)}
-        {menuButtons("Configurações", changePage)}
+    <div className="p-[30px] md:px-[40px] flex flex-row h-[100px] w-full md:w-fit md:rounded-full bg-sky-500 shadow-xl justify-between items-center gap-x-[40px] transition: duration-400 hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]">
+      <img src={logo} className="h-[130px] max-h-[130px]"></img>
+      <div className="flex flex-row w-fit h-100% justify-start items-center  gap-[4px]">
+        {items.map((item) => (
+          <button
+            type="button"
+            className={item === activePage ? selectedButton : unselectedButton}
+            onClick={() => {
+              changePage(item);
+            }}
+          >
+            {item === "Meus Dados" ? (
+              <UserIcon className={iconCustomiztion} />
+            ) : item === "Mensagens" ? (
+              <EnvelopeIcon className={iconCustomiztion} />
+            ) : (
+              <AdjustmentsHorizontalIcon className={iconCustomiztion} />
+            )}
+            {item}
+          </button>
+        ))}
       </div>
     </div>
   );

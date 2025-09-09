@@ -8,11 +8,11 @@ function App() {
   const [activePage, changePage] = useState("Meus Dados");
   return (
     <div className="flex flex-col w-full h-full items-center">
-      <div className="w-full h-100">
+      <div className="w-full h-[200px] md:h-[400px]">
         <ImageSlider />
       </div>
       <div className="w-full flex justify-center mt-[-2rem]">
-        <NavBar changePage={changePage} />
+        <NavBar changePage={changePage} activePage={activePage} />
       </div>
       <div className="h-10" />
       {activePage === "Meus Dados" && <MyData></MyData>}
