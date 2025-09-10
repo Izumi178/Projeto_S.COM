@@ -6,4 +6,13 @@
   min-width: 320px;
   margin: 0 auto;
   text-align: center;
+  --primary-color: #38bdf8;
+  --bg-color: white;
+  --portugues: true;
+}
+
+@theme {
+  --primary-color: var(--primary-color),
+  --bg-color: var(--bg-color),
+  --idioma: var(--portugues),
 }

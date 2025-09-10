@@ -37,7 +37,7 @@ function MyData() {
       },
     },
   ];
-  const iconProps = "w-[40px] text-sky-500";
+  const iconProps = "w-[40px] text-(--primary-color)";
   return (
     <ul className="flex flex-col w-full items-center gap-[30px]">
       {dataCard.map((data) => (
@@ -50,7 +50,7 @@ function MyData() {
             >
               <div className="flex flex-row gap-[5px] justify-center items-center">
                 <data.icon className={iconProps}></data.icon>
-                <h2 className="text-sky-500 text-3xl font-bold">
+                <h2 className="text-(--primary-color) text-3xl font-bold">
                   {data.title}
                 </h2>
               </div>

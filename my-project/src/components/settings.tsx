@@ -37,9 +37,9 @@ function Settings() {
       },
     },
   ];
-  const iconProps = "w-[40px] text-sky-500";
+  const iconProps = "w-[40px] text-(--primary-color)";
   return (
-    <ul className="flex flex-col min-w-[700px] items-center gap-[30px]">
+    <ul className="flex flex-col sm:min-w-[400px] md:min-w-[700px] items-center gap-[30px]">
       {dataCard.map((data) => (
         <div className="flex flex-col w-full h-fit justify-between items-center shadow-md shadow-grey-500 rounded-xl transition: duration-400 hover:scale-110">
           <div
@@ -49,7 +49,9 @@ function Settings() {
           >
             <div className="flex flex-row gap-[5px] justify-center items-center">
               <data.icon className={iconProps}></data.icon>
-              <h2 className="text-sky-500 text-3xl font-bold">{data.title}</h2>
+              <h2 className="text-(--primary-color) text-3xl font-bold">
+                {data.title}
+              </h2>
             </div>
             <button className="flex cursor-pointer" onClick={data.cardControl}>
               {data.expanded ? (
