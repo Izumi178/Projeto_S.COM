@@ -3,8 +3,9 @@ import {
   ChevronUpIcon,
   TableCellsIcon,
   AcademicCapIcon,
-  ChartBarIcon,
 } from "@heroicons/react/16/solid";
+import RegisterData from "./registerData";
+import InstitutionalData from "./insitutionalData";
 import { useState } from "react";
 
 function MyData() {
@@ -18,7 +19,6 @@ function MyData() {
   }
   const [cadastroExpanded, cadastroControl] = useState(false);
   const [institucionalExpanded, institucionalControl] = useState(false);
-  const [notasExpanded, notasControl] = useState(false);
   const dataCard: cards[] = [
     {
       title: "Dados Cadastrais",
@@ -36,27 +36,21 @@ function MyData() {
         institucionalControl(!institucionalExpanded);
       },
     },
-    {
-      title: "Notas e frequências",
-      expanded: notasExpanded,
-      icon: ChartBarIcon,
-      cardControl() {
-        notasControl(!notasExpanded);
-      },
-    },
   ];
-  const iconProps = "w-14 stroke-cyan-500";
-  const cardProps =
-    "flex flex-col w-full justify-start items-center shadow-md shadow-grey-500 rounded-xl";
+  const iconProps = "w-[40px] text-sky-500";
   return (
     <ul className="flex flex-col w-full items-center gap-[30px]">
       {dataCard.map((data) => (
         <li>
-          <div className={cardProps}>
-            <div className="px-[10px] py-[7px] flex flex-row w-auto min-w-[400px] md:min-w-[700px] justify-between items-center rounded-xl border border-sky-500">
+          <div className="flex flex-col w-full h-fit justify-between items-center shadow-md shadow-grey-500 rounded-xl transition: duration-400 hover:scale-110">
+            <div
+              className={`px-[20px] py-[10px] flex flex-row w-full justify-between items-center z-1000 shadow-md ${
+                data.expanded ? "rounded-t-xl " : "rounded-xl"
+              }`}
+            >
               <div className="flex flex-row gap-[5px] justify-center items-center">
                 <data.icon className={iconProps}></data.icon>
-                <h2 className="text-sky-500 text-2xl font-bold">
+                <h2 className="text-sky-500 text-3xl font-bold">
                   {data.title}
                 </h2>
               </div>
@@ -71,10 +65,16 @@ function MyData() {
                 )}
               </button>
             </div>
+            <div className={data.expanded ? "flex items-center" : "hidden"}>
+              {data.title === "Dados Cadastrais" ? (
+                <RegisterData />
+              ) : (
+                <InstitutionalData />
+              )}
+            </div>
           </div>
         </li>
       ))}
-      ;
     </ul>
   );
 }

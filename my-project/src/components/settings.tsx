@@ -1,7 +1,7 @@
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  TableCellsIcon,
+  PencilSquareIcon,
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/16/solid";
 import Preferences from "./preferences";
@@ -23,7 +23,7 @@ function Settings() {
     {
       title: "Alterar Dados Cadastrais",
       expanded: cadastroExpanded,
-      icon: TableCellsIcon,
+      icon: PencilSquareIcon,
       cardControl() {
         cadastroControl(!cadastroExpanded);
       },
@@ -39,7 +39,7 @@ function Settings() {
   ];
   const iconProps = "w-[40px] text-sky-500";
   return (
-    <ul className="flex flex-col min-w-[700px] items-center gap-10">
+    <ul className="flex flex-col min-w-[700px] items-center gap-[30px]">
       {dataCard.map((data) => (
         <div className="flex flex-col w-full h-fit justify-between items-center shadow-md shadow-grey-500 rounded-xl transition: duration-400 hover:scale-110">
           <div
@@ -47,7 +47,7 @@ function Settings() {
               data.expanded ? "rounded-t-xl" : "rounded-xl"
             }`}
           >
-            <div className="flex flex-row gap-5 justify-center items-center">
+            <div className="flex flex-row gap-[5px] justify-center items-center">
               <data.icon className={iconProps}></data.icon>
               <h2 className="text-sky-500 text-3xl font-bold">{data.title}</h2>
             </div>

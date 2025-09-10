@@ -2,7 +2,7 @@ import lightLogo from "../assets/unesp_light.png";
 import { useState } from "react";
 import { UserIcon } from "@heroicons/react/16/solid";
 import { EnvelopeIcon } from "@heroicons/react/16/solid";
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/16/solid";
+import { Cog6ToothIcon } from "@heroicons/react/16/solid";
 
 type NavBarProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
@@ -35,7 +35,7 @@ function NavBar({ changePage, activePage }: NavBarProps) {
             ) : item === "Mensagens" ? (
               <EnvelopeIcon className={iconCustomiztion} />
             ) : (
-              <AdjustmentsHorizontalIcon className={iconCustomiztion} />
+              <Cog6ToothIcon className={iconCustomiztion} />
             )}
             {item}
           </button>
