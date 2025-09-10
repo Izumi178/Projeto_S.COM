@@ -14,7 +14,7 @@ function App() {
       <div className="w-full flex justify-center mt-[-2rem]">
         <NavBar changePage={changePage} activePage={activePage} />
       </div>
-      <div className="h-10" />
+      <div className="h-[50px]" />
       {activePage === "Meus Dados" && <MyData></MyData>}
       {activePage === "Configurações" && <Settings></Settings>}
     </div>
