@@ -61,7 +61,7 @@ function AlterData() {
                 <label className="text-(--primary-color) font-bold">
                   {item.label}
                 </label>
-                <p className="block py-[10px] text-sm md:text-lg whitespace-nowrap sm:px-[10px] md:px-[20px] bg-gray-200 min-w-[150px] md:min-w-[250px] rounded-full text-(--primary-color) font-bold">
+                <p className="block py-[10px] text-smc md:text-lg whitespace-nowrap sm:px-[10px] md:px-[20px] bg-gray-200 min-w-[150px] md:min-w-[250px] rounded-full text-(--primary-color) font-bold">
                   {item.data}
                 </p>
               </li>
