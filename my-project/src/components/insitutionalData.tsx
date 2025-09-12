@@ -72,7 +72,7 @@ function InstitutionalData() {
                 <label className="text-(--primary-color) font-bold">
                   {item.label}
                 </label>
-                <p className="block py-[10px] px-[20px] bg-gray-200 min-w-[250px] rounded-full text-(--primary-color) font-bold">
+                <p className="block py-[10px] px-[20px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) min-w-[250px] rounded-full text-(--primary-color) font-bold">
                   {item.data}
                 </p>
               </li>
@@ -94,7 +94,7 @@ function InstitutionalData() {
                 <label className="text-(--primary-color) font-bold">
                   {item.label}
                 </label>
-                <p className="block py-[10px] px-[20px] bg-gray-200 min-w-[250px] rounded-full text-(--primary-color) font-bold">
+                <p className="block py-[10px] px-[20px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) min-w-[250px] rounded-full text-(--primary-color) font-bold">
                   {item.data}
                 </p>
               </li>
@@ -106,7 +106,7 @@ function InstitutionalData() {
                 <label className="text-(--primary-color) font-bold">
                   {item.label}
                 </label>
-                <p className="block py-[10px] px-[20px] bg-gray-200 min-w-[250px] rounded-full text-(--primary-color) font-bold">
+                <p className="block py-[10px] px-[20px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) min-w-[250px] rounded-full text-(--primary-color) font-bold">
                   {item.data}
                 </p>
               </li>
@@ -123,7 +123,7 @@ function InstitutionalData() {
             </h3>
           </div>
           <TableContainer>
-            <Table className="min-w-[700px] rounded-xl bg-gray-200 ">
+            <Table className="min-w-[700px] rounded-xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) ">
               <TableHead>
                 <TableRow>
                   <TableCell>Matéria</TableCell>

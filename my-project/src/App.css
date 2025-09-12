@@ -6,13 +6,17 @@
   min-width: 320px;
   margin: 0 auto;
   text-align: center;
+  --bg-dark: #2f3847;
   --primary-color: #38bdf8;
-  --bg-color: white;
-  --portugues: true;
+  --forms-bg-light: #E5E7EB;
+  --forms-bg-dark: #364153;
 }
 
 @theme {
   --primary-color: var(--primary-color),
-  --bg-color: var(--bg-color),
-  --idioma: var(--portugues),
+  --forms-bg-light: var(--forms-bg-white);
+  --forms-bg-dark: var(--forms-bg-dark);
+  --bg-dark: var(--bg-dark);
 }
+
+@custom-variant dark (&:where(.dark, .dark *));

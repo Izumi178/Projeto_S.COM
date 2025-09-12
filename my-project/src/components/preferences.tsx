@@ -5,11 +5,13 @@ import {
 } from "@heroicons/react/16/solid";
 
 function Preferences() {
-  const colorSelector = document.getElementById("color");
-  colorSelector?.addEventListener("input", (event) => {
-    const target = event.target as HTMLInputElement;
-    document.documentElement.style.setProperty("--primary-color", target.value);
-  });
+  function setMode() {
+    if (document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+  }
   return (
     <ul>
       <li>
@@ -20,8 +22,12 @@ function Preferences() {
               Ativar modo noturno
             </h3>
           </div>
-          <div className="flex flex-row h-[20px] w-[50px] bg-gray-200 rounded-full items-center justify-start">
-            <button className="h-[20px] w-[20px] rounded-full bg-(--primary-color) z-1000"></button>
+          <div className="flex flex-row h-[20px] w-[50px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) rounded-full items-center justify-start dark:justify-end ">
+            <button
+              id="mode"
+              className="h-[20px] w-[20px] rounded-full bg-(--primary-color) z-1000"
+              onClick={setMode}
+            ></button>
           </div>
         </div>
       </li>
@@ -31,22 +37,11 @@ function Preferences() {
             <LanguageIcon className="w-[30px] text-(--primary-color)" />
             <h3 className="text-xl text-(--primary-color) font-bold">Idioma</h3>
           </div>
-          <div className="px-[6px] py-[2px] bg-gray-200 font-lg  font-bold w-fit rounded-md justify-center items-center">
+          <div className="px-[8px] py-[2px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) font-lg text-(--primary-color) font-bold w-fit rounded-md justify-center items-center">
             <select>
               <option>Português</option>
               <option>Inglês</option>
             </select>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div className="flex flex-row items-center min-w-[400px] md:min-w-[700px] h-auto px-[30px] py-[10px] shadow-md justify-between">
-          <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
-            <PaintBrushIcon className="w-[30px] text-(--primary-color)" />
-            <h3 className="text-xl text-(--primary-color) font-bold">Tema</h3>
-          </div>
-          <div className="px-[6px] py-[2px] bg-gray-200 font-lg  font-bold w-fit rounded-md justify-center items-center">
-            <input type="color"></input>
           </div>
         </div>
       </li>

@@ -37,7 +37,7 @@ function AlterData() {
                 </label>
                 <input
                   type={item.label === "email" ? "email" : "tel"}
-                  className="bg-gray-200 px-[20px] py-[10px] min-w-[100px] rounded-full text-(--primary-color) font-bold"
+                  className="bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) px-[20px] py-[10px] min-w-[100px] rounded-full text-(--primary-color) font-bold"
                 ></input>
               </li>
             ))}
@@ -61,7 +61,7 @@ function AlterData() {
                 <label className="text-(--primary-color) font-bold">
                   {item.label}
                 </label>
-                <p className="block py-[10px] text-smc md:text-lg whitespace-nowrap sm:px-[10px] md:px-[20px] bg-gray-200 min-w-[150px] md:min-w-[250px] rounded-full text-(--primary-color) font-bold">
+                <p className="block py-[10px] text-smc md:text-lg whitespace-nowrap sm:px-[10px] md:px-[20px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) min-w-[150px] md:min-w-[250px] rounded-full text-(--primary-color) font-bold">
                   {item.data}
                 </p>
               </li>
