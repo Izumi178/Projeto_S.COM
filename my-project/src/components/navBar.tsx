@@ -10,24 +10,24 @@ type NavBarProps = {
   activePage: string;
 };
 const selectedButton =
-  "px-[7px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap sm:text-lg md:text-xl w-fit underline items-center text-white dark:text-black rounded-full font-bold cursor-pointer gap-[7px]";
+  "px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl w-fit underline items-center  text-white dark:text-(--bg-dark)  font-bold cursor-pointer gap-[4px] md:gap-[7px]";
 const unselectedButton =
-  "px-[7px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap sm:text-lg md:text-xl w-fit items-center text-white dark:text-black rounded-full font-bold cursor-pointer gap-[7px] transition duration-200 ease-in-out hover:underline";
+  "px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl w-fit items-center  text-white dark:text-(--bg-dark)  font-bold cursor-pointer gap-[4px] md:gap-[7px] transition duration-200 ease-in-out hover:underline";
 
 const items = ["Meus Dados", "Mensagens", "Configurações"];
-const iconCustomiztion = "text-(--bg-color) w-[15px] sm:w-[20px]";
+const iconCustomiztion = "text-(--bg-color) w-[10px] sm:w-[20px] md:w-[30px]";
 function NavBar({ changePage, activePage }: NavBarProps) {
   return (
-    <div className="p-[15px] sm:p-[30px] md:px-[35px] flex flex-row h-[100px] w-full md:max-w-[900px] md:rounded-full bg-(--primary-color) shadow-xl justify-between items-center gap-[2px] md:gap-x-[40px] transition: duration-400 hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]">
+    <div className="px-[15px] sm:p-[30px] md:px-[35px] flex flex-row h-[50px] md:h-[100px] w-full md:max-w-[900px] md:rounded-full bg-(--primary-color) shadow-xl justify-between items-center md:gap-x-[40px] transition: duration-400 hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]">
       <img
         src={darkLogo}
-        className="h-[80px] sm:h-[100px] md:h-[130px] hidden dark:block"
+        className="h-[60px] sm:h-[100px] md:h-[130px] hidden dark:block"
       ></img>
       <img
         src={lightLogo}
-        className="h-[80px] sm:h-[100px] md:h-[130px] dark:hidden"
+        className="h-[60px] sm:h-[100px] md:h-[130px] dark:hidden"
       ></img>
-      <div className="flex flex-row w-fit h-100% justify-start items-center text-(--bg-color)  md:gap-[4px]">
+      <div className="flex flex-row w-fit h-100% justify-start items-center md:gap-[4px] mr-[10px] sm:mr-[40px]">
         {items.map((item) => (
           <button
             type="button"

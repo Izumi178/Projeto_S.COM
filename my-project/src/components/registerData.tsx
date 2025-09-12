@@ -38,7 +38,7 @@ function RegisterData() {
               </h3>
             </div>
           </div>
-          <ul className="flex flex-row items-center min-w-[1000px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
+          <div className="flex grid grid-cols-2 md:grid-cols-4 items-center min-w-[1000px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
             {firstRow.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className="text-(--primary-color) font-bold">
@@ -49,8 +49,8 @@ function RegisterData() {
                 </p>
               </li>
             ))}
-          </ul>
-          <ul className="flex flex-row items-center min-w-[1000px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
+          </div>
+          <div className="flex grid grid-cols-2 md:grid-cols-4 items-center min-w-[1000px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
             {secondRow.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className="text-(--primary-color) font-bold">
@@ -61,7 +61,7 @@ function RegisterData() {
                 </p>
               </li>
             ))}
-          </ul>
+          </div>
         </div>
       </li>
       <li>
@@ -74,7 +74,7 @@ function RegisterData() {
               </h3>
             </div>
           </div>
-          <ul className="flex flex-row items-center min-w-[1000px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
+          <div className="flex grid grid-cols-2 md:grid-cols-4 items-center min-w-[1000px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
             {address.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className="text-(--primary-color) font-bold">
@@ -85,7 +85,7 @@ function RegisterData() {
                 </p>
               </li>
             ))}
-          </ul>
+          </div>
         </div>
       </li>
     </ul>

@@ -4,7 +4,8 @@
 #root {
   max-width: 1960px;
   min-width: 320px;
-  margin: 0 auto;
+  height: 100%;
+  margin: 0;
   text-align: center;
   --bg-dark: #2f3847;
   --primary-color: #38bdf8;

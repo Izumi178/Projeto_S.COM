@@ -7,7 +7,7 @@ import Settings from "./components/settings";
 function App() {
   const [activePage, changePage] = useState("Meus Dados");
   return (
-    <div className="flex flex-col w-full h-full items-center bg-white dark:bg-(--bg-dark)">
+    <div className="flex flex-col w-full min-h-screen items-center bg-white dark:bg-(--bg-dark)">
       <div className="w-full h-[200px] md:h-[400px]">
         <ImageSlider />
       </div>

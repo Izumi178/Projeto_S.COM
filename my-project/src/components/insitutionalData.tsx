@@ -3,12 +3,6 @@ import {
   BriefcaseIcon,
   BookOpenIcon,
 } from "@heroicons/react/16/solid";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 
 function InstitutionalData() {
   interface dataLabel {
@@ -36,7 +30,7 @@ function InstitutionalData() {
     { label: "Horas de estágio:", data: "0" },
   ];
 
-  interface tableRows {
+  interface trs {
     materia: string;
     professor: string;
     carga: number;
@@ -45,7 +39,7 @@ function InstitutionalData() {
     mediaTrabalho: number;
   }
 
-  const Materias: tableRows[] = [
+  const Materias: trs[] = [
     {
       materia: "S.COM",
       professor: "Leopoldo André Dutra Lusquino Filho",
@@ -55,7 +49,9 @@ function InstitutionalData() {
       mediaTrabalho: 8.0,
     },
   ];
-
+  const row =
+    "bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) text-(--primary-color) text-md";
+  const cell = "py-[10px]";
   return (
     <ul>
       <li>
@@ -122,32 +118,26 @@ function InstitutionalData() {
               Dados do semestre
             </h3>
           </div>
-          <TableContainer>
-            <Table className="min-w-[700px] rounded-xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) ">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Matéria</TableCell>
-                  <TableCell>Professor</TableCell>
-                  <TableCell>Carga Horária</TableCell>
-                  <TableCell>Frequência</TableCell>
-                  <TableCell>Média de Prova</TableCell>
-                  <TableCell>Média de Trabalho</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Materias.map((item) => (
-                  <TableRow>
-                    <TableCell>{item.materia}</TableCell>
-                    <TableCell>{item.professor}</TableCell>
-                    <TableCell>{item.carga}</TableCell>
-                    <TableCell>{item.frequencia}</TableCell>
-                    <TableCell>{item.mediaProva}</TableCell>
-                    <TableCell>{item.mediaTrabalho}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <table className="min-w-[700px] rounded- bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
+            <tr className={row}>
+              <th className={cell}>Matéria</th>
+              <th className={cell}>Professor</th>
+              <th className={cell}>Carga Horária</th>
+              <th className={cell}>Frequência</th>
+              <th className={cell}>Média de Prova</th>
+              <th className={cell}>Média de Trabalho</th>
+            </tr>
+            {Materias.map((item) => (
+              <tr className={row}>
+                <th className={cell}>{item.materia}</th>
+                <th className={cell}>{item.professor}</th>
+                <th className={cell}>{item.carga}</th>
+                <th className={cell}>{item.frequencia}</th>
+                <th className={cell}>{item.mediaProva}</th>
+                <th className={cell}>{item.mediaTrabalho}</th>
+              </tr>
+            ))}
+          </table>
         </div>
       </li>
     </ul>

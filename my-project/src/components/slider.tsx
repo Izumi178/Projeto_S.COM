@@ -5,8 +5,6 @@ import portaria from "../assets/unesp-portaria.jpg";
 
 function ImageSlider() {
   const images = [frente, refetorio, portaria];
-  const active = "w-full h-full object-contain transition delay-500";
-  const inactive = "hidden";
   const [activeIndex, changeImage] = useState(0);
   useEffect(() => {
     const period = setInterval(() => {
@@ -15,9 +13,14 @@ function ImageSlider() {
     return () => clearInterval(period);
   }, [activeIndex]);
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden transition ">
       {images.map((image, index) => (
-        <div key={image} className={index === activeIndex ? active : inactive}>
+        <div
+          key={image}
+          className={
+            index === activeIndex ? "w-full h-full object-contain" : "hidden"
+          }
+        >
           <img src={image} className="w-full h-full object-cover"></img>
         </div>
       ))}
