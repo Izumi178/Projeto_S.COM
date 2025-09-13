@@ -21,7 +21,7 @@ function Settings() {
   const [preferencesExpanded, preferencesControl] = useState(false);
   const dataCard: cards[] = [
     {
-      title: "Alterar Dados Cadastrais",
+      title: "Alterar dados",
       expanded: cadastroExpanded,
       icon: PencilSquareIcon,
       cardControl() {
@@ -39,9 +39,9 @@ function Settings() {
   ];
   const iconProps = "w-[40px] text-(--primary-color)";
   return (
-    <ul className="flex flex-col sm:min-w-[400px] md:min-w-[700px] items-center gap-[30px]">
+    <ul className="flex flex-col items-center gap-[30px]">
       {dataCard.map((data) => (
-        <div className="flex flex-col w-full h-fit justify-between items-center shadow-md shadow-grey-500 rounded-xl transition: duration-400 hover:scale-110">
+        <div className="flex flex-col items-center min-w-[300px] sm:min-w-[600px] md:min-w-[720px] lg:min-w-[1000px] xl:min-w-[1200px] 2xl:min-w-[1424px] h-auto shadow-md justify-between">
           <div
             className={`px-[20px] py-[10px] flex flex-row w-full justify-between items-center z-1000 shadow-md ${
               data.expanded ? "rounded-t-xl" : "rounded-xl"
@@ -49,7 +49,7 @@ function Settings() {
           >
             <div className="flex flex-row gap-[5px] justify-center items-center">
               <data.icon className={iconProps}></data.icon>
-              <h2 className="text-(--primary-color) text-3xl font-bold">
+              <h2 className="text-(--primary-color) text-3xl font-bold whitespace-nowrap">
                 {data.title}
               </h2>
             </div>

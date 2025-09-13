@@ -31,7 +31,7 @@ function RegisterData() {
   const label =
     "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base";
   const field =
-    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-xl min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
     <ul>
       <li>
@@ -39,7 +39,7 @@ function RegisterData() {
           <div className={titleArea}>
             <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
               <UserIcon className="w-[30px] text-(--primary-color)" />
-              <h3 className="text-2xl text-(--primary-color) font-bold">
+              <h3 className="sm:text-xl md:text-2xl text-(--primary-color) font-bold">
                 Dados Pessoais
               </h3>
             </div>
