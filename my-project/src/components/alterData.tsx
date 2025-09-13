@@ -47,8 +47,8 @@ function AlterData() {
   return (
     <ul>
       <li>
-        <div className="flex flex-col min-width-[400px] md:min-width-[700px] h-auto pb-[20px] px-[30px] gap-y-[10px]">
-          <div className="flex flex-row items-center min-width-[400px] md:min-width-[700px] h-auto px-[30px] py-[20px]  justify-between">
+        <div className="flex flex-col min-width-[300px] md:min-width-[700px] h-auto pb-[20px] px-[30px] gap-y-[10px]">
+          <div className="flex flex-row items-center min-width-[300px] md:min-width-[700px] h-auto px-[30px] py-[20px]  justify-between">
             <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
               <PhoneIcon className="w-[30px] text-(--primary-color)" />
               <h3 className="text-2xl text-(--primary-color) font-bold">
@@ -56,7 +56,7 @@ function AlterData() {
               </h3>
             </div>
           </div>
-          <ul className="flex flex-row items-center min-width-[400px] md:min-width-[700px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
+          <ul className="flex flex-row items-center min-width-[300px] md:min-width-[700px] h-auto px-[40px] py-[10px] justify-start gap-[40px]">
             {contact.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className="text-(--primary-color) font-bold">
@@ -87,8 +87,8 @@ function AlterData() {
         </div>
       </li>
       <li>
-        <div className="flex flex-col min-width-[400px] md:min-width-[700px] h-auto pb-[20px] px-[30px] gap-y-[10px]">
-          <div className="flex flex-row items-center min-width-[400px] md:min-width-[700px] h-auto  py-[20px] justify-between">
+        <div className="flex flex-col min-width-[300px] md:min-width-[700px] h-auto pb-[20px] px-[30px] gap-y-[10px]">
+          <div className="flex flex-row items-center min-width-[300px] md:min-width-[700px] h-auto  py-[20px] justify-between">
             <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
               <HomeIcon className="w-[30px] text-(--primary-color)" />
               <h3 className="text-2xl text-(--primary-color) font-bold">
@@ -96,7 +96,7 @@ function AlterData() {
               </h3>
             </div>
           </div>
-          <ul className="flex flex-row items-center min-width-[400px] md:min-width-[700px] h-auto px-[40px] py-[10px] justify-start gap-[20px] md:gap-[40px]">
+          <ul className="flex flex-row items-center min-width-[300px] md:min-width-[700px] h-auto px-[40px] py-[10px] justify-start gap-[20px] md:gap-[40px]">
             {address.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className="text-(--primary-color) font-bold">

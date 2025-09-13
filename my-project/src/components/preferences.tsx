@@ -15,7 +15,7 @@ function Preferences() {
   return (
     <ul>
       <li>
-        <div className="flex flex-row items-center min-w-[476px] md:min-w-[700px] lg:min-w-[1000px] xl:min-w-[1200px] 2x:min-w-[1500px] h-auto px-[30px] py-[10px] shadow-md justify-between">
+        <div className="flex flex-row items-center min-w-[300px] md:min-w-[700px] lg:min-w-[1000px] xl:min-w-[1200px] 2x:min-w-[1500px] h-auto px-[30px] py-[10px] shadow-md justify-between">
           <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
             <MoonIcon className="w-[30px] text-(--primary-color)" />
             <h3 className="text-xl text-(--primary-color) font-bold">
