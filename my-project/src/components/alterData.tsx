@@ -47,11 +47,8 @@ function AlterData() {
                 type="email"
                 {...register("Email", {
                   required: true,
-                  pattern: {
-                    value:
-                      /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook.com|yahoo.com){11,50}$/i,
-                    message: "Digite um email válido",
-                  },
+                  pattern:
+                    /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook.com|yahoo.com){11,50}$/i,
                 })}
                 className={field}
               ></input>
@@ -61,7 +58,8 @@ function AlterData() {
                   : ((!watch("Email").includes("@gmail.com") &&
                       !watch("Email").includes("@outlook.com") &&
                       !watch("Email").includes("@yahoo.com")) ||
-                      watch("Email").length < 15) &&
+                      watch("Email").length < 15 ||
+                      /^\d+$/.test(watch("Email").split("@")[0])) &&
                     "Email inválido"}
               </span>
             </li>
@@ -70,25 +68,18 @@ function AlterData() {
               <input
                 {...register("Telefone", {
                   required: true,
-                  pattern: {
-                    value: /^[0-9]{10,11}$/,
-                    message: "Digite um telefone válido",
-                  },
+                  pattern: /^[0-9]{10,11}$/,
                 })}
                 className={field}
               ></input>
               <span className={span}>
-                {errors.Telefone
-                  ? errors.Telefone?.message
-                  : (watch("Telefone").length < 10 ||
-                      watch("Telefone").length > 11) &&
-                    "Telefone inválido"}
+                {(watch("Telefone").length < 10 ||
+                  watch("Telefone").length > 11 ||
+                  !/^\d+$/.test(watch("Telefone"))) &&
+                  "Telefone inválido"}
               </span>
             </li>
           </div>
-          <button className="bg-(--primary-color) text-white dark:text-(--bg-dark) w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105">
-            Salvar mudanças
-          </button>
         </div>
       </li>
       <li>
@@ -107,17 +98,13 @@ function AlterData() {
               <input
                 {...register("CEP", {
                   required: true,
-                  pattern: {
-                    value: /^[0-9]{8}$/,
-                    message: "Digite um CEP válido",
-                  },
+                  pattern: /^[0-9]{8}$/,
                 })}
                 className={field}
               ></input>
               <span className={span}>
-                {errors.CEP
-                  ? errors.CEP?.message
-                  : watch("CEP").length != 8 && "CEP inválido"}
+                {(watch("CEP").length != 8 || !/^\d+$/.test(watch("CEP"))) &&
+                  "CEP inválido"}
               </span>
             </li>
             <li className="flex flex-col items-start gap-[5px]">
@@ -125,10 +112,7 @@ function AlterData() {
               <input
                 {...register("Cidade", {
                   required: true,
-                  pattern: {
-                    value: /^[a-zA-Z]{5,20}$/i,
-                    message: "Digite uma cidade válida",
-                  },
+                  pattern: /^[a-zA-Z]{5,20}$/i,
                 })}
                 className={field}
               ></input>
@@ -141,9 +125,7 @@ function AlterData() {
               </span>
             </li>
             <li className="flex flex-col items-start gap-[5px]">
-              <label className={label}>
-                Logradouro (ex: Rua Ottila Wey Pereira)
-              </label>
+              <label className={label}>Logradouro (ex: Rua XXXX)</label>
               <input className={field}></input>
             </li>
             <li className="flex flex-col items-start gap-[5px]">
@@ -151,10 +133,7 @@ function AlterData() {
               <input
                 {...register("Numero", {
                   required: true,
-                  pattern: {
-                    value: /^[0-9]{1,4}$/,
-                    message: "Digite um Numero válido",
-                  },
+                  pattern: /^[0-9]{1,4}$/,
                 })}
                 className={field}
               ></input>
@@ -162,7 +141,8 @@ function AlterData() {
                 {errors.Numero
                   ? errors.Numero?.message
                   : (watch("Numero").length < 1 ||
-                      watch("Numero").length > 4) &&
+                      watch("Numero").length > 4 ||
+                      !/^\d+$/.test(watch("Numero"))) &&
                     "Numero inválido"}
               </span>
             </li>
