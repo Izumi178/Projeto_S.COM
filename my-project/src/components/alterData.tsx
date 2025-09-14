@@ -2,21 +2,21 @@ import { PhoneIcon, HomeIcon } from "@heroicons/react/16/solid";
 import { useForm } from "react-hook-form";
 
 function AlterData() {
-  interface dataLabel {
-    label: string;
-    data: string;
-  }
-  const contact: dataLabel[] = [
-    { label: "Email", data: "gabriel.izumi17@gmail.com" },
-    { label: "Telefone", data: "(19) 97422-7325" },
-  ];
-  const address: dataLabel[] = [
-    { label: "CEP", data: "18085-846" },
-    { label: "Cidade", data: "Sorocaba" },
-    { label: "Logradouro", data: "Rua Ottília Wey Pereira" },
-    { label: "Número", data: "128" },
-  ];
   const span = "text-bold text-red-600 font-md";
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      Email: "",
+      Telefone: "",
+      CEP: "",
+      Numero: "",
+      Cidade: "",
+    },
+  });
 
   const card =
     "flex flex-col min-w-[300px] sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] h-auto px-[30px] py-[10px] shadow-md gap-y-[10px]";
@@ -41,13 +41,50 @@ function AlterData() {
             </div>
           </div>
           <div className={grid}>
-            {contact.map((item) => (
-              <li className="flex flex-col items-start gap-[5px]">
-                <label className={label}>{item.label}</label>
-                <input id={item.label} className={field}></input>
-                <span>{item.label + " inválido"}</span>
-              </li>
-            ))}
+            <li className="flex flex-col items-start gap-[5px]">
+              <label className={label}>Email (ex: xxxxxx@gmail.com)</label>
+              <input
+                type="email"
+                {...register("Email", {
+                  required: true,
+                  pattern: {
+                    value:
+                      /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook.com|yahoo.com){11,50}$/i,
+                    message: "Digite um email válido",
+                  },
+                })}
+                className={field}
+              ></input>
+              <span className={span}>
+                {errors.Email
+                  ? errors.Email?.message
+                  : ((!watch("Email").includes("@gmail.com") &&
+                      !watch("Email").includes("@outlook.com") &&
+                      !watch("Email").includes("@yahoo.com")) ||
+                      watch("Email").length < 15) &&
+                    "Email inválido"}
+              </span>
+            </li>
+            <li className="flex flex-col items-start gap-[5px]">
+              <label className={label}>Telefone (ex: 19974227325)</label>
+              <input
+                {...register("Telefone", {
+                  required: true,
+                  pattern: {
+                    value: /^[0-9]{10,11}$/,
+                    message: "Digite um telefone válido",
+                  },
+                })}
+                className={field}
+              ></input>
+              <span className={span}>
+                {errors.Telefone
+                  ? errors.Telefone?.message
+                  : (watch("Telefone").length < 10 ||
+                      watch("Telefone").length > 11) &&
+                    "Telefone inválido"}
+              </span>
+            </li>
           </div>
           <button className="bg-(--primary-color) text-white dark:text-(--bg-dark) w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105">
             Salvar mudanças
@@ -65,13 +102,70 @@ function AlterData() {
             </div>
           </div>
           <div className={grid}>
-            {address.map((item) => (
-              <li className="flex flex-col items-start gap-[5px]">
-                <label className={label}>{item.label}</label>
-                <input id={item.label} type="text" className={field}></input>
-                <span></span>
-              </li>
-            ))}
+            <li className="flex flex-col items-start gap-[5px]">
+              <label className={label}>CEP (ex: 18085842)</label>
+              <input
+                {...register("CEP", {
+                  required: true,
+                  pattern: {
+                    value: /^[0-9]{8}$/,
+                    message: "Digite um CEP válido",
+                  },
+                })}
+                className={field}
+              ></input>
+              <span className={span}>
+                {errors.CEP
+                  ? errors.CEP?.message
+                  : watch("CEP").length != 8 && "CEP inválido"}
+              </span>
+            </li>
+            <li className="flex flex-col items-start gap-[5px]">
+              <label className={label}>Cidade (ex: Sorocaba)</label>
+              <input
+                {...register("Cidade", {
+                  required: true,
+                  pattern: {
+                    value: /^[a-zA-Z]{5,20}$/i,
+                    message: "Digite uma cidade válida",
+                  },
+                })}
+                className={field}
+              ></input>
+              <span className={span}>
+                {errors.Cidade
+                  ? errors.Cidade?.message
+                  : (watch("Cidade").length < 5 ||
+                      watch("Cidade").length > 20) &&
+                    "Cidade inválido"}
+              </span>
+            </li>
+            <li className="flex flex-col items-start gap-[5px]">
+              <label className={label}>
+                Logradouro (ex: Rua Ottila Wey Pereira)
+              </label>
+              <input className={field}></input>
+            </li>
+            <li className="flex flex-col items-start gap-[5px]">
+              <label className={label}>Número</label>
+              <input
+                {...register("Numero", {
+                  required: true,
+                  pattern: {
+                    value: /^[0-9]{1,4}$/,
+                    message: "Digite um Numero válido",
+                  },
+                })}
+                className={field}
+              ></input>
+              <span className={span}>
+                {errors.Numero
+                  ? errors.Numero?.message
+                  : (watch("Numero").length < 1 ||
+                      watch("Numero").length > 4) &&
+                    "Numero inválido"}
+              </span>
+            </li>
           </div>
           <button className="bg-(--primary-color) text-white dark:text-(--bg-dark) w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105">
             Salvar mudanças
