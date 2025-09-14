@@ -41,7 +41,7 @@ function Settings() {
   return (
     <ul className="flex flex-col items-center gap-[30px]">
       {dataCard.map((data) => (
-        <div className="flex flex-col items-center min-w-[300px] sm:min-w-[600px] md:min-w-[720px] lg:min-w-[1000px] xl:min-w-[1200px] 2xl:min-w-[1424px] h-auto shadow-md justify-between">
+        <div className="flex flex-col items-center min-w-[300px] sm:min-w-[600px] md:min-w-[720px] lg:min-w-[1000px] xl:min-w-[1200px] 2xl:min-w-[1424px] h-auto shadow-md justify-between transition: duration-400 hover:scale-105">
           <div
             className={`px-[20px] py-[10px] flex flex-row w-full justify-between items-center z-1000 shadow-md ${
               data.expanded ? "rounded-t-xl" : "rounded-xl"

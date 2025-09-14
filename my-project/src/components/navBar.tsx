@@ -12,7 +12,7 @@ type NavBarProps = {
 const selectedButton =
   "px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl w-fit underline items-center  text-white dark:text-(--bg-dark)  font-bold cursor-pointer gap-[4px] md:gap-[7px]";
 const unselectedButton =
-  "px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl w-fit items-center  text-white dark:text-(--bg-dark)  font-bold cursor-pointer gap-[4px] md:gap-[7px] transition duration-200 ease-in-out hover:underline";
+  "px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl w-fit items-center  text-white dark:text-(--bg-dark)  font-bold cursor-pointer gap-[4px] md:gap-[7px] transition: duration-200 ease-in-out hover:underline";
 
 const items = ["Meus Dados", "Mensagens", "Configurações"];
 const iconCustomiztion = "text-(--bg-color) w-[10px] sm:w-[20px] md:w-[30px]";

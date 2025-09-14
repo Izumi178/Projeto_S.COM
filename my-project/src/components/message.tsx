@@ -1,77 +1,61 @@
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  PencilSquareIcon,
-  AdjustmentsHorizontalIcon,
-} from "@heroicons/react/16/solid";
-import Preferences from "./preferences";
-import AlterData from "./alterData";
+import { EnvelopeIcon, EnvelopeOpenIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 
-function Settings() {
+function Messages() {
   interface cards {
-    title: string;
+    autor: string;
+    assunto: string;
+    corpo: string;
     expanded: boolean;
-    icon: React.ForwardRefExoticComponent<
-      Omit<React.SVGProps<SVGSVGElement>, "ref">
-    >;
     cardControl(): void;
   }
-  const [cadastroExpanded, cadastroControl] = useState(false);
-  const [preferencesExpanded, preferencesControl] = useState(false);
+  const [messageExpanded, messageControl] = useState(false);
   const dataCard: cards[] = [
     {
-      title: "Novas mensagens",
-      expanded: cadastroExpanded,
-      icon: PencilSquareIcon,
+      autor: "Leopoldo André Dutra Lusquino Filho",
+      assunto: "Novo comunicado",
+      corpo:
+        "	Pessoal, sobre o relatório dos trabalhos individuais, eles não tem um formato definido, mas o utilizem como um complemento da apresentação, discutindo quais frameworks, APIs e bibliotecas utilzaram no desenvolvimento do seu projeto, discutindo falhas que não conseguiram superar e apontando elementos técnicos do seu trabalho que não são explorados em outras partes.",
+      expanded: messageExpanded,
       cardControl() {
-        cadastroControl(!cadastroExpanded);
-      },
-    },
-    {
-      title: "Preferências",
-      expanded: preferencesExpanded,
-      icon: AdjustmentsHorizontalIcon,
-      cardControl() {
-        preferencesControl(!preferencesExpanded);
+        messageControl(!messageExpanded);
       },
     },
   ];
-  const iconProps = "w-[40px] text-(--primary-color)";
+  const iconProps = "w-[30px] sm:w-[40px] text-(--primary-color)";
   return (
-    <ul className="flex flex-col sm:min-w-[400px] md:min-w-[700px] items-center gap-[30px]">
+    <ul className="flex flex-col items-center gap-[30px] rounded-full  transition: duration-400 hover:scale-105">
       {dataCard.map((data) => (
-        <div className="flex flex-col w-full h-fit justify-between items-center shadow-md shadow-grey-500 rounded-xl transition: duration-400 hover:scale-110">
+        <div className="flex flex-col items-center min-w-[300px] sm:min-w-[600px] md:max-w-[720px] h-auto shadow-md justify-between">
           <div
-            className={`px-[20px] py-[10px] flex flex-row w-full justify-between items-center z-1000 shadow-md ${
-              data.expanded ? "rounded-t-xl" : "rounded-xl"
-            }`}
+            className={
+              "px-[10px] sm:px-[20px] py-[10px] flex flex-row w-full justify-between items-center z-1000 shadow-md gap-[10px]"
+            }
           >
-            <div className="flex flex-row gap-[5px] justify-center items-center">
-              <data.icon className={iconProps}></data.icon>
-              <h2 className="text-(--primary-color) text-3xl font-bold">
-                {data.title}
+            <div className="flex flex-col gap-[5px] justify-center items-start sm:ml-[20px]">
+              <h2 className="text-(--primary-color) text-xl font-bold whitespace-nowrap">
+                {"De: " + data.autor}
               </h2>
+              <h3 className="text-(--primary-color) text-lg font-bold whitespace-nowrap">
+                {"Sobre: " + data.assunto}
+              </h3>
             </div>
             <button className="flex cursor-pointer" onClick={data.cardControl}>
               {data.expanded ? (
-                <ChevronUpIcon className={iconProps}></ChevronUpIcon>
+                <EnvelopeOpenIcon className={iconProps}></EnvelopeOpenIcon>
               ) : (
-                <ChevronDownIcon className={iconProps}></ChevronDownIcon>
+                <EnvelopeIcon className={iconProps}></EnvelopeIcon>
               )}
             </button>
           </div>
           <div className={data.expanded ? "flex items-center" : "hidden"}>
-            {data.title === "Preferências" ? (
-              <Preferences></Preferences>
-            ) : (
-              <AlterData></AlterData>
-            )}
+            <p className="text-(--primary-color) font-bold text-start text-lg px-[60px] py-[40px]">
+              {data.corpo}
+            </p>
           </div>
         </div>
       ))}
     </ul>
   );
 }
-
-export default Settings;
+export default Messages;
