@@ -6,21 +6,21 @@ function RegisterData() {
     data: string;
   }
   const firstRow: dataLabel[] = [
-    { label: "Nome:", data: "Gabriel Kazuo Izumi" },
-    { label: "CPF:", data: "488.123.498-62" },
-    { label: "Email:", data: "gabriel.izumi17@gmail.com" },
-    { label: "Telefone:", data: "(19) 97422-7325" },
-    { label: "Sexo:", data: "Masculino" },
-    { label: "Data de Nascimento:", data: "17/02/2005" },
-    { label: "Estado Civil:", data: "Solteiro" },
-    { label: "Cidade de Nascimento:", data: "Campinas" },
+    { label: "Nome", data: "Gabriel Kazuo Izumi" },
+    { label: "CPF", data: "488.123.498-62" },
+    { label: "Email", data: "gabriel.izumi17@gmail.com" },
+    { label: "Telefone", data: "(19) 97422-7325" },
+    { label: "Sexo", data: "Masculino" },
+    { label: "Data de Nascimento", data: "17/02/2005" },
+    { label: "Estado Civil", data: "Solteiro" },
+    { label: "Cidade de Nascimento", data: "Campinas" },
   ];
 
   const address: dataLabel[] = [
     { label: "CEP", data: "18085-846" },
     { label: "Cidade", data: "Sorocaba" },
     { label: "Logradouro", data: "Rua Ottília Wey Pereira" },
-    { label: "Número", data: "128" },
+    { label: "Numero", data: "128" },
   ];
   const card =
     "flex flex-col min-w-[300px] sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] h-auto px-[30px] py-[10px] shadow-md gap-y-[10px]";
@@ -48,7 +48,11 @@ function RegisterData() {
             {firstRow.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className={label}>{item.label}</label>
-                <p className={field}>{item.data}</p>
+                <p className={field}>
+                  {localStorage.getItem(item.label) !== null
+                    ? localStorage.getItem(item.label)
+                    : item.data}
+                </p>
               </li>
             ))}
           </div>
@@ -68,7 +72,11 @@ function RegisterData() {
             {address.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className={label}>{item.label}</label>
-                <p className={field}>{item.data}</p>
+                <p className={field}>
+                  {localStorage.getItem(item.label) !== null
+                    ? localStorage.getItem(item.label)
+                    : item.data}
+                </p>
               </li>
             ))}
           </div>
