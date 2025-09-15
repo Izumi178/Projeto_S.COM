@@ -33,10 +33,10 @@ function Messages() {
             }
           >
             <div className="flex flex-col gap-[5px] justify-center items-start sm:ml-[20px]">
-              <h2 className="text-(--primary-color) text-xl font-bold whitespace-nowrap">
+              <h2 className="text-(--primary-color) text-xl big:text-2xl font-bold whitespace-nowrap">
                 {"De: " + data.autor}
               </h2>
-              <h3 className="text-(--primary-color) text-lg font-bold whitespace-nowrap">
+              <h3 className="text-(--primary-color) text-lg big:text-xl font-bold whitespace-nowrap">
                 {"Sobre: " + data.assunto}
               </h3>
             </div>
@@ -49,7 +49,7 @@ function Messages() {
             </button>
           </div>
           <div className={data.expanded ? "flex items-center" : "hidden"}>
-            <p className="text-(--primary-color) font-bold text-start text-lg px-[60px] py-[40px]">
+            <p className="text-(--primary-color) font-bold text-start text-lg big:text-xl px-[60px] py-[40px]">
               {data.corpo}
             </p>
           </div>

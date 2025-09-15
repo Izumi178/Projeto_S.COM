@@ -21,3 +21,4 @@
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant big (&:where(.big, .big *));
