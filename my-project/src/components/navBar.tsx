@@ -13,7 +13,18 @@ const items = ["Meus Dados", "Mensagens", "Configurações"];
 const iconCustomiztion = "text-(--bg-color) w-[10px] sm:w-[20px] md:w-[30px]";
 function NavBar({ changePage, activePage }: NavBarProps) {
   return (
-    <div className="px-[15px] sm:p-[30px] md:px-[35px] flex flex-row h-[50px] md:h-[100px] w-full md:max-w-[1000px] md:rounded-full bg-(--primary-color) shadow-xl justify-between items-center md:gap-x-[40px] transition: duration-400 hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]">
+    /*Efeitos aplicados à navBar
+    - hover:scale - quando o cursor está em cima do componente ele expande;
+    - hover:scale-y - quando o cursor está em cima do componente ele expande verticalmente;
+    - duration-400  - determina a duracao do efeito ;
+    - hover:-translate-y  - desloca o componente para cima;
+    */
+    <div
+      className="px-[15px] sm:p-[30px] md:px-[35px] flex flex-row h-[50px] 
+    md:h-[100px] w-full md:max-w-[1000px] md:rounded-full bg-(--primary-color) 
+    shadow-xl justify-between items-center md:gap-x-[40px] transition: duration-400 
+    hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]"
+    >
       <img
         src={darkLogo}
         className="h-[60px] sm:h-[100px] md:h-[130px] hidden dark:block"

@@ -64,10 +64,14 @@ function Preferences() {
         >
           <div className="flex flex-row items-center w-fit h-auto gap-x-[5px] sm:gap-x-[10px] whitespace-nowrap">
             <BoldIcon className="w-[20px] sm:w-[30px] text-(--primary-color)" />
+            {/*quando o modo de fonte aumentada nao esta ativada, a fonte possui um tamanho,
+            quando ativa, ela aumenta*/}
             <h3 className="text-sm sm:text-xl big:text-sm big:sm:text-2xl text-(--primary-color) font-bold">
               Aumentar tamanho da fonte
             </h3>
           </div>
+          {/*Quando o dark mode nao esta ativado, o fundo possui uma cor,
+          quando ativa, a cor muda*/}
           <div
             className="flex flex-row h-[15px] w-[40px] sm:h-[20px] sm:w-[50px] 
           bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) rounded-full items-center justify-start 

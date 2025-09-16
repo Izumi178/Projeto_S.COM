@@ -3,17 +3,16 @@ import { useForm } from "react-hook-form";
 
 function AlterData() {
   const span = "text-bold text-red-600 font-md";
-  //Variáveis de estado dos inputs
+  //Declaração do useForm
   const {
-    //tipo de formulario
+    //função que permite adicionar validação aos inputs
     register,
     //funcao executada ao submeter o formulario
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onChange",
     defaultValues: {
-      //Atribui valores padr
+      //Atribui valores padrões
       Email: localStorage.getItem("Email") ?? "",
       Telefone: localStorage.getItem("Telefone") ?? "",
       Logradouro: localStorage.getItem("Logradouro") ?? "",
@@ -24,7 +23,7 @@ function AlterData() {
   });
 
   const card =
-    "flex flex-col min-w-[300px] sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] h-auto px-[30px] py-[10px] shadow-md gap-y-[10px]";
+    "flex flex-col min-w-[300px] sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] h-auto px-[30px] py-[10px] gap-y-[10px]";
   const titleArea =
     "flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap justify-start";
   const grid =
@@ -35,6 +34,7 @@ function AlterData() {
     "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
     <form
+      className="py-[20px]"
       onSubmit={handleSubmit((data) => {
         {
           /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
@@ -47,6 +47,7 @@ function AlterData() {
         localStorage.setItem("Numero", data.Numero);
       })}
     >
+      {/*Lista que contém os inputs*/}
       <ul>
         <li>
           <div className={card}>
@@ -177,7 +178,7 @@ function AlterData() {
       {/*Botao que chama a funcao atribuida ao formulario*/}
       <button
         type="submit"
-        className="bg-(--primary-color) text-white dark:text-(--bg-dark) w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
+        className="bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
       >
         Salvar mudanças
       </button>
