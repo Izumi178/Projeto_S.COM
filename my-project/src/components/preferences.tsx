@@ -39,7 +39,7 @@ function Preferences() {
         >
           <div className="flex flex-row items-center w-fit h-auto gap-x-[5px] sm:gap-x-[10px] whitespace-nowrap">
             <MoonIcon className="w-[20px] sm:w-[30px] text-(--primary-color)" />
-            <h3 className="text-sm sm:text-xl text-(--primary-color) font-bold">
+            <h3 className="text-sm sm:text-xl big:text-sm big:sm:text-2xl text-(--primary-color) font-bold">
               Ativar modo noturno
             </h3>
           </div>
@@ -64,7 +64,7 @@ function Preferences() {
         >
           <div className="flex flex-row items-center w-fit h-auto gap-x-[5px] sm:gap-x-[10px] whitespace-nowrap">
             <BoldIcon className="w-[20px] sm:w-[30px] text-(--primary-color)" />
-            <h3 className="text-sm sm:text-xl text-(--primary-color) font-bold">
+            <h3 className="text-sm sm:text-xl big:text-sm big:sm:text-2xl text-(--primary-color) font-bold">
               Aumentar tamanho da fonte
             </h3>
           </div>

@@ -13,7 +13,7 @@ const items = ["Meus Dados", "Mensagens", "Configurações"];
 const iconCustomiztion = "text-(--bg-color) w-[10px] sm:w-[20px] md:w-[30px]";
 function NavBar({ changePage, activePage }: NavBarProps) {
   return (
-    <div className="px-[15px] sm:p-[30px] md:px-[35px] flex flex-row h-[50px] md:h-[100px] w-full md:max-w-[900px] md:rounded-full bg-(--primary-color) shadow-xl justify-between items-center md:gap-x-[40px] transition: duration-400 hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]">
+    <div className="px-[15px] sm:p-[30px] md:px-[35px] flex flex-row h-[50px] md:h-[100px] w-full md:max-w-[1000px] md:rounded-full bg-(--primary-color) shadow-xl justify-between items-center md:gap-x-[40px] transition: duration-400 hover:scale-y-110 md:hover:scale-110 hover:-translate-y-[10px]">
       <img
         src={darkLogo}
         className="h-[60px] sm:h-[100px] md:h-[130px] hidden dark:block"
@@ -26,7 +26,7 @@ function NavBar({ changePage, activePage }: NavBarProps) {
         {items.map((item) => (
           <button
             type="button"
-            className={`px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl lg:text-2xl w-fit items-center text-white dark:text-[color:var(--bg-dark)] font-bold cursor-pointer gap-[4px] md:gap-[7px] transition duration-200 ease-in-out 
+            className={`px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl lg:text-2xl big:text-lg big:sm:text-xl big:md:text-2xl big:lg:text-3xl  w-fit items-center text-white dark:text-[color:var(--bg-dark)] font-bold cursor-pointer gap-[4px] md:gap-[7px] transition duration-200 ease-in-out 
    ${item === activePage ? "underline" : "hover:underline"}`}
             onClick={() => {
               changePage(item);

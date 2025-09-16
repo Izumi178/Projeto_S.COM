@@ -5,13 +5,15 @@ function AlterData() {
   const span = "text-bold text-red-600 font-md";
   //Variáveis de estado dos inputs
   const {
+    //tipo de formulario
     register,
+    //funcao executada ao submeter o formulario
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
     defaultValues: {
+      //Atribui valores padr
       Email: localStorage.getItem("Email") ?? "",
       Telefone: localStorage.getItem("Telefone") ?? "",
       Logradouro: localStorage.getItem("Logradouro") ?? "",
@@ -26,15 +28,17 @@ function AlterData() {
   const titleArea =
     "flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap justify-start";
   const grid =
-    "flex grid cols-1 sm:grid-cols-2 lg:grid-cols-4 items-start h-auto gap-y-[20px] sm:px-[10px] lg:px-[20px] py-[10px] justify-start sm:gap-x-[30px] md:gap-x-[40px]";
+    "flex grid cols-1 sm:grid-cols-2 lg:grid-cols-4 big:grid-cols-1 big:md:grid-cols-2 items-center h-auto gap-y-[20px] sm:px-[10px] lg:px-[20px] py-[10px] justify-start sm:gap-x-[30px] md:gap-x-[40px]";
   const label =
-    "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base";
+    "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base big:text-lg";
   const field =
-    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        console.log("oi");
+        {
+          /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
+        }
         localStorage.setItem("Email", data.Email);
         localStorage.setItem("Telefone", data.Telefone);
         localStorage.setItem("CEP", data.CEP);
@@ -49,14 +53,21 @@ function AlterData() {
             <div className={titleArea}>
               <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
                 <PhoneIcon className="w-[30px] text-(--primary-color)" />
-                <h3 className="text-2xl text-(--primary-color) font-bold">
+                <h3 className="big:text-3xl text-2xl text-(--primary-color) font-bold">
                   Alterar Contato
                 </h3>
               </div>
             </div>
             <div className={grid}>
               <li className="flex flex-col items-start gap-[5px]">
+                {/*Campo de email*/}
                 <label className={label}>Email (ex: xxxxxx@gmail.com)</label>
+                {/*
+                  - required: true, torna o campo obrigatorio
+                  - pattern: valida o email digitado, neste caso, 
+                  pode incluir letras, simbolos e numero
+                  e deve incluir @xxxxx.com ao final
+                  - message: mensagem de erro*/}
                 <input
                   type="email"
                   {...register("Email", {
@@ -69,10 +80,14 @@ function AlterData() {
                   })}
                   className={field}
                 ></input>
+                {/*Exibe mensagem de erro, caso nao seja nulo*/}
                 <span className={span}>{errors.Email?.message}</span>
               </li>
               <li className="flex flex-col items-start gap-[5px]">
                 <label className={label}>Telefone (ex: 19974227325)</label>
+                {/*Campo de telefone
+                - pattern: apenas numeros, 
+                podendo ter entre 10 e 11 digitos, incluindo ddd*/}
                 <input
                   {...register("Telefone", {
                     required: true,
@@ -93,7 +108,7 @@ function AlterData() {
             <div className={titleArea}>
               <div className="flex flex-row items-center w-fit h-auto gap-x-[10px] whitespace-nowrap">
                 <HomeIcon className="w-[30px] text-(--primary-color)" />
-                <h3 className="text-2xl text-(--primary-color) font-bold">
+                <h3 className="big:text-3xl text-2xl text-(--primary-color) font-bold">
                   Alterar Endereço
                 </h3>
               </div>
@@ -159,6 +174,7 @@ function AlterData() {
           </div>
         </li>
       </ul>
+      {/*Botao que chama a funcao atribuida ao formulario*/}
       <button
         type="submit"
         className="bg-(--primary-color) text-white dark:text-(--bg-dark) w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"

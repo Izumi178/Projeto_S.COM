@@ -49,7 +49,7 @@ function Settings() {
           >
             <div className="flex flex-row gap-[5px] justify-center items-center">
               <data.icon className={iconProps}></data.icon>
-              <h2 className="text-(--primary-color) text-3xl font-bold whitespace-nowrap">
+              <h2 className="text-(--primary-color) text-3xl big:text-4xl font-bold whitespace-nowrap">
                 {data.title}
               </h2>
             </div>
