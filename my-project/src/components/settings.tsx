@@ -6,9 +6,13 @@ import {
 } from "@heroicons/react/16/solid";
 import Preferences from "./preferences";
 import AlterData from "./alterData";
-import { useState } from "react";
+import { useState, type SetStateAction } from "react";
 
-function Settings() {
+type popUp = {
+  set: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function Settings({ set }: popUp) {
   interface cards {
     title: string;
     expanded: boolean;
@@ -65,7 +69,7 @@ function Settings() {
             {data.title === "Preferências" ? (
               <Preferences></Preferences>
             ) : (
-              <AlterData></AlterData>
+              <AlterData set={set}></AlterData>
             )}
           </div>
         </div>

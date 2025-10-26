@@ -1,27 +1,50 @@
 import { UserIcon, HomeIcon } from "@heroicons/react/16/solid";
+import {
+  GetPersonalData,
+  GetAdressData,
+  type Pessoas,
+  type Endereco,
+} from "../getRegisterData";
+import { useEffect, useState } from "react";
 
 function RegisterData() {
+  const [personalData, setPersonalData] = useState<Pessoas>();
+  const [adressData, setAdressData] = useState<Endereco>();
+  useEffect(() => {
+    const loadData = async () => {
+      const dadosPessoais = await GetPersonalData("gabriel.izumi@unesp.br");
+      const dadosEndereco = await GetAdressData("gabriel.izumi@unesp.br");
+      if (dadosPessoais) {
+        setPersonalData(dadosPessoais[0]);
+      }
+      if (dadosEndereco) {
+        setAdressData(dadosEndereco[0]);
+      }
+    };
+    loadData();
+  }, []);
   interface dataLabel {
     label: string;
-    data: string;
+    data: any;
   }
   const firstRow: dataLabel[] = [
-    { label: "Nome", data: "Gabriel Kazuo Izumi" },
-    { label: "CPF", data: "488.123.498-62" },
-    { label: "Email", data: "gabriel.izumi17@gmail.com" },
-    { label: "Telefone", data: "(19) 97422-7325" },
-    { label: "Sexo", data: "Masculino" },
-    { label: "Data de Nascimento", data: "17/02/2005" },
-    { label: "Estado Civil", data: "Solteiro" },
-    { label: "Cidade de Nascimento", data: "Campinas" },
+    { label: "Nome", data: personalData?.name },
+    { label: "CPF", data: personalData?.CPF },
+    { label: "Email", data: personalData?.email },
+    { label: "Telefone", data: personalData?.telefone },
+    { label: "Sexo", data: personalData?.sexo },
+    { label: "Data de Nascimento", data: personalData?.nascimento },
+    { label: "Estado Civil", data: personalData?.civil },
+    { label: "Cidade de Nascimento", data: personalData?.cidade },
   ];
 
   const address: dataLabel[] = [
-    { label: "CEP", data: "18085-846" },
-    { label: "Cidade", data: "Sorocaba" },
-    { label: "Logradouro", data: "Rua Ottília Wey Pereira" },
-    { label: "Numero", data: "128" },
+    { label: "CEP", data: adressData?.CEP },
+    { label: "Cidade", data: adressData?.cidade },
+    { label: "Logradouro", data: adressData?.logradouro },
+    { label: "Numero", data: adressData?.numero },
   ];
+
   const card =
     "flex flex-col min-w-[300px] sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] h-auto px-[30px] py-[10px] shadow-md gap-y-[10px]";
   const titleArea =
@@ -48,11 +71,7 @@ function RegisterData() {
             {firstRow.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className={label}>{item.label}</label>
-                <p className={field}>
-                  {localStorage.getItem(item.label) !== null
-                    ? localStorage.getItem(item.label)
-                    : item.data}
-                </p>
+                <p className={field}>{item.data}</p>
               </li>
             ))}
           </div>
@@ -72,11 +91,7 @@ function RegisterData() {
             {address.map((item) => (
               <li className="flex flex-col items-start gap-[5px]">
                 <label className={label}>{item.label}</label>
-                <p className={field}>
-                  {localStorage.getItem(item.label) !== null
-                    ? localStorage.getItem(item.label)
-                    : item.data}
-                </p>
+                <p className={field}>{item.data}</p>
               </li>
             ))}
           </div>

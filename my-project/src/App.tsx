@@ -1,15 +1,17 @@
 //Importa a função hook useState()
-import { useState } from "react";
+import { useState, type SetStateAction } from "react";
 //Importa componentes que compõe a página
 import NavBar from "./components/navBar";
 import ImageSlider from "./components/slider";
 import MyData from "./components/myData";
 import Settings from "./components/settings";
 import Messages from "./components/message";
+import PopUp from "./components/popUp";
 
-function App() {
+function Page() {
   //Declaracao da variavel de estado da pagina "activePage",
   // a funcao que controla seu estado "changePage" e seu estado inicial "Meus Dados"
+  const [popUp, setPopUp] = useState(false);
   const [activePage, changePage] = useState("Meus Dados");
   if (localStorage.getItem("dark") !== null) {
     document.documentElement.classList.add("dark");
@@ -51,10 +53,18 @@ function App() {
       {/*exemplo de renderizacao condicional, 
       caso o estado da pagina ativa corresponda ao componente, este sera renderizado*/}
       {activePage === "Meus Dados" && <MyData></MyData>}
-      {activePage === "Configurações" && <Settings></Settings>}
+      {activePage === "Configurações" && <Settings set={setPopUp}></Settings>}
       {activePage === "Mensagens" && <Messages></Messages>}
+      {popUp && (
+        <PopUp
+          title={"Funciona"}
+          content={"ajhdjahdjasd"}
+          works={false}
+          set={setPopUp}
+        ></PopUp>
+      )}
     </div>
   );
 }
 
-export default App;
+export default Page;

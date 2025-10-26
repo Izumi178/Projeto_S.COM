@@ -3,21 +3,36 @@ import {
   BriefcaseIcon,
   BookOpenIcon,
 } from "@heroicons/react/16/solid";
+import { GetInstitutionalData, type Aluno } from "../getInstitutionalData";
+import { useState, useEffect } from "react";
 
 function InstitutionalData() {
+  const [institutionalData, setInstitutionalData] = useState<Aluno>();
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await GetInstitutionalData("gabriel.izumi@unesp.br");
+      if (data) {
+        setInstitutionalData(data[0]);
+      }
+    };
+    loadData();
+  }, []);
   interface dataLabel {
     label: string;
-    data: string;
+    data: any;
   }
   const generalData: dataLabel[] = [
-    { label: "Ra:", data: "231270852" },
-    { label: "Curso Matriculado:", data: "Eng. Controle e Automação" },
-    { label: "Email institucional:", data: "gabriel.izumi@unesp.br" },
-    { label: "Semestre matriculado:", data: "5" },
-    { label: "Carga horária concluída:", data: "1500" },
-    { label: "Horas de extensão", data: "120" },
-    { label: "Horas complementares", data: "60" },
-    { label: "Horas de estágio:", data: "0" },
+    { label: "Ra:", data: institutionalData?.RA },
+    { label: "Curso Matriculado:", data: institutionalData?.curso },
+    { label: "Email institucional:", data: institutionalData?.email },
+    { label: "Semestre matriculado:", data: institutionalData?.semestre },
+    { label: "Carga horária concluída:", data: institutionalData?.horas_curso },
+    { label: "Horas de extensão", data: institutionalData?.horas_extensao },
+    {
+      label: "Horas complementares",
+      data: institutionalData?.horas_complementar,
+    },
+    { label: "Horas de estágio:", data: institutionalData?.horas_estagio },
   ];
 
   const history: dataLabel[] = [
