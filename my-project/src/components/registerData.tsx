@@ -7,13 +7,17 @@ import {
 } from "../getRegisterData";
 import { useEffect, useState } from "react";
 
-function RegisterData() {
+type user = {
+  email: string;
+};
+
+function RegisterData({ email }: user) {
   const [personalData, setPersonalData] = useState<Pessoas>();
   const [adressData, setAdressData] = useState<Endereco>();
   useEffect(() => {
     const loadData = async () => {
-      const dadosPessoais = await GetPersonalData("gabriel.izumi@unesp.br");
-      const dadosEndereco = await GetAdressData("gabriel.izumi@unesp.br");
+      const dadosPessoais = await GetPersonalData(email);
+      const dadosEndereco = await GetAdressData(email);
       if (dadosPessoais) {
         setPersonalData(dadosPessoais[0]);
       }

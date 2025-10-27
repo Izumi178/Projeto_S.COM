@@ -8,10 +8,13 @@ import Settings from "../components/settings";
 import Messages from "../components/message";
 import PopUp from "../components/warning";
 import { type popUp } from "../components/warning";
-import { Link } from "react-router-dom";
+import { verifyAuth } from "../authLogin";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const [warning, setPopUp] = useState<popUp>();
+  const [email, setEmail] = useState("");
   useEffect(() => {
     const setWarning = () => {
       const war: popUp = {
@@ -23,15 +26,19 @@ function Home() {
       };
       setPopUp(war);
     };
+    const getUser = async () => {
+      const email = await verifyAuth();
+      if (email) {
+        setEmail(email);
+      } else {
+        navigate("/login", { replace: true });
+      }
+    };
     setWarning();
+    getUser();
   }, []);
   const [activePage, changePage] = useState("Meus Dados");
-  if (localStorage.getItem("dark") !== null) {
-    document.documentElement.classList.add("dark");
-  }
-  if (localStorage.getItem("big") !== null) {
-    document.documentElement.classList.add("big");
-  }
+
   return (
     /*Container principal da pagina que contem demais componentes
       - flex: torna o componente um container flexível(organização propria);
@@ -65,11 +72,13 @@ function Home() {
       <div className="h-[50px]" />
       {/*exemplo de renderizacao condicional, 
       caso o estado da pagina ativa corresponda ao componente, este sera renderizado*/}
-      {activePage === "Meus Dados" && <MyData></MyData>}
-      {activePage === "Configurações" && (
-        <Settings set={warning?.set}></Settings>
+      {email && activePage === "Meus Dados" && <MyData email={email}></MyData>}
+      {email && activePage === "Configurações" && (
+        <Settings set={warning?.set} email={email}></Settings>
       )}
-      {activePage === "Mensagens" && <Messages></Messages>}
+      {email && activePage === "Mensagens" && (
+        <Messages email={email}></Messages>
+      )}
       {warning?.show && (
         <PopUp
           title={warning?.title}

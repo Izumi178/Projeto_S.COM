@@ -11,9 +11,10 @@ import { type popUp } from "./warning";
 
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
+  email: string;
 };
 
-function Settings({ set }: warning) {
+function Settings({ set, email }: warning) {
   interface cards {
     title: string;
     expanded: boolean;

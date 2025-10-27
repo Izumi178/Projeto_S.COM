@@ -6,11 +6,15 @@ import {
 import { GetInstitutionalData, type Aluno } from "../getInstitutionalData";
 import { useState, useEffect } from "react";
 
-function InstitutionalData() {
+type user = {
+  email: string;
+};
+
+function InstitutionalData({ email }: user) {
   const [institutionalData, setInstitutionalData] = useState<Aluno>();
   useEffect(() => {
     const loadData = async () => {
-      const data = await GetInstitutionalData("gabriel.izumi@unesp.br");
+      const data = await GetInstitutionalData(email);
       if (data) {
         setInstitutionalData(data[0]);
       }

@@ -13,7 +13,6 @@ export async function AuthLogin({ email, senha }: login) {
   if (error) {
     return false;
   } else {
-    console.log("yeee");
     return true;
   }
 }
@@ -27,12 +26,12 @@ export async function verifyAuth() {
     error,
   } = await supabase.auth.getSession();
   if (error) {
-    return false;
+    return null;
   } else {
-    if (session) {
-      return false;
+    if (session?.user.email) {
+      return session.user.email;
     } else {
-      return true;
+      return null;
     }
   }
 }

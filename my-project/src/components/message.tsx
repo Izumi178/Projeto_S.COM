@@ -1,7 +1,11 @@
 import { EnvelopeIcon, EnvelopeOpenIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 
-function Messages() {
+type user = {
+  email: string;
+};
+
+function Messages({ email }: user) {
   interface cards {
     autor: string;
     assunto: string;

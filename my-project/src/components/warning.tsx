@@ -32,7 +32,6 @@ export default function PopUp({
         className="bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
         onClick={() => {
           if (set) {
-            console.log(goToLogin);
             if (goToLogin) {
               const data: popUp = {
                 title: undefined,
@@ -42,7 +41,6 @@ export default function PopUp({
                 set: set,
               };
               set(data);
-              console.log("abababab");
               navigate("/login", { replace: true });
             } else {
               const data: popUp = {
