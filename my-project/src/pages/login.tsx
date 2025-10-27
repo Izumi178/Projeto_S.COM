@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { AuthLogin } from "../authLogin";
 export default function Login() {
   const {
     //função que permite adicionar validação aos inputs
@@ -30,6 +31,7 @@ export default function Login() {
               /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
             }
             if (data.Email && data.Senha) {
+              await AuthLogin({ email: data.Email, senha: data.Senha });
             }
           })}
         >

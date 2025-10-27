@@ -49,7 +49,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
             {...register("Nome", {
               required: true,
               pattern: {
-                value: /^[a-zA-ZÀ-ÿ\s]{2,50}$/i,
+                value: /^[a-zA-ZÀ-ÿ\s]{10,50}$/i,
                 message: "Nome inválido",
               },
             })}

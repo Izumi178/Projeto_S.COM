@@ -34,7 +34,7 @@ export async function CreateAccount({ pers, ad, log }: allData) {
   const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
   const supabase = createClient(supabaseUrl, supabaseKey);
   const { error } = await supabase.auth.signUp({
-    email: pers.Email,
+    email: log.email,
     password: log.senha,
   });
   if (error) {
@@ -59,7 +59,7 @@ async function setData({ pers, ad, log }: allData) {
     telefone: pers.Telefone,
     sexo: pers.Sexo,
     nascimento: pers.Nascimento,
-    civil: pers.Nascimento,
+    civil: pers.Civil,
     cidade: pers.Cidade,
   });
   if (error) {
@@ -80,15 +80,21 @@ async function setData({ pers, ad, log }: allData) {
         .from("aprovados")
         .select("curso")
         .match({ CPF: CPF });
+      console.log(data);
       if (data) {
         const curso = data[0];
-        const { error } = await supabase.from("endereco").update({
+        console.log(curso);
+        const { error } = await supabase.from("alunos").insert({
           RA: Math.floor(Math.random() * (100 - 0 + 1)),
           pessoa_id: id,
-          email: log.email,
           curso: curso,
+          email: log.email,
         });
-        return true;
+        if (error) {
+          console.log(error);
+        } else {
+          return true;
+        }
       } else {
         return false;
       }
