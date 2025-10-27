@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { AuthLogin } from "../authLogin";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
+  const navigate = useNavigate();
   const {
     //função que permite adicionar validação aos inputs
     register,
@@ -31,7 +33,10 @@ export default function Login() {
               /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
             }
             if (data.Email && data.Senha) {
-              await AuthLogin({ email: data.Email, senha: data.Senha });
+              if (await AuthLogin({ email: data.Email, senha: data.Senha })) {
+                navigate("/", { replace: true });
+              } else {
+              }
             }
           })}
         >
@@ -77,13 +82,19 @@ export default function Login() {
             {/*Exibe mensagem de erro, caso nao seja nulo*/}
             <span className={span}>{errors.Senha?.message}</span>
           </li>
-
           <button
             type="submit"
-            className="mt-[20px] bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
+            className="my-[20px] bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
           >
-            Salvar mudanças
+            Entrar
           </button>
+          <br></br>
+          <Link
+            className="mt-[20px] underline text-(--primary-color)"
+            to="/signIn"
+          >
+            Crie sua conta UNESP
+          </Link>
         </form>
       </div>
     </div>
