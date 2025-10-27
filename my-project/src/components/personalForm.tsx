@@ -6,14 +6,11 @@ type seiLa = {
 };
 export default function PersonalForm({ changePage, setPerson }: seiLa) {
   const {
-    //função que permite adicionar validação aos inputs
     register,
-    //funcao executada ao submeter o formulario
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      //Atribui valores padrões
       Nome: "",
       Email: "",
       CPF: "",
@@ -47,7 +44,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <input
             type="text"
             {...register("Nome", {
-              required: true,
+              required: { value: true, message: "Digite seu nome completo" },
               pattern: {
                 value: /^[a-zA-ZÀ-ÿ\s]{10,50}$/i,
                 message: "Nome inválido",
@@ -64,7 +61,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <input
             type="text"
             {...register("Email", {
-              required: true,
+              required: { value: true, message: "Digite seu email" },
               pattern: {
                 value:
                   /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com)$/,
@@ -82,7 +79,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <input
             type="text"
             {...register("CPF", {
-              required: true,
+              required: { value: true, message: "Digite seu CPF" },
               pattern: {
                 value: /^[0-9.-]{14}$/i,
                 message: "CPF inválido",
@@ -99,7 +96,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <input
             type="text"
             {...register("Telefone", {
-              required: true,
+              required: { value: true, message: "Digite seu telefone" },
               pattern: {
                 value: /^[0-9]{10,11}$/,
                 message: "Telefone inválido",
@@ -115,7 +112,11 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <input
             type="text"
             {...register("Cidade", {
-              required: true,
+              required: { value: true, message: "Digite sua cidae natal" },
+              pattern: {
+                value: /^[a-zA-ZÀ-ÿ\s]{2,50}$/,
+                message: "Cidade inválida",
+              },
             })}
             className={field}
           ></input>
@@ -124,11 +125,13 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Data de nascimento</label>
-
           <input
             type="date"
             {...register("Nascimento", {
-              required: true,
+              required: {
+                value: true,
+                message: "Selecione uma data de nascimento",
+              },
             })}
             className={field}
           ></input>
@@ -139,7 +142,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <label className={label}>Sexo</label>
           <select
             {...register("Sexo", {
-              required: true,
+              required: { value: true, message: "Selecione seu sexo" },
             })}
             className={field}
           >
@@ -154,7 +157,7 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <label className={label}>Estado Civil</label>
           <select
             {...register("Civil", {
-              required: true,
+              required: { value: true, message: "Selecione seu estado civil" },
             })}
             className={field}
           >
@@ -166,7 +169,6 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
           <span className={span}>{errors.Civil?.message}</span>
         </li>
       </div>
-
       <button
         type="submit"
         className="mt-[20px] bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"

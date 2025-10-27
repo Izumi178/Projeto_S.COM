@@ -7,12 +7,13 @@ import {
 import Preferences from "./preferences";
 import AlterData from "./alterData";
 import { useState, type SetStateAction } from "react";
+import { type popUp } from "./warning";
 
-type popUp = {
-  set: React.Dispatch<React.SetStateAction<boolean>>;
+type warning = {
+  set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
 
-function Settings({ set }: popUp) {
+function Settings({ set }: warning) {
   interface cards {
     title: string;
     expanded: boolean;

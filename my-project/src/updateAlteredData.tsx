@@ -28,21 +28,22 @@ export async function UpdateAlteredData(alteredData: AlteredData) {
       .update({ email: alteredData.email, telefone: alteredData.telefone })
       .eq("id", persData[0].id);
     if (error) {
-      console.log(error);
-    }
-  }
-  if (adData) {
-    const { error } = await supabase
-      .from("endereco")
-      .update({
-        CEP: alteredData.cep,
-        cidade: alteredData.cidade,
-        logradouro: alteredData.logradouro,
-        numero: alteredData.numero,
-      })
-      .eq("id", adData[0].id);
-    if (error) {
-      console.log(error);
+      return false;
+    } else if (adData) {
+      const { error } = await supabase
+        .from("endereco")
+        .update({
+          CEP: alteredData.cep,
+          cidade: alteredData.cidade,
+          logradouro: alteredData.logradouro,
+          numero: alteredData.numero,
+        })
+        .eq("id", adData[0].id);
+      if (error) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 }

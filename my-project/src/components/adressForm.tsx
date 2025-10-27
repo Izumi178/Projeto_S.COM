@@ -6,14 +6,11 @@ type seiLa = {
 };
 export default function AddressForm({ changePage, setAddress }: seiLa) {
   const {
-    //função que permite adicionar validação aos inputs
     register,
-    //funcao executada ao submeter o formulario
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      //Atribui valores padrões
       CEP: "",
       Logradouro: "",
       Cidade: "",
@@ -41,7 +38,7 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
           <label className={label}>CEP (ex: 18085842)</label>
           <input
             {...register("CEP", {
-              required: true,
+              required: { value: true, message: "Digite seu CEP" },
               pattern: {
                 value: /^[0-9-]{9}$/,
                 message: "CEP inválido",
@@ -52,10 +49,13 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
           <span className={span}>{errors.CEP?.message}</span>
         </li>
         <li className="flex flex-col items-start gap-[5px]">
-          <label className={label}>Cidade (ex: Sorocaba)</label>
+          <label className={label}>Cidade</label>
           <input
             {...register("Cidade", {
-              required: true,
+              required: {
+                value: true,
+                message: "Digite sua cidade de residência",
+              },
               pattern: {
                 value: /^[a-zA-ZÀ-ÿ\s]{2,50}$/i,
                 message: "Cidade inválida",
@@ -69,7 +69,10 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
           <label className={label}>Logradouro (ex: Rua XXXX)</label>
           <input
             {...register("Logradouro", {
-              required: true,
+              required: {
+                value: true,
+                message: "Digite sua rua, avenida, etc.",
+              },
               pattern: {
                 value: /^[\p{L}0-9\s.\-\/ºª,()]{3,100}$/u,
                 message: "Logradouro inválido",
@@ -83,7 +86,10 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
           <label className={label}>Número</label>
           <input
             {...register("Numero", {
-              required: true,
+              required: {
+                value: true,
+                message: "Digite o número da sua residência",
+              },
               pattern: {
                 value: /^[0-9]{1,4}$/,
                 message: "Numero inválido",

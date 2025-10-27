@@ -12,14 +12,12 @@ type seiLa = {
 };
 export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
   const {
-    //função que permite adicionar validação aos inputs
     register,
-    //funcao executada ao submeter o formulario
+
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      //Atribui valores padrões
       Email: "",
       ConfirmEmail: "",
       Senha: "",
@@ -36,7 +34,6 @@ export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
       className="py-[20px] "
       onSubmit={handleSubmit(async (data) => {
         {
-          /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
           if (
             data.Email != data.ConfirmEmail ||
             data.Senha != data.ConfirmSenha
@@ -56,12 +53,11 @@ export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
     >
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
-          {/*Campo de email*/}
           <label className={label}>Email institucional (xxxxx@unesp.br)</label>
           <input
             type="text"
             {...register("Email", {
-              required: true,
+              required: { value: true, message: "Crie um email institucional" },
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@(unesp\.br)$/,
                 message: "Email inválido",
@@ -69,17 +65,16 @@ export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
             })}
             className={field}
           ></input>
-          {/*Exibe mensagem de erro, caso nao seja nulo*/}
+
           <span className={span}>{errors.Email?.message}</span>
         </li>
         <li className="flex flex-col items-start gap-[5px]">
-          {/*Campo de email*/}
           <label className={label}>Confirmar Email</label>
 
           <input
             type="text"
             {...register("ConfirmEmail", {
-              required: true,
+              required: { value: true, message: "Confirme seu email" },
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+@(unesp\.br)$/,
                 message: "Email inválido",
@@ -87,49 +82,37 @@ export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
             })}
             className={field}
           ></input>
-          {/*Exibe mensagem de erro, caso nao seja nulo*/}
+
           <span className={span}>{errors.Email?.message}</span>
         </li>
         <li className="flex flex-col items-start gap-[5px]">
-          {/*Campo de email*/}
           <label className={label}>Senha</label>
-          {/*
-                  - required: true, torna o campo obrigatorio
-                  - pattern: valida o email digitado, neste caso, 
-                  pode incluir letras, simbolos e numero
-                  e deve incluir @xxxxx.com ao final
-                  - message: mensagem de erro*/}
+
           <input
             type="password"
             {...register("Senha", {
-              required: true,
-              minLength: 8,
-              maxLength: 50,
+              required: { value: true, message: "Crie uma senha" },
+              minLength: {
+                value: 8,
+                message: "Sua senha deve conter no mínimo 8 caracteres",
+              },
             })}
             className={field}
           ></input>
-          {/*Exibe mensagem de erro, caso nao seja nulo*/}
+
           <span className={span}>{errors.Senha?.message}</span>
         </li>
         <li className="flex flex-col items-start gap-[5px]">
-          {/*Campo de email*/}
           <label className={label}>Confirmar Senha</label>
-          {/*
-                  - required: true, torna o campo obrigatorio
-                  - pattern: valida o email digitado, neste caso, 
-                  pode incluir letras, simbolos e numero
-                  e deve incluir @xxxxx.com ao final
-                  - message: mensagem de erro*/}
+
           <input
             type="password"
             {...register("ConfirmSenha", {
-              required: true,
-              minLength: 8,
-              maxLength: 50,
+              required: { value: true, message: "Confirme sua senha" },
             })}
             className={field}
           ></input>
-          {/*Exibe mensagem de erro, caso nao seja nulo*/}
+
           <span className={span}>{errors.Senha?.message}</span>
         </li>
       </div>

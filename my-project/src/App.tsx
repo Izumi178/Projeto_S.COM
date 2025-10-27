@@ -1,17 +1,29 @@
 //Importa a função hook useState()
-import { useState, type SetStateAction } from "react";
+import { useState, useEffect, type SetStateAction } from "react";
 //Importa componentes que compõe a página
 import NavBar from "./components/navBar";
 import ImageSlider from "./components/slider";
 import MyData from "./components/myData";
 import Settings from "./components/settings";
 import Messages from "./components/message";
-import PopUp from "./components/popUp";
+import PopUp from "./components/warning";
+import { type popUp } from "./components/warning";
 
 function Page() {
-  //Declaracao da variavel de estado da pagina "activePage",
-  // a funcao que controla seu estado "changePage" e seu estado inicial "Meus Dados"
-  const [popUp, setPopUp] = useState(false);
+  const [warning, setPopUp] = useState<popUp>();
+  useEffect(() => {
+    const setWarning = () => {
+      const war: popUp = {
+        title: undefined,
+        content: undefined,
+        show: false,
+        works: undefined,
+        set: setPopUp,
+      };
+      setPopUp(war);
+    };
+    setWarning();
+  }, []);
   const [activePage, changePage] = useState("Meus Dados");
   if (localStorage.getItem("dark") !== null) {
     document.documentElement.classList.add("dark");
@@ -53,14 +65,17 @@ function Page() {
       {/*exemplo de renderizacao condicional, 
       caso o estado da pagina ativa corresponda ao componente, este sera renderizado*/}
       {activePage === "Meus Dados" && <MyData></MyData>}
-      {activePage === "Configurações" && <Settings set={setPopUp}></Settings>}
+      {activePage === "Configurações" && (
+        <Settings set={warning?.set}></Settings>
+      )}
       {activePage === "Mensagens" && <Messages></Messages>}
-      {popUp && (
+      {warning?.show && (
         <PopUp
-          title={"Funciona"}
-          content={"ajhdjahdjasd"}
-          works={false}
-          set={setPopUp}
+          title={warning?.title}
+          content={warning?.content}
+          show={warning?.show}
+          works={warning?.works}
+          set={warning?.set}
         ></PopUp>
       )}
     </div>

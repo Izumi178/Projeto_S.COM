@@ -8,12 +8,13 @@ import {
   type Endereco,
 } from "../getRegisterData";
 import { UpdateAlteredData, type AlteredData } from "../updateAlteredData";
+import { type popUp } from "./warning";
 
-type popUp = {
-  set: React.Dispatch<React.SetStateAction<boolean>>;
+type warning = {
+  set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
 
-function AlterData({ set }: popUp) {
+function AlterData({ set }: warning) {
   //Declaração do useForm
   const {
     //função que permite adicionar validação aos inputs
@@ -93,8 +94,29 @@ function AlterData({ set }: popUp) {
               cidade: data.Cidade,
               cep: Number(data.CEP),
             };
-            await UpdateAlteredData(newData);
-            set(true);
+            if (await UpdateAlteredData(newData)) {
+              if (set) {
+                const data: popUp = {
+                  title: "funcionou",
+                  content: "ihuu",
+                  show: true,
+                  works: true,
+                  set: set,
+                };
+                set(data);
+              }
+            } else {
+              if (set) {
+                const data: popUp = {
+                  title: "n funcionou",
+                  content: "n ihuu",
+                  show: true,
+                  works: false,
+                  set: set,
+                };
+                set(data);
+              }
+            }
           }
         })}
       >
