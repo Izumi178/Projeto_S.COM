@@ -35,3 +35,15 @@ export async function verifyAuth() {
     }
   }
 }
+
+export async function logOut() {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    return false;
+  } else {
+    return true;
+  }
+}
