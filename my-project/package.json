@@ -21,6 +21,7 @@
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.62.0",
     "react-input-mask": "^2.0.4",
+    "react-router-dom": "^7.9.4",
     "react-slideshow-image": "^4.3.2",
     "reactjs-popup": "^2.0.6",
     "tailwindcss": "^4.1.13"

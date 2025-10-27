@@ -43,8 +43,11 @@ export async function CreateAccount({ pers, ad, log }: allData) {
   } else {
     if (data.user != null) {
       const id = data.user.id;
-      await setData({ pers, ad, log, id });
-      return true;
+      if (await setData({ pers, ad, log, id })) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }
@@ -69,7 +72,7 @@ async function setData({ pers, ad, log, id }: allData) {
     return false;
   } else {
     const { error } = await supabase.from("endereco").insert({
-      id: Math.floor(Math.random() * (100 - 0 + 1)),
+      id: Math.floor(Math.random() * (100000 - 0 + 1)),
       CEP: ad.CEP,
       cidade: ad.Cidade,
       logradouro: ad.Logradouro,
@@ -88,7 +91,7 @@ async function setData({ pers, ad, log, id }: allData) {
         const curso = data[0].curso;
         console.log(curso);
         const { error } = await supabase.from("alunos").insert({
-          RA: Math.floor(Math.random() * (100 - 0 + 1)),
+          RA: Math.floor(Math.random() * (100000 - 0 + 1)),
           pessoa_id: id,
           curso: curso,
           email: log.email,

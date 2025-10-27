@@ -17,3 +17,22 @@ export async function AuthLogin({ email, senha }: login) {
     return true;
   }
 }
+
+export async function verifyAuth() {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+  if (error) {
+    return false;
+  } else {
+    if (session) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}

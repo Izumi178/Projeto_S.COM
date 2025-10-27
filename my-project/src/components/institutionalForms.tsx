@@ -5,12 +5,19 @@ import {
   type login,
   type person,
 } from "../createAccount";
+import type { popUp } from "./warning";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   pers: person | undefined;
   ad: address | undefined;
+  setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
-export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
+export default function InstitutionalForm({
+  changePage,
+  pers,
+  ad,
+  setPopUp,
+}: seiLa) {
   const {
     register,
 
@@ -38,14 +45,46 @@ export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
             data.Email != data.ConfirmEmail ||
             data.Senha != data.ConfirmSenha
           ) {
-            console.log("oi");
+            if (setPopUp) {
+              const data: popUp = {
+                title: "Falha",
+                content: "Sua conta UNESP não foi criada, tente novamente",
+                show: true,
+                works: false,
+                set: setPopUp,
+              };
+              setPopUp(data);
+            }
           } else {
             const log: login = {
               email: data.Email,
               senha: data.Senha,
             };
             if (pers && ad) {
-              await CreateAccount({ pers, ad, log });
+              if (await CreateAccount({ pers, ad, log })) {
+                if (setPopUp) {
+                  const data: popUp = {
+                    title: "Sucesso",
+                    content: "Sua conta UNESP foi criada com sucesso",
+                    show: true,
+                    works: true,
+                    set: setPopUp,
+                    goToLogin: true,
+                  };
+                  setPopUp(data);
+                }
+              } else {
+                if (setPopUp) {
+                  const data: popUp = {
+                    title: "Falha",
+                    content: "Sua conta UNESP não foi criada, tente novamente",
+                    show: true,
+                    works: false,
+                    set: setPopUp,
+                  };
+                  setPopUp(data);
+                }
+              }
             }
           }
         }
@@ -70,7 +109,6 @@ export default function InstitutionalForm({ changePage, pers, ad }: seiLa) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Confirmar Email</label>
-
           <input
             type="text"
             {...register("ConfirmEmail", {
