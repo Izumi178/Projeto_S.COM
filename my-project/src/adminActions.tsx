@@ -33,13 +33,18 @@ export async function deleteUser(user: Pessoas) {
       return false;
     } else {
       const { error } = await supabase
-        .from("aluno")
+        .from("alunos")
         .delete()
         .match({ pessoa_id: id });
       if (error) {
         return false;
       } else {
-        return true;
+        const { error } = await supabase.auth.admin.deleteUser(id);
+        if (error) {
+          return false;
+        } else {
+          return true;
+        }
       }
     }
   }

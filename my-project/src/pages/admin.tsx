@@ -3,11 +3,26 @@ import { useEffect, useState, type SetStateAction } from "react";
 import { getUsers } from "../adminActions";
 import { type Pessoas } from "../getRegisterData";
 import ConfirmDelete from "../components/confirmDelete";
+import type { popUp } from "../components/warning";
+import PopUp from "../components/warning";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
   const [delUser, setDelUser] = useState<Pessoas>();
   const [closed, close] = useState(true);
-  const [done, setPopup] = useState(true);
+  const [warning, setPopUp] = useState<popUp>();
+  useEffect(() => {
+    const setWarning = () => {
+      const war: popUp = {
+        title: undefined,
+        content: undefined,
+        show: false,
+        works: undefined,
+        set: setPopUp,
+      };
+      setPopUp(war);
+    };
+    setWarning();
+  }, []);
   useEffect(() => {
     const loadData = async () => {
       const dados = await getUsers();
@@ -54,11 +69,23 @@ export default function AdminPage() {
           {" "}
           Adicionar perfil
         </button>
+        {!closed && delUser && (
+          <ConfirmDelete
+            user={delUser}
+            close={close}
+            setPopUp={warning?.set}
+          ></ConfirmDelete>
+        )}
+        {warning?.show && (
+          <PopUp
+            title={warning?.title}
+            content={warning?.content}
+            show={warning?.show}
+            works={warning?.works}
+            set={warning?.set}
+          ></PopUp>
+        )}
       </div>
-      {!closed && delUser && (
-        <ConfirmDelete user={delUser} close={close}></ConfirmDelete>
-      )}
-      {}
     </div>
   );
 }

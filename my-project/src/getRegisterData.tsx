@@ -2,7 +2,7 @@ import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
 import { GetInstitutionalData } from "./getInstitutionalData";
 
 export type Pessoas = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   CPF: string;
