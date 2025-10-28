@@ -4,7 +4,7 @@ import {
   type address,
   type login,
   type person,
-} from "../../createAccount";
+} from "../../../server/createAccount";
 import type { popUp } from "../warning";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
@@ -92,7 +92,7 @@ export default function InstitutionalForm({
     >
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
-          <label className={label}>Email institucional (xxxxx@unesp.br)</label>
+          <label className={label}>Email institucional</label>
           <input
             type="text"
             {...register("Email", {

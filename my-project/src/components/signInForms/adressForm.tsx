@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { type address } from "../../createAccount";
+import { type address } from "../../../server/createAccount";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   setAddress: React.Dispatch<React.SetStateAction<address | undefined>>;

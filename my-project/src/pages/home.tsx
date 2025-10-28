@@ -5,16 +5,16 @@ import NavBar from "../components/home/navBar";
 import ImageSlider from "../components/home/slider";
 import MyData from "../components/home/myData";
 import Settings from "../components/home/settings";
-import Messages from "../components/home/message";
+import Messages from "../../server/message";
 import PopUp from "../components/warning";
 import { type popUp } from "../components/warning";
-import { verifyAdm, verifyAuth } from "../authLogin";
+import { verifyAdm, verifyAuth } from "../../server/authLogin";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
   const [warning, setPopUp] = useState<popUp>();
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
   useEffect(() => {
     const setWarning = () => {
       const war: popUp = {
@@ -27,14 +27,13 @@ function Home() {
       setPopUp(war);
     };
     const getUser = async () => {
-      const email = await verifyAuth();
-      console.log(email);
-      if (email) {
+      const id = await verifyAuth();
+      if (id) {
         const admin = await verifyAdm();
         if (admin != null && admin === true) {
           navigate("/admin", { replace: true });
         } else {
-          setEmail(email);
+          setId(id);
         }
       } else {
         navigate("/login", { replace: true });
@@ -78,12 +77,9 @@ function Home() {
       <div className="h-[50px]" />
       {/*exemplo de renderizacao condicional, 
       caso o estado da pagina ativa corresponda ao componente, este sera renderizado*/}
-      {email && activePage === "Meus Dados" && <MyData email={email}></MyData>}
-      {email && activePage === "Configurações" && (
-        <Settings set={warning?.set} email={email}></Settings>
-      )}
-      {email && activePage === "Mensagens" && (
-        <Messages email={email}></Messages>
+      {id && activePage === "Meus Dados" && <MyData id={id}></MyData>}
+      {id && activePage === "Configurações" && (
+        <Settings set={warning?.set} id={id}></Settings>
       )}
       {warning?.show && (
         <PopUp

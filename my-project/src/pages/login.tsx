@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { AuthLogin } from "../authLogin";
+import { AuthLogin } from "../../server/authLogin";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PopUp, { type popUp } from "../components/warning";

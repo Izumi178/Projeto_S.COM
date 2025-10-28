@@ -4,8 +4,32 @@
     <meta charset="UTF-8" />
     <link rel="icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="Content-Security-Policy"
+  content="
+    default-src 'self';
+    connect-src 'self' https://fzxehfvsfxmsthhobdnr.supabase.co https://auth.supabase.co;
+    script-src 'self' 'unsafe-inline' https://fzxehfvsfxmsthhobdnr.supabase.co;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    font-src 'self';
+    frame-ancestors 'none';
+  "
+/>
+
+
+    <meta http-equiv="Referrer-Policy" content="no-referrer" />
     <title>Sigrad</title>
-    <link href="/src/App.css" rel="stylesheet">
+    <link href="/src/styles/App.css" rel="stylesheet">
+    <script type="module">
+      import { injectIntoGlobalHook } from "/@react-refresh";
+      injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => {};
+      window.$RefreshSig$ = () => (type) => type;
+    </script>
+
+    <script type="module" src="/@vite/client"></script>
   </head>
   <body>
     <div id="root"></div>

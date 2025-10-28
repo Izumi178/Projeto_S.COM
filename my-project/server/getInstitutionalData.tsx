@@ -13,11 +13,11 @@ export type Aluno = {
   horas_estagio: number;
 };
 
-export async function GetInstitutionalData(email: string) {
+export async function GetInstitutionalData(id: string) {
   const { data, error }: PostgrestResponse<Aluno> = await supabase
     .from("alunos")
     .select("*")
-    .match({ email: email });
+    .match({ pessoa_id: id });
   if (error) {
     console.log(error);
   } else {

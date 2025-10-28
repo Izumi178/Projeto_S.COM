@@ -1,19 +1,22 @@
 import { PencilSquareIcon, UserMinusIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState, type SetStateAction } from "react";
-import { getUserEmail, getUsers } from "../adminActions";
+import { getUserEmail, getUsers } from "../../server/adminActions";
 import {
   GetAdressData,
   GetPersonalData,
   type Endereco,
   type Pessoas,
-} from "../getRegisterData";
+} from "../../server/getRegisterData";
 import ConfirmDelete from "../components/admin/confirmDelete";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
-import { logOut, verifyAdm, verifyAuth } from "../authLogin";
+import { logOut, verifyAdm, verifyAuth } from "../../server/authLogin";
 import { useNavigate } from "react-router-dom";
 import EditUser from "../components/admin/edit";
-import { GetInstitutionalData, type Aluno } from "../getInstitutionalData";
+import {
+  GetInstitutionalData,
+  type Aluno,
+} from "../../server/getInstitutionalData";
 import CreateUser from "../components/admin/create";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
@@ -93,13 +96,13 @@ export default function AdminPage() {
                   onClick={async () => {
                     setUSer(perfil);
                     if (user) {
-                      const email = await getUserEmail(user?.id);
-                      if (email) {
+                      const id = user?.id;
+                      if (id) {
                         const dadosInstitucionais = await GetInstitutionalData(
-                          email
+                          id
                         );
-                        const dadosPessoais = await GetPersonalData(email);
-                        const dadosEndereco = await GetAdressData(email);
+                        const dadosPessoais = await GetPersonalData(id);
+                        const dadosEndereco = await GetAdressData(id);
                         if (
                           dadosPessoais &&
                           dadosEndereco &&

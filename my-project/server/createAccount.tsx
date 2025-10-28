@@ -109,7 +109,6 @@ export async function checkCPF(CPF: string) {
     .from("aprovados")
     .select("*")
     .match({ CPF: CPF });
-  console.log(data);
   if (data && data.length != 0) {
     return true;
   } else {

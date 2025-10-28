@@ -4,20 +4,20 @@ import {
   GetAdressData,
   type Pessoas,
   type Endereco,
-} from "../../getRegisterData";
+} from "../../../server/getRegisterData";
 import { useEffect, useState } from "react";
 
 type user = {
-  email: string;
+  id: string;
 };
 
-function RegisterData({ email }: user) {
+function RegisterData({ id }: user) {
   const [personalData, setPersonalData] = useState<Pessoas>();
   const [adressData, setAdressData] = useState<Endereco>();
   useEffect(() => {
     const loadData = async () => {
-      const dadosPessoais = await GetPersonalData(email);
-      const dadosEndereco = await GetAdressData(email);
+      const dadosPessoais = await GetPersonalData(id);
+      const dadosEndereco = await GetAdressData(id);
       if (dadosPessoais) {
         setPersonalData(dadosPessoais[0]);
       }

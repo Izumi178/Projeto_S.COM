@@ -1,21 +1,17 @@
 import { PhoneIcon, HomeIcon } from "@heroicons/react/16/solid";
 import { useForm } from "react-hook-form";
-import { useState, useEffect, type SetStateAction } from "react";
 import {
-  GetPersonalData,
-  GetAdressData,
-  type Pessoas,
-  type Endereco,
-} from "../../getRegisterData";
-import { UpdateAlteredData, type AlteredData } from "../../updateAlteredData";
+  UpdateAlteredData,
+  type AlteredData,
+} from "../../../server/updateAlteredData";
 import { type popUp } from "../warning";
 
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
-  email: string;
+  id: string;
 };
 
-function AlterData({ set, email }: warning) {
+function AlterData({ set, id }: warning) {
   //Declaração do useForm
   const {
     //função que permite adicionar validação aos inputs
@@ -35,29 +31,7 @@ function AlterData({ set, email }: warning) {
       Cidade: "",
     },
   });
-  const [personalData, setPersonalData] = useState<Pessoas>();
-  const [adressData, setAdressData] = useState<Endereco>();
-  useEffect(() => {
-    const loadData = async () => {
-      const dadosPessoais = await GetPersonalData("gabriel.izumi@unesp.br");
-      const dadosEndereco = await GetAdressData("gabriel.izumi@unesp.br");
-      if (dadosPessoais) {
-        setPersonalData(dadosPessoais[0]);
-      }
-      if (dadosEndereco) {
-        setAdressData(dadosEndereco[0]);
-      }
-      reset({
-        Email: personalData?.email,
-        Telefone: personalData?.telefone.toString(),
-        Logradouro: adressData?.logradouro.toString(),
-        CEP: adressData?.CEP,
-        Numero: adressData?.numero.toString(),
-        Cidade: adressData?.cidade,
-      });
-    };
-    loadData();
-  }, []);
+
   const span = "text-bold text-red-600 font-md";
 
   const card =
@@ -87,7 +61,7 @@ function AlterData({ set, email }: warning) {
             data.CEP
           ) {
             let newData: AlteredData = {
-              email_logged: email,
+              id: id,
               email: data.Email,
               telefone: Number(data.Telefone),
               logradouro: data.Logradouro.toString(),

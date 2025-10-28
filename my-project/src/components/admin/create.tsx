@@ -1,9 +1,9 @@
-import { type Aluno } from "../../getInstitutionalData";
+import { type Aluno } from "../../../server/getInstitutionalData";
 import type { popUp } from "../warning";
 import { useForm } from "react-hook-form";
-import { type Endereco, type Pessoas } from "../../getRegisterData";
-import { createAccount, editUser } from "../../adminActions";
-import type { address, person } from "../../createAccount";
+import { type Endereco, type Pessoas } from "../../../server/getRegisterData";
+import { createAccount, editUser } from "../../../server/adminActions";
+import type { address, person } from "../../../server/createAccount";
 
 type userData = {
   close: React.Dispatch<React.SetStateAction<boolean>>;

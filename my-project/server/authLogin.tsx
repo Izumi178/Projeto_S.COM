@@ -23,8 +23,8 @@ export async function verifyAuth() {
   if (error) {
     return null;
   } else {
-    if (session?.user.email) {
-      return session.user.email;
+    if (session?.user.id) {
+      return session.user.id;
     } else {
       return null;
     }

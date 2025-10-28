@@ -1,20 +1,19 @@
+import { BuildingLibraryIcon, BriefcaseIcon } from "@heroicons/react/16/solid";
 import {
-  BuildingLibraryIcon,
-  BriefcaseIcon,
-  BookOpenIcon,
-} from "@heroicons/react/16/solid";
-import { GetInstitutionalData, type Aluno } from "../../getInstitutionalData";
+  GetInstitutionalData,
+  type Aluno,
+} from "../../../server/getInstitutionalData";
 import { useState, useEffect } from "react";
 
 type user = {
-  email: string;
+  id: string;
 };
 
-function InstitutionalData({ email }: user) {
+function InstitutionalData({ id }: user) {
   const [institutionalData, setInstitutionalData] = useState<Aluno>();
   useEffect(() => {
     const loadData = async () => {
-      const data = await GetInstitutionalData(email);
+      const data = await GetInstitutionalData(id);
       if (data) {
         setInstitutionalData(data[0]);
       }
@@ -46,25 +45,6 @@ function InstitutionalData({ email }: user) {
     { label: "Coeficiente de rendimento da turma:", data: "6,0" },
   ];
 
-  interface trs {
-    materia: string;
-    professor: string;
-    carga: number;
-    frequencia: number;
-    mediaProva: number;
-    mediaTrabalho: number;
-  }
-
-  const Materias: trs[] = [
-    {
-      materia: "S.COM",
-      professor: "Leopoldo André Dutra Lusquino Filho",
-      carga: 60,
-      frequencia: 100,
-      mediaProva: 6.75,
-      mediaTrabalho: 8.0,
-    },
-  ];
   const row =
     "bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) text-(--primary-color) text-xs big:text-lg";
   const cell = "py-[10px] px-[5px]";
@@ -114,36 +94,6 @@ function InstitutionalData({ email }: user) {
               </li>
             ))}
           </div>
-        </div>
-      </li>
-      <li>
-        <div className={card}>
-          <div className={titleArea}>
-            <BookOpenIcon className="w-[30px] text-(--primary-color)" />
-            <h3 className="big:text-3xl text-2xl text-(--primary-color) font-bold">
-              Dados do semestre
-            </h3>
-          </div>
-          <table className="min-w-[400px] overflow-x-auto sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
-            <tr className={row}>
-              <th className={cell}>Matéria</th>
-              <th className={cell}>Professor</th>
-              <th className={cell}>Carga Horária</th>
-              <th className={cell}>Frequência</th>
-              <th className={cell}>Média de Prova</th>
-              <th className={cell}>Média de Trabalho</th>
-            </tr>
-            {Materias.map((item) => (
-              <tr className={row}>
-                <th className={cell}>{item.materia}</th>
-                <th className={cell}>{item.professor}</th>
-                <th className={cell}>{item.carga}</th>
-                <th className={cell}>{item.frequencia}</th>
-                <th className={cell}>{item.mediaProva}</th>
-                <th className={cell}>{item.mediaTrabalho}</th>
-              </tr>
-            ))}
-          </table>
         </div>
       </li>
     </ul>

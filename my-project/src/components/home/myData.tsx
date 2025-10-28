@@ -9,10 +9,10 @@ import InstitutionalData from "./insitutionalData";
 import { useState } from "react";
 
 type user = {
-  email: string;
+  id: string;
 };
 
-function MyData({ email }: user) {
+function MyData({ id }: user) {
   interface cards {
     title: string;
     expanded: boolean;
@@ -75,9 +75,9 @@ function MyData({ email }: user) {
             </div>
             <div className={data.expanded ? "flex items-center" : "hidden"}>
               {data.title === "Dados Cadastrais" ? (
-                <RegisterData email={email} />
+                <RegisterData id={id} />
               ) : (
-                <InstitutionalData email={email} />
+                <InstitutionalData id={id} />
               )}
             </div>
           </div>

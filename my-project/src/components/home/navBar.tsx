@@ -9,7 +9,7 @@ type NavBarProps = {
   activePage: string;
 };
 
-const items = ["Meus Dados", "Mensagens", "Configurações"];
+const items = ["Meus Dados", "Configurações"];
 const iconCustomiztion = "text-(--bg-color) w-[10px] sm:w-[20px] md:w-[30px]";
 function NavBar({ changePage, activePage }: NavBarProps) {
   return (
@@ -45,8 +45,6 @@ function NavBar({ changePage, activePage }: NavBarProps) {
           >
             {item === "Meus Dados" ? (
               <UserIcon className={iconCustomiztion} />
-            ) : item === "Mensagens" ? (
-              <EnvelopeIcon className={iconCustomiztion} />
             ) : (
               <Cog6ToothIcon className={iconCustomiztion} />
             )}

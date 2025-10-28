@@ -11,10 +11,10 @@ import { type popUp } from "../warning";
 
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
-  email: string;
+  id: string;
 };
 
-function Settings({ set, email }: warning) {
+function Settings({ set, id }: warning) {
   interface cards {
     title: string;
     expanded: boolean;
@@ -71,7 +71,7 @@ function Settings({ set, email }: warning) {
             {data.title === "Preferências" ? (
               <Preferences></Preferences>
             ) : (
-              <AlterData set={set} email={email}></AlterData>
+              <AlterData set={set} id={id}></AlterData>
             )}
           </div>
         </div>

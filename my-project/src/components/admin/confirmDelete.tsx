@@ -1,5 +1,5 @@
-import { deleteUser } from "../../adminActions";
-import { type Pessoas } from "../../getRegisterData";
+import { deleteUser } from "../../../server/adminActions";
+import { type Pessoas } from "../../../server/getRegisterData";
 import type { popUp } from "../warning";
 
 type idk = {

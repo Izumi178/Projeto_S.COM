@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { type person } from "../../createAccount";
+import { type person } from "../../../server/createAccount";
 import type { popUp } from "../warning";
-import { checkCPF } from "../../createAccount";
+import { checkCPF } from "../../../server/createAccount";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   setPerson: React.Dispatch<React.SetStateAction<person | undefined>>;

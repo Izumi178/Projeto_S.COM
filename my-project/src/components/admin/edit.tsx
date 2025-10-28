@@ -1,9 +1,9 @@
-import { type Aluno } from "../../getInstitutionalData";
+import { type Aluno } from "../../../server/getInstitutionalData";
 import type { popUp } from "../warning";
 import { useForm } from "react-hook-form";
-import { type Endereco, type Pessoas } from "../../getRegisterData";
-import { editUser } from "../../adminActions";
-import type { address, person } from "../../createAccount";
+import { type Endereco, type Pessoas } from "../../../server/getRegisterData";
+import { editUser } from "../../../server/adminActions";
+import type { address, person } from "../../../server/createAccount";
 
 type userData = {
   personalData: Pessoas;
@@ -325,7 +325,7 @@ export default function EditUser({
       </div>
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
-          <label className={label}>Email institucional (xxxxx@unesp.br)</label>
+          <label className={label}>Email institucional </label>
           <input
             type="text"
             {...register("EmailUNESP", {
