@@ -29,7 +29,12 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
         {
           /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
           changePage(3);
-          setAddress(data);
+          setAddress({
+            CEP: data.CEP,
+            Logradouro: data.Logradouro,
+            Cidade: data.Cidade,
+            Numero: Number(data.Numero),
+          });
         }
       })}
     >

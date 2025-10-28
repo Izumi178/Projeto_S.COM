@@ -26,8 +26,8 @@ export default function SignIn() {
   }, []);
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="flex flex-col w-full min-h-screen pb-[100px] items-center mt-[200px] bg-white dark:bg-(--bg-dark)">
-        <div className="flex flex-col w-[800px] h-auto items-center justify-center  bg-gray-100 rounded-[40px] drop-shadow-2xl p-[20px]">
+      <div className="flex flex-col w-full min-h-screen pb-[100px] items-center pt-[200px] bg-white dark:bg-(--bg-dark)">
+        <div className="flex flex-col w-[800px] h-auto items-center justify-center bg-white dark:bg-(--bg-dark) bg-gray-100 rounded-[40px] drop-shadow-2xl p-[20px]">
           <h2 className="text-(--primary-color) font-bold text-[40px]">
             Matricule-se
           </h2>
@@ -35,6 +35,7 @@ export default function SignIn() {
             <PersonalForm
               changePage={setPage}
               setPerson={setPerson}
+              setPopUp={warning?.set}
             ></PersonalForm>
           ) : activePage === 2 ? (
             <AddressForm

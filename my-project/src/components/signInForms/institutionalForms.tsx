@@ -48,7 +48,7 @@ export default function InstitutionalForm({
             if (setPopUp) {
               const data: popUp = {
                 title: "Falha",
-                content: "Sua conta UNESP não foi criada, tente novamente",
+                content: "As credenciais não correspondem",
                 show: true,
                 works: false,
                 set: setPopUp,

@@ -10,7 +10,7 @@ type idk = {
 
 export default function ConfirmDelete({ user, close, setPopUp }: idk) {
   return (
-    <div className="fixed flex flex-col justify-center z-1000 w-[500px] h-[300px] rounded-[50px] items-center bg-gray-700 shadow-box-xl shadow-box-black gap-[10px] translate-y-[50%]">
+    <div className="fixed flex flex-col justify-center z-1000 w-[500px] h-[300px] rounded-[50px] items-center bg-gray-700 gap-[10px] drop-shadow-2xl translate-y-[50%]">
       <h3 className="text-(--primary-color) text-[42px] font-bold">
         Confirmar ação
       </h3>

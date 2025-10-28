@@ -1,10 +1,24 @@
 import { useForm } from "react-hook-form";
 import { AuthLogin } from "../authLogin";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import PopUp, { type popUp } from "../components/warning";
 export default function Login() {
   const navigate = useNavigate();
-  useEffect(() => {});
+  const [warning, setPopUp] = useState<popUp>();
+  useEffect(() => {
+    const setWarning = () => {
+      const war: popUp = {
+        title: undefined,
+        content: undefined,
+        show: false,
+        works: undefined,
+        set: setPopUp,
+      };
+      setPopUp(war);
+    };
+    setWarning();
+  }, []);
   const {
     //função que permite adicionar validação aos inputs
     register,
@@ -25,8 +39,8 @@ export default function Login() {
   const field =
     "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
-    <div className="flex flex-col w-full min-h-screen pb-[100px] items-center mt-[200px] bg-white dark:bg-(--bg-dark)">
-      <div className="flex flex-col w-[500px] h-auto items-center justify-center  bg-gray-100 rounded-[40px] drop-shadow-2xl p-[20px]">
+    <div className="flex flex-col w-full min-h-screen pb-[100px] items-center pt-[200px] bg-white dark:bg-(--bg-dark)">
+      <div className="flex flex-col w-[500px] h-auto items-center justify-center bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
         <h2 className="text-(--primary-color) font-bold text-[40px]">Login</h2>
         <form
           className="py-[20px] gap-[20px]"
@@ -38,6 +52,16 @@ export default function Login() {
               if (await AuthLogin({ email: data.Email, senha: data.Senha })) {
                 navigate("/", { replace: true });
               } else {
+                if (setPopUp) {
+                  const data: popUp = {
+                    title: "Falha",
+                    content: "Credenciais não correspondem",
+                    show: true,
+                    works: false,
+                    set: setPopUp,
+                  };
+                  setPopUp(data);
+                }
               }
             }
           })}
@@ -52,9 +76,12 @@ export default function Login() {
                   e deve incluir @xxxxx.com ao final
                   - message: mensagem de erro*/}
             <input
-              type="Senha"
+              type="Email"
               {...register("Email", {
-                required: true,
+                required: {
+                  value: true,
+                  message: "Digite seu email institucional",
+                },
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@(unesp\.br)$/,
                   message: "Email inválido",
@@ -77,7 +104,7 @@ export default function Login() {
             <input
               type="password"
               {...register("Senha", {
-                required: true,
+                required: { value: true, message: "Digite sua senha" },
               })}
               className={field}
             ></input>
@@ -106,6 +133,15 @@ export default function Login() {
           </Link>
         </form>
       </div>
+      {warning?.show && (
+        <PopUp
+          title={warning?.title}
+          content={warning?.content}
+          show={warning?.show}
+          works={warning?.works}
+          set={warning?.set}
+        ></PopUp>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
 import { supabase } from "./supabaseCliente";
+import { useState } from "react";
 
 export type person = {
   Nome: string;
@@ -100,5 +101,18 @@ async function setData({ pers, ad, log, id }: allData) {
         return false;
       }
     }
+  }
+}
+
+export async function checkCPF(CPF: string) {
+  const { data } = await supabase
+    .from("aprovados")
+    .select("*")
+    .match({ CPF: CPF });
+  console.log(data);
+  if (data && data.length != 0) {
+    return true;
+  } else {
+    return false;
   }
 }

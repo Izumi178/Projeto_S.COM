@@ -48,7 +48,7 @@ export default function EditUser({
     "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
     <form
-      className="absolute flex flex-col w-fit p-[40px] justify-center z-1000 rounded-[50px] items-center bg-gray-700 gap-[10px] translate-y-[50%]"
+      className="absolute mt-[20px] flex flex-col w-fit p-[40px] justify-center z-1000 rounded-[50px] items-center bg-white dark:bg-(--bg-dark) gap-[10px] drop-shadow-2xl"
       onSubmit={handleSubmit(async (data) => {
         {
           const newPerson: Pessoas = {

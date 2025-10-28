@@ -63,7 +63,7 @@ export default function AdminPage() {
     items-center bg-white dark:bg-(--bg-dark)"
     >
       <div className="flex flex-row items-center my-[20px]">
-        <h1 className="text-[40px] font-bold">Perfis</h1>
+        <h1 className="text-[40px] text-(--primary-color) font-bold">Perfis</h1>
         <button
           className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
           onClick={async () => {
@@ -76,69 +76,72 @@ export default function AdminPage() {
           Sair
         </button>
       </div>
-      <div className="flex flex-row w-[500px] bg-(--primary-color)">
-        <div className="w-[50px]">id</div>
-        <div className="w-[300px]">Nome</div>
-        <div className="w-[75px]">Editar Perfil</div>
-        <div className="w-[75px]">Deletar Perfil</div>
-      </div>
-      {perfis &&
-        perfis.map((perfil) => (
-          <div className="flex flex-row w-[500px] bg-(--forms-bg-light)">
-            <p className="w-[50px]">{perfil.id}</p>
-            <p className="w-[300px]">{perfil.name}</p>
-            <div className="w-[75px]">
-              <button
-                onClick={async () => {
-                  setUSer(perfil);
-                  if (user) {
-                    const email = await getUserEmail(user?.id);
-                    if (email) {
-                      const dadosInstitucionais = await GetInstitutionalData(
-                        email
-                      );
-                      const dadosPessoais = await GetPersonalData(email);
-                      const dadosEndereco = await GetAdressData(email);
-                      if (
-                        dadosPessoais &&
-                        dadosEndereco &&
-                        dadosInstitucionais
-                      ) {
-                        setPersonalData(dadosPessoais[0]);
-                        setAdressData(dadosEndereco[0]);
-                        setInstitutionalData(dadosInstitucionais[0]);
+      <div className="px-[20px] text-(--primary-color)">
+        <div className="flex flex-row w-[950px] bg-(--primary-color) dark:text-white text-(--forms-bg-black)">
+          <div className="w-[500px]">id</div>
+          <div className="w-[300px]">Nome</div>
+          <div className="w-[75px]">Editar Perfil</div>
+          <div className="w-[75px]">Deletar Perfil</div>
+        </div>
+        {perfis &&
+          perfis.map((perfil) => (
+            <div className="flex flex-row w-[950px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) ">
+              <p className="w-[500px]">{perfil.id}</p>
+              <p className="w-[300px]">{perfil.name}</p>
+              <div className="w-[75px]">
+                <button
+                  onClick={async () => {
+                    setUSer(perfil);
+                    if (user) {
+                      const email = await getUserEmail(user?.id);
+                      if (email) {
+                        const dadosInstitucionais = await GetInstitutionalData(
+                          email
+                        );
+                        const dadosPessoais = await GetPersonalData(email);
+                        const dadosEndereco = await GetAdressData(email);
+                        if (
+                          dadosPessoais &&
+                          dadosEndereco &&
+                          dadosInstitucionais
+                        ) {
+                          setPersonalData(dadosPessoais[0]);
+                          setAdressData(dadosEndereco[0]);
+                          setInstitutionalData(dadosInstitucionais[0]);
+                        }
                       }
                     }
-                  }
 
-                  closeEdit(false);
-                }}
-                className="w-fit justify-center cursor-pointer"
-              >
-                <PencilSquareIcon className="text-black w-[20px]"></PencilSquareIcon>
-              </button>
+                    closeEdit(false);
+                  }}
+                  className="w-fit justify-center cursor-pointer"
+                >
+                  <PencilSquareIcon className=" w-[20px]"></PencilSquareIcon>
+                </button>
+              </div>
+              <div className="w-[75px] justify-center cursor-pointer">
+                <button
+                  onClick={() => {
+                    closeDel(false);
+                    setUSer(perfil);
+                  }}
+                  className="w-fit"
+                >
+                  <UserMinusIcon className="w-[20px]"></UserMinusIcon>
+                </button>
+              </div>
             </div>
-            <div className="w-[75px] justify-center cursor-pointer">
-              <button
-                onClick={() => {
-                  closeDel(false);
-                  setUSer(perfil);
-                }}
-                className="w-fit"
-              >
-                <UserMinusIcon className="text-black w-[20px]"></UserMinusIcon>
-              </button>
-            </div>
-          </div>
-        ))}
-      <button
-        onClick={() => {
-          closeCreate(false);
-        }}
-        className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer"
-      >
-        Adicionar perfil
-      </button>
+          ))}
+        <button
+          onClick={() => {
+            closeCreate(false);
+          }}
+          className="flex flex-row w-[950px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) justify-center cursor-pointer"
+        >
+          + Adicionar perfil
+        </button>
+      </div>
+
       {!createClosed && (
         <CreateUser close={closeCreate} setPopUp={setPopUp}></CreateUser>
       )}

@@ -98,8 +98,8 @@ function AlterData({ set, email }: warning) {
             if (await UpdateAlteredData(newData)) {
               if (set) {
                 const data: popUp = {
-                  title: "funcionou",
-                  content: "ihuu",
+                  title: "Sucesso",
+                  content: "Mudanças salvas com sucesso",
                   show: true,
                   works: true,
                   set: set,
@@ -109,8 +109,8 @@ function AlterData({ set, email }: warning) {
             } else {
               if (set) {
                 const data: popUp = {
-                  title: "n funcionou",
-                  content: "n ihuu",
+                  title: "Falha",
+                  content: "Mudanças não salvas",
                   show: true,
                   works: false,
                   set: set,

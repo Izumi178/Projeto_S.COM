@@ -1,10 +1,17 @@
 import { useForm } from "react-hook-form";
 import { type person } from "../../createAccount";
+import type { popUp } from "../warning";
+import { checkCPF } from "../../createAccount";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   setPerson: React.Dispatch<React.SetStateAction<person | undefined>>;
+  setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
-export default function PersonalForm({ changePage, setPerson }: seiLa) {
+export default function PersonalForm({
+  changePage,
+  setPerson,
+  setPopUp,
+}: seiLa) {
   const {
     register,
     handleSubmit,
@@ -25,15 +32,48 @@ export default function PersonalForm({ changePage, setPerson }: seiLa) {
   const label =
     "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base big:text-lg";
   const field =
-    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+    "block py-[10px] px-[20px] mx-[5px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
     <form
       className="py-[20px] "
-      onSubmit={handleSubmit((data) => {
+      onSubmit={handleSubmit(async (data) => {
         {
-          if (data) {
-            changePage(2);
-            setPerson(data);
+          const cpfTrue = await checkCPF(data.CPF);
+          console.log("tchau");
+          if (cpfTrue) {
+            const today = new Date();
+            const year = today.getFullYear();
+            const birth = new Date(data.Nascimento);
+            const birthYear = birth.getFullYear();
+            if (year - birthYear >= 18) {
+              if (data) {
+                changePage(2);
+                setPerson(data);
+              }
+            } else {
+              if (setPopUp) {
+                const data: popUp = {
+                  title: "Falha",
+                  content: "Insira uma data de nascimento válida",
+                  show: true,
+                  works: false,
+                  set: setPopUp,
+                };
+                setPopUp(data);
+              }
+            }
+          } else {
+            console.log("oi");
+            if (setPopUp) {
+              const data: popUp = {
+                title: "Falha",
+                content: "CPF não disponivel na lista de aprovados",
+                show: true,
+                works: false,
+                set: setPopUp,
+              };
+              setPopUp(data);
+            }
           }
         }
       })}

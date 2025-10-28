@@ -13,7 +13,6 @@ export default function UpdatePassword() {
   } = useForm({
     defaultValues: {
       //Atribui valores padrões
-      Email: "",
       Senha: "",
     },
   });
@@ -23,10 +22,10 @@ export default function UpdatePassword() {
   const field =
     "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
-    <div className="flex flex-col w-full min-h-screen pb-[100px] items-center mt-[200px] bg-white dark:bg-(--bg-dark)">
-      <div className="flex flex-col w-[500px] h-auto items-center justify-center  bg-gray-100 rounded-[40px] drop-shadow-2xl p-[20px]">
+    <div className="flex flex-col w-full min-h-screen pb-[100px] items-center pt-[200px] bg-white dark:bg-(--bg-dark)">
+      <div className="flex flex-col w-[500px] h-auto items-center justify-center bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
         <h2 className="text-(--primary-color) font-bold text-[40px]">
-          Esqueci minha senha
+          Atualizar senha
         </h2>
         <form
           className="py-[20px] gap-[20px]"
@@ -34,15 +33,11 @@ export default function UpdatePassword() {
             {
               /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
             }
-            if (data.Email) {
-              sendEmail(data.Email);
-            } else {
-            }
           })}
         >
           <li className="flex flex-col items-start gap-[5px]">
             {/*Campo de email*/}
-            <label className={label}>Email</label>
+            <label className={label}>Senha</label>
             {/*
                   - required: true, torna o campo obrigatorio
                   - pattern: valida o email digitado, neste caso, 
@@ -50,24 +45,27 @@ export default function UpdatePassword() {
                   e deve incluir @xxxxx.com ao final
                   - message: mensagem de erro*/}
             <input
-              type="email"
-              {...register("Email", {
-                required: true,
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@(unesp\.br)$/,
-                  message: "Email inválido",
+              type="password"
+              {...register("Senha", {
+                required: {
+                  value: true,
+                  message: "Digite sua nova senha",
+                },
+                minLength: {
+                  value: 8,
+                  message: "Sua senha deve conter no mínimo 8 caracteres",
                 },
               })}
               className={field}
             ></input>
             {/*Exibe mensagem de erro, caso nao seja nulo*/}
-            <span className={span}>{errors.Email?.message}</span>
+            <span className={span}>{errors.Senha?.message}</span>
           </li>
           <button
             type="submit"
             className="my-[20px] bg-(--primary-color) w-fit text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl px-[10px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
           >
-            Enviar email de recuperação
+            Salvar senha
           </button>
           <br></br>
         </form>
