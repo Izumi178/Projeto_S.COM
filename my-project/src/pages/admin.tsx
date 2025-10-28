@@ -1,16 +1,25 @@
 import { PencilSquareIcon, UserMinusIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState, type SetStateAction } from "react";
-import { getUsers } from "../adminActions";
-import { type Pessoas } from "../getRegisterData";
+import { getUserEmail, getUsers } from "../adminActions";
+import {
+  GetAdressData,
+  GetPersonalData,
+  type Endereco,
+  type Pessoas,
+} from "../getRegisterData";
 import ConfirmDelete from "../components/admin/confirmDelete";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
-import { logOut, verifyAdm } from "../authLogin";
+import { logOut, verifyAdm, verifyAuth } from "../authLogin";
 import { useNavigate } from "react-router-dom";
 import EditUser from "../components/admin/edit";
+import { GetInstitutionalData, type Aluno } from "../getInstitutionalData";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
   const [user, setUSer] = useState<Pessoas>();
+  const [personalData, setPersonalData] = useState<Pessoas>();
+  const [adressData, setAdressData] = useState<Endereco>();
+  const [institutionalData, setInstitutionalData] = useState<Aluno>();
   const [delClosed, closeDel] = useState(true);
   const [createClosed, closeCreate] = useState(true);
   const [editClosed, closeEdit] = useState(true);
@@ -66,7 +75,6 @@ export default function AdminPage() {
           Sair
         </button>
       </div>
-
       <div className="flex flex-row w-[500px] bg-(--primary-color)">
         <div className="w-[50px]">id</div>
         <div className="w-[300px]">Nome</div>
@@ -80,9 +88,29 @@ export default function AdminPage() {
             <p className="w-[300px]">{perfil.name}</p>
             <div className="w-[75px]">
               <button
-                onClick={() => {
-                  closeEdit(false);
+                onClick={async () => {
                   setUSer(perfil);
+                  if (user) {
+                    const email = await getUserEmail(user?.id);
+                    if (email) {
+                      const dadosInstitucionais = await GetInstitutionalData(
+                        email
+                      );
+                      const dadosPessoais = await GetPersonalData(email);
+                      const dadosEndereco = await GetAdressData(email);
+                      if (
+                        dadosPessoais &&
+                        dadosEndereco &&
+                        dadosInstitucionais
+                      ) {
+                        setPersonalData(dadosPessoais[0]);
+                        setAdressData(dadosEndereco[0]);
+                        setInstitutionalData(dadosInstitucionais[0]);
+                      }
+                    }
+                  }
+
+                  closeEdit(false);
                 }}
                 className="w-fit justify-center cursor-pointer"
               >
@@ -105,9 +133,19 @@ export default function AdminPage() {
       <button className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer">
         Adicionar perfil
       </button>
-      {!editClosed && user && (
-        <EditUser id={user.id} close={closeEdit} setPopUp={setPopUp}></EditUser>
-      )}
+      {!editClosed &&
+        user &&
+        personalData &&
+        adressData &&
+        institutionalData && (
+          <EditUser
+            close={closeEdit}
+            setPopUp={setPopUp}
+            personalData={personalData}
+            addressData={adressData}
+            institutionalData={institutionalData}
+          ></EditUser>
+        )}
       {!delClosed && user && (
         <ConfirmDelete
           user={user}

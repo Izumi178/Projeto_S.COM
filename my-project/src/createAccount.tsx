@@ -16,7 +16,7 @@ export type address = {
   CEP: string;
   Logradouro: string;
   Cidade: string;
-  Numero: string;
+  Numero: number;
 };
 
 export type login = {

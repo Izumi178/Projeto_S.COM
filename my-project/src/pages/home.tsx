@@ -28,6 +28,7 @@ function Home() {
     };
     const getUser = async () => {
       const email = await verifyAuth();
+      console.log(email);
       if (email) {
         const admin = await verifyAdm();
         if (admin != null && admin === true) {
