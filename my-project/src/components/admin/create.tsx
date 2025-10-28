@@ -2,43 +2,35 @@ import { type Aluno } from "../../getInstitutionalData";
 import type { popUp } from "../warning";
 import { useForm } from "react-hook-form";
 import { type Endereco, type Pessoas } from "../../getRegisterData";
-import { editUser } from "../../adminActions";
+import { createAccount, editUser } from "../../adminActions";
 import type { address, person } from "../../createAccount";
 
 type userData = {
-  personalData: Pessoas;
-  addressData: Endereco;
-  institutionalData: Aluno;
   close: React.Dispatch<React.SetStateAction<boolean>>;
   setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
 
-export default function EditUser({
-  personalData,
-  addressData,
-  institutionalData,
-  close,
-  setPopUp,
-}: userData) {
+export default function CreateUser({ close, setPopUp }: userData) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      Nome: personalData?.name,
-      Email: personalData?.email,
-      CPF: personalData?.CPF,
-      Nascimento: personalData?.nascimento,
-      CidadeNatal: personalData?.cidade,
-      Telefone: personalData?.telefone,
-      Civil: personalData?.civil,
-      Sexo: personalData?.sexo,
-      CEP: addressData?.CEP,
-      Logradouro: addressData?.logradouro,
-      Cidade: addressData?.cidade,
-      Numero: addressData?.numero,
-      EmailUNESP: institutionalData?.email,
+      Nome: "",
+      Email: "",
+      CPF: "",
+      Nascimento: "",
+      CidadeNatal: "",
+      Telefone: "",
+      Civil: "",
+      Sexo: "",
+      CEP: "",
+      Logradouro: "",
+      Cidade: "",
+      Numero: "",
+      EmailUNESP: "",
+      Senha: "",
     },
   });
   const span = "text-bold text-red-600 font-md";
@@ -51,22 +43,21 @@ export default function EditUser({
       className="absolute flex flex-col w-fit p-[40px] justify-center z-1000 rounded-[50px] items-center bg-gray-700 gap-[10px] translate-y-[50%]"
       onSubmit={handleSubmit(async (data) => {
         {
-          const newPerson: Pessoas = {
-            id: personalData.id,
-            name: data.Nome,
-            email: data.Email,
+          const newPerson: person = {
+            Nome: data.Nome,
+            Email: data.Email,
             CPF: data.CPF,
-            telefone: data.Telefone,
-            sexo: data.Sexo,
-            nascimento: data.Nascimento,
-            civil: data.Civil,
-            cidade: data.CidadeNatal,
+            Telefone: data.Telefone,
+            Sexo: data.Sexo,
+            Nascimento: data.Nascimento,
+            Civil: data.Civil,
+            Cidade: data.CidadeNatal,
           };
           const newAddress: address = {
             CEP: data.CEP,
             Logradouro: data.Logradouro.toString(),
             Cidade: data.Cidade,
-            Numero: data.Numero,
+            Numero: Number(data.Numero),
           };
           const newInstitutional: Aluno = {
             RA: 0,
@@ -81,16 +72,17 @@ export default function EditUser({
           };
           if (newPerson) {
             if (
-              await editUser({
+              await createAccount({
                 pers: newPerson,
                 ad: newAddress,
-                log: newInstitutional,
+                log: { email: data.EmailUNESP, senha: data.Senha },
+                std: newInstitutional,
               })
             ) {
               if (setPopUp) {
                 const warn: popUp = {
                   title: "Sucesso",
-                  content: "Dados atualizados com sucesso",
+                  content: "Usuario criado com sucesso",
                   show: true,
                   works: true,
                   set: setPopUp,
@@ -116,7 +108,7 @@ export default function EditUser({
       })}
     >
       <h2 className="text-(--primary-color) font-bold text-[40px]">
-        Editar perfil
+        Matricule-se
       </h2>
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
@@ -191,7 +183,6 @@ export default function EditUser({
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Cidade Natal</label>
-
           <input
             type="text"
             {...register("CidadeNatal", {
@@ -340,8 +331,23 @@ export default function EditUser({
             })}
             className={field}
           ></input>
-
           <span className={span}>{errors.Email?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Senha</label>
+
+          <input
+            type="password"
+            {...register("Senha", {
+              required: { value: true, message: "Crie uma senha" },
+              minLength: {
+                value: 8,
+                message: "Sua senha deve conter no mínimo 8 caracteres",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Senha?.message}</span>
         </li>
       </div>
       <div className="flex flex-row justify-center gap-[20px]">
@@ -357,7 +363,7 @@ export default function EditUser({
           type="submit"
           className="mt-[20px] bg-green-400 text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
         >
-          Salvar mudanças
+          Criar usuario
         </button>
       </div>
     </form>

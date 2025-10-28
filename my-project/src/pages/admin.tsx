@@ -14,6 +14,7 @@ import { logOut, verifyAdm, verifyAuth } from "../authLogin";
 import { useNavigate } from "react-router-dom";
 import EditUser from "../components/admin/edit";
 import { GetInstitutionalData, type Aluno } from "../getInstitutionalData";
+import CreateUser from "../components/admin/create";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
   const [user, setUSer] = useState<Pessoas>();
@@ -130,9 +131,17 @@ export default function AdminPage() {
             </div>
           </div>
         ))}
-      <button className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer">
+      <button
+        onClick={() => {
+          closeCreate(false);
+        }}
+        className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer"
+      >
         Adicionar perfil
       </button>
+      {!createClosed && (
+        <CreateUser close={closeCreate} setPopUp={setPopUp}></CreateUser>
+      )}
       {!editClosed &&
         user &&
         personalData &&
