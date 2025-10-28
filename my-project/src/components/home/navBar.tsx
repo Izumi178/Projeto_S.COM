@@ -1,5 +1,5 @@
-import lightLogo from "../assets/unesp_light.png";
-import darkLogo from "../assets/unesp_dark.png";
+import lightLogo from "../../assets/unesp_light.png";
+import darkLogo from "../../assets/unesp_dark.png";
 import { UserIcon } from "@heroicons/react/16/solid";
 import { EnvelopeIcon } from "@heroicons/react/16/solid";
 import { Cog6ToothIcon } from "@heroicons/react/16/solid";

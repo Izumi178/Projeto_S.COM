@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { type person } from "../createAccount";
+import { type person } from "../../createAccount";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   setPerson: React.Dispatch<React.SetStateAction<person | undefined>>;

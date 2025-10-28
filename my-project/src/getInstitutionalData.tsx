@@ -1,4 +1,4 @@
-import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
+import { type PostgrestResponse } from "@supabase/supabase-js";
 import { supabase } from "./supabaseCliente";
 
 export type Aluno = {

@@ -6,9 +6,9 @@ import {
   GetAdressData,
   type Pessoas,
   type Endereco,
-} from "../getRegisterData";
-import { UpdateAlteredData, type AlteredData } from "../updateAlteredData";
-import { type popUp } from "./warning";
+} from "../../getRegisterData";
+import { UpdateAlteredData, type AlteredData } from "../../updateAlteredData";
+import { type popUp } from "../warning";
 
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;

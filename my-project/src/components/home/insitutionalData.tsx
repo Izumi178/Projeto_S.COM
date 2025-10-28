@@ -3,7 +3,7 @@ import {
   BriefcaseIcon,
   BookOpenIcon,
 } from "@heroicons/react/16/solid";
-import { GetInstitutionalData, type Aluno } from "../getInstitutionalData";
+import { GetInstitutionalData, type Aluno } from "../../getInstitutionalData";
 import { useState, useEffect } from "react";
 
 type user = {

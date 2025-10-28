@@ -1,0 +1,342 @@
+import type { person, address } from "../../createAccount";
+import { GetInstitutionalData, type Aluno } from "../../getInstitutionalData";
+import { useEffect, useState } from "react";
+import type { popUp } from "../warning";
+import { useForm } from "react-hook-form";
+import {
+  GetAdressData,
+  GetPersonalData,
+  type Endereco,
+  type Pessoas,
+} from "../../getRegisterData";
+import { verifyAuth } from "../../authLogin";
+
+type userData = {
+  id: string;
+  close: React.Dispatch<React.SetStateAction<boolean>>;
+  setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
+};
+
+export default function EditUser({ id, close, setPopUp }: userData) {
+  const [personalData, setPersonalData] = useState<Pessoas>();
+  const [adressData, setAdressData] = useState<Endereco>();
+  const [institutionalData, setInstitutionalData] = useState<Aluno>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      Nome: personalData?.name,
+      Email: personalData?.email,
+      CPF: personalData?.CPF,
+      Nascimento: personalData?.nascimento,
+      CidadeNatal: personalData?.cidade,
+      Telefone: personalData?.telefone,
+      Civil: personalData?.civil,
+      Sexo: personalData?.sexo,
+      CEP: adressData?.CEP,
+      Logradouro: adressData?.logradouro,
+      Cidade: adressData?.cidade,
+      Numero: adressData?.numero,
+      EmailUNESP: institutionalData?.email,
+    },
+  });
+  useEffect(() => {
+    const loadData = async () => {
+      const email = await verifyAuth();
+      if (email) {
+        const dadosInstitucionais = await GetInstitutionalData(email);
+        const dadosPessoais = await GetPersonalData(email);
+        const dadosEndereco = await GetAdressData(email);
+        if (dadosPessoais && dadosEndereco && dadosInstitucionais) {
+          setPersonalData(dadosPessoais[0]);
+          setAdressData(dadosEndereco[0]);
+          setInstitutionalData(dadosInstitucionais[0]);
+          if (personalData && adressData && institutionalData) {
+            reset({
+              Nome: personalData?.name,
+              Email: personalData?.email,
+              CPF: personalData?.CPF,
+              Nascimento: personalData?.nascimento,
+              CidadeNatal: personalData?.cidade,
+              Telefone: personalData?.telefone,
+              Civil: personalData?.civil,
+              Sexo: personalData?.sexo,
+              CEP: adressData?.CEP,
+              Logradouro: adressData?.logradouro,
+              Cidade: adressData?.cidade,
+              Numero: adressData?.numero,
+              EmailUNESP: institutionalData?.email,
+            });
+          }
+        }
+      }
+    };
+    loadData();
+  }, []);
+  const span = "text-bold text-red-600 font-md";
+  const label =
+    "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base big:text-lg";
+  const field =
+    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+  return (
+    <div className="absolute flex flex-col w-[800px] z-1000 h-auto items-center justify-center bg-gray-100 rounded-[40px] drop-shadow-2xl p-[20px] translate-y-[50%]">
+      <h2 className="text-(--primary-color) font-bold text-[40px]">
+        Matricule-se
+      </h2>
+      <form
+        className="flex flex-col w-fit p-[40px] justify-center z-1000 rounded-[50px] items-center bg-gray-700 gap-[10px]"
+        onSubmit={handleSubmit(async (data) => {
+          {
+          }
+        })}
+      >
+        <div className="grid grid-cols-2 gap-[20px]">
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Nome completo</label>
+            <input
+              type="text"
+              {...register("Nome", {
+                required: {
+                  value: true,
+                  message: "Digite seu nome completo",
+                },
+                pattern: {
+                  value: /^[a-zA-ZÀ-ÿ\s]{10,50}$/i,
+                  message: "Nome inválido",
+                },
+              })}
+              className={field}
+            ></input>
+
+            <span className={span}>{errors.Nome?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Email</label>
+
+            <input
+              type="text"
+              {...register("Email", {
+                required: { value: true, message: "Digite seu email" },
+                pattern: {
+                  value:
+                    /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com)$/,
+                  message: "Email inválido",
+                },
+              })}
+              className={field}
+            ></input>
+
+            <span className={span}>{errors.Email?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>CPF (XXX.XXX.XXX-XX)</label>
+
+            <input
+              type="text"
+              {...register("CPF", {
+                required: { value: true, message: "Digite seu CPF" },
+                pattern: {
+                  value: /^[0-9.-]{14}$/i,
+                  message: "CPF inválido",
+                },
+              })}
+              className={field}
+            ></input>
+
+            <span className={span}>{errors.CPF?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Telefone</label>
+
+            <input
+              type="text"
+              {...register("Telefone", {
+                required: { value: true, message: "Digite seu telefone" },
+                pattern: {
+                  value: /^[0-9]{10,11}$/,
+                  message: "Telefone inválido",
+                },
+              })}
+              className={field}
+            ></input>
+            <span className={span}>{errors.Telefone?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Cidade Natal</label>
+
+            <input
+              type="text"
+              {...register("CidadeNatal", {
+                required: { value: true, message: "Digite sua cidae natal" },
+                pattern: {
+                  value: /^[a-zA-ZÀ-ÿ\s]{2,50}$/,
+                  message: "Cidade inválida",
+                },
+              })}
+              className={field}
+            ></input>
+
+            <span className={span}>{errors.CidadeNatal?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Data de nascimento</label>
+            <input
+              type="date"
+              {...register("Nascimento", {
+                required: {
+                  value: true,
+                  message: "Selecione uma data de nascimento",
+                },
+              })}
+              className={field}
+            ></input>
+
+            <span className={span}>{errors.Nascimento?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Sexo</label>
+            <select
+              {...register("Sexo", {
+                required: { value: true, message: "Selecione seu sexo" },
+              })}
+              className={field}
+            >
+              <option>Masculino</option>
+              <option>Feminino</option>
+              <option>Outro</option>
+            </select>
+
+            <span className={span}>{errors.Sexo?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Estado Civil</label>
+            <select
+              {...register("Civil", {
+                required: {
+                  value: true,
+                  message: "Selecione seu estado civil",
+                },
+              })}
+              className={field}
+            >
+              <option>Solteiro</option>
+              <option>Casado</option>
+              <option>Divorciado</option>
+              <option>Viúvo</option>
+            </select>
+            <span className={span}>{errors.Civil?.message}</span>
+          </li>
+        </div>
+        <div className="grid grid-cols-2 gap-[20px]">
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>CEP (ex: 18085842)</label>
+            <input
+              {...register("CEP", {
+                required: { value: true, message: "Digite seu CEP" },
+                pattern: {
+                  value: /^[0-9-]{9}$/,
+                  message: "CEP inválido",
+                },
+              })}
+              className={field}
+            ></input>
+            <span className={span}>{errors.CEP?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Cidade de residência</label>
+            <input
+              {...register("Cidade", {
+                required: {
+                  value: true,
+                  message: "Digite sua cidade de residência",
+                },
+                pattern: {
+                  value: /^[a-zA-ZÀ-ÿ\s]{2,50}$/i,
+                  message: "Cidade inválida",
+                },
+              })}
+              className={field}
+            ></input>
+            <span className={span}>{errors.Cidade?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Logradouro (ex: Rua XXXX)</label>
+            <input
+              {...register("Logradouro", {
+                required: {
+                  value: true,
+                  message: "Digite sua rua, avenida, etc.",
+                },
+                pattern: {
+                  value: /^[\p{L}0-9\s.\-\/ºª,()]{3,100}$/u,
+                  message: "Logradouro inválido",
+                },
+              })}
+              className={field}
+            ></input>
+            <span className={span}>{errors.Logradouro?.message}</span>
+          </li>
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>Número</label>
+            <input
+              {...register("Numero", {
+                required: {
+                  value: true,
+                  message: "Digite o número da sua residência",
+                },
+                pattern: {
+                  value: /^[0-9]{1,4}$/,
+                  message: "Numero inválido",
+                },
+              })}
+              className={field}
+            ></input>
+            <span className={span}>{errors.Numero?.message}</span>
+          </li>
+        </div>
+        <div className="grid grid-cols-2 gap-[20px]">
+          <li className="flex flex-col items-start gap-[5px]">
+            <label className={label}>
+              Email institucional (xxxxx@unesp.br)
+            </label>
+            <input
+              type="text"
+              {...register("EmailUNESP", {
+                required: {
+                  value: true,
+                  message: "Crie um email institucional",
+                },
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@(unesp\.br)$/,
+                  message: "Email inválido",
+                },
+              })}
+              className={field}
+            ></input>
+
+            <span className={span}>{errors.Email?.message}</span>
+          </li>
+        </div>
+        <div className="flex flex-row justify-center gap-[20px]">
+          <button
+            onClick={() => {
+              close(true);
+            }}
+            className="mt-[20px] bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
+          >
+            Anterior
+          </button>
+          <button
+            type="submit"
+            className="mt-[20px] bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
+          >
+            Próximo
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

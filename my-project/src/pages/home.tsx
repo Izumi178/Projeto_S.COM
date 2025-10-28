@@ -1,11 +1,11 @@
 //Importa a função hook useState()
 import { useState, useEffect } from "react";
 //Importa componentes que compõe a página
-import NavBar from "../components/navBar";
-import ImageSlider from "../components/slider";
-import MyData from "../components/myData";
-import Settings from "../components/settings";
-import Messages from "../components/message";
+import NavBar from "../components/home/navBar";
+import ImageSlider from "../components/home/slider";
+import MyData from "../components/home/myData";
+import Settings from "../components/home/settings";
+import Messages from "../components/home/message";
 import PopUp from "../components/warning";
 import { type popUp } from "../components/warning";
 import { verifyAdm, verifyAuth } from "../authLogin";

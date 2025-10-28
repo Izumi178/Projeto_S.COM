@@ -2,15 +2,18 @@ import { PencilSquareIcon, UserMinusIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState, type SetStateAction } from "react";
 import { getUsers } from "../adminActions";
 import { type Pessoas } from "../getRegisterData";
-import ConfirmDelete from "../components/confirmDelete";
+import ConfirmDelete from "../components/admin/confirmDelete";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
 import { logOut, verifyAdm } from "../authLogin";
 import { useNavigate } from "react-router-dom";
+import EditUser from "../components/admin/edit";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
-  const [delUser, setDelUser] = useState<Pessoas>();
-  const [closed, close] = useState(true);
+  const [user, setUSer] = useState<Pessoas>();
+  const [delClosed, closeDel] = useState(true);
+  const [createClosed, closeCreate] = useState(true);
+  const [editClosed, closeEdit] = useState(true);
   const [warning, setPopUp] = useState<popUp>();
   const navigate = useNavigate();
   useEffect(() => {
@@ -76,15 +79,21 @@ export default function AdminPage() {
             <p className="w-[50px]">{perfil.id}</p>
             <p className="w-[300px]">{perfil.name}</p>
             <div className="w-[75px]">
-              <button className="w-fit justify-center cursor-pointer">
+              <button
+                onClick={() => {
+                  closeEdit(false);
+                  setUSer(perfil);
+                }}
+                className="w-fit justify-center cursor-pointer"
+              >
                 <PencilSquareIcon className="text-black w-[20px]"></PencilSquareIcon>
               </button>
             </div>
             <div className="w-[75px] justify-center cursor-pointer">
               <button
                 onClick={() => {
-                  close(false);
-                  setDelUser(perfil);
+                  closeDel(false);
+                  setUSer(perfil);
                 }}
                 className="w-fit"
               >
@@ -94,13 +103,15 @@ export default function AdminPage() {
           </div>
         ))}
       <button className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer">
-        {" "}
         Adicionar perfil
       </button>
-      {!closed && delUser && (
+      {!editClosed && user && (
+        <EditUser id={user.id} close={closeEdit} setPopUp={setPopUp}></EditUser>
+      )}
+      {!delClosed && user && (
         <ConfirmDelete
-          user={delUser}
-          close={close}
+          user={user}
+          close={closeDel}
           setPopUp={warning?.set}
         ></ConfirmDelete>
       )}

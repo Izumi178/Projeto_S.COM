@@ -4,7 +4,7 @@ import {
   GetAdressData,
   type Pessoas,
   type Endereco,
-} from "../getRegisterData";
+} from "../../getRegisterData";
 import { useEffect, useState } from "react";
 
 type user = {

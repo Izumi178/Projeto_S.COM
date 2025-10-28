@@ -4,8 +4,8 @@ import {
   type address,
   type login,
   type person,
-} from "../createAccount";
-import type { popUp } from "./warning";
+} from "../../createAccount";
+import type { popUp } from "../warning";
 type seiLa = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   pers: person | undefined;

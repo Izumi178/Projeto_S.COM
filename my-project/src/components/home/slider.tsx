@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import frente from "../assets/unesp_frente.jpeg";
-import refetorio from "../assets/unesp-refeitório.jpg";
-import portaria from "../assets/unesp-portaria.jpg";
+import frente from "../../assets/unesp_frente.jpeg";
+import refetorio from "../../assets/unesp-refeitório.jpg";
+import portaria from "../../assets/unesp-portaria.jpg";
 
 function ImageSlider() {
   //declarando array de imagens

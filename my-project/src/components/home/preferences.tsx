@@ -3,7 +3,7 @@ import {
   BoldIcon,
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/16/solid";
-import { logOut } from "../authLogin";
+import { logOut } from "../../authLogin";
 import { useNavigate } from "react-router-dom";
 
 function Preferences() {

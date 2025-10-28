@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import PersonalForm from "../components/personalForm";
-import AddressForm from "../components/adressForm";
-import InstitutionalForm from "../components/institutionalForms";
+import PersonalForm from "../components/signInForms/personalForm";
+import AddressForm from "../components/signInForms/adressForm";
+import InstitutionalForm from "../components/signInForms/institutionalForms";
 import { type person, type address } from "../createAccount";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
