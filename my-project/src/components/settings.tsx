@@ -71,7 +71,7 @@ function Settings({ set, email }: warning) {
             {data.title === "Preferências" ? (
               <Preferences></Preferences>
             ) : (
-              <AlterData set={set}></AlterData>
+              <AlterData set={set} email={email}></AlterData>
             )}
           </div>
         </div>

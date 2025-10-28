@@ -29,7 +29,8 @@ function Home() {
     const getUser = async () => {
       const email = await verifyAuth();
       if (email) {
-        if (await verifyAdm) {
+        const admin = await verifyAdm();
+        if (admin != null && admin === true) {
           navigate("/admin", { replace: true });
         } else {
           setEmail(email);

@@ -14,12 +14,13 @@ export type AlteredData = {
   logradouro: string;
   numero: number;
   cidade: string;
-  cep: number;
+  cep: string;
 };
 
 export async function UpdateAlteredData(alteredData: AlteredData) {
   const persData = await GetPersonalData(alteredData.email_logged);
   const adData = await GetAdressData(alteredData.email_logged);
+  console.log(adData);
   if (persData) {
     const { error } = await supabase
       .from("pessoas")

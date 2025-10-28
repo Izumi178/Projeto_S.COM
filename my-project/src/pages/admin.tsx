@@ -5,7 +5,7 @@ import { type Pessoas } from "../getRegisterData";
 import ConfirmDelete from "../components/confirmDelete";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
-import { verifyAdm } from "../authLogin";
+import { logOut, verifyAdm } from "../authLogin";
 import { useNavigate } from "react-router-dom";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
@@ -37,66 +37,82 @@ export default function AdminPage() {
   }, []);
   useEffect(() => {
     const verify = async () => {
-      if (!(await verifyAdm)) {
+      const admin = await verifyAdm();
+      if (!admin) {
         navigate("/login", { replace: true });
       }
     };
     verify();
   }, []);
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="my-[20px] text-[40px] font-bold">Perfis</h1>
-        <div className="flex flex-row w-[500px] bg-(--primary-color)">
-          <div className="w-[50px]">id</div>
-          <div className="w-[300px]">Nome</div>
-          <div className="w-[75px]">Editar Perfil</div>
-          <div className="w-[75px]">Deletar Perfil</div>
-        </div>
-        {perfis &&
-          perfis.map((perfil) => (
-            <div className="flex flex-row w-[500px] bg-(--forms-bg-light)">
-              <p className="w-[50px]">{perfil.id}</p>
-              <p className="w-[300px]">{perfil.name}</p>
-              <div className="w-[75px]">
-                <button className="w-fit justify-center cursor-pointer">
-                  <PencilSquareIcon className="text-black w-[20px]"></PencilSquareIcon>
-                </button>
-              </div>
-              <div className="w-[75px] justify-center cursor-pointer">
-                <button
-                  onClick={() => {
-                    close(false);
-                    setDelUser(perfil);
-                  }}
-                  className="w-fit"
-                >
-                  <UserMinusIcon className="text-black w-[20px]"></UserMinusIcon>
-                </button>
-              </div>
-            </div>
-          ))}
-        <button className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer">
-          {" "}
-          Adicionar perfil
+    <div
+      className="flex flex-col w-full min-h-screen pb-[100px] 
+    items-center bg-white dark:bg-(--bg-dark)"
+    >
+      <div className="flex flex-row items-center my-[20px]">
+        <h1 className="text-[40px] font-bold">Perfis</h1>
+        <button
+          className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
+          onClick={async () => {
+            if (await logOut()) {
+              navigate("/login", { replace: true });
+            } else {
+            }
+          }}
+        >
+          Sair
         </button>
-        {!closed && delUser && (
-          <ConfirmDelete
-            user={delUser}
-            close={close}
-            setPopUp={warning?.set}
-          ></ConfirmDelete>
-        )}
-        {warning?.show && (
-          <PopUp
-            title={warning?.title}
-            content={warning?.content}
-            show={warning?.show}
-            works={warning?.works}
-            set={warning?.set}
-          ></PopUp>
-        )}
       </div>
+
+      <div className="flex flex-row w-[500px] bg-(--primary-color)">
+        <div className="w-[50px]">id</div>
+        <div className="w-[300px]">Nome</div>
+        <div className="w-[75px]">Editar Perfil</div>
+        <div className="w-[75px]">Deletar Perfil</div>
+      </div>
+      {perfis &&
+        perfis.map((perfil) => (
+          <div className="flex flex-row w-[500px] bg-(--forms-bg-light)">
+            <p className="w-[50px]">{perfil.id}</p>
+            <p className="w-[300px]">{perfil.name}</p>
+            <div className="w-[75px]">
+              <button className="w-fit justify-center cursor-pointer">
+                <PencilSquareIcon className="text-black w-[20px]"></PencilSquareIcon>
+              </button>
+            </div>
+            <div className="w-[75px] justify-center cursor-pointer">
+              <button
+                onClick={() => {
+                  close(false);
+                  setDelUser(perfil);
+                }}
+                className="w-fit"
+              >
+                <UserMinusIcon className="text-black w-[20px]"></UserMinusIcon>
+              </button>
+            </div>
+          </div>
+        ))}
+      <button className="flex flex-row w-[500px] bg-(--forms-bg-light) justify-center cursor-pointer">
+        {" "}
+        Adicionar perfil
+      </button>
+      {!closed && delUser && (
+        <ConfirmDelete
+          user={delUser}
+          close={close}
+          setPopUp={warning?.set}
+        ></ConfirmDelete>
+      )}
+      {warning?.show && (
+        <PopUp
+          title={warning?.title}
+          content={warning?.content}
+          show={warning?.show}
+          works={warning?.works}
+          set={warning?.set}
+        ></PopUp>
+      )}
     </div>
   );
 }

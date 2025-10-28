@@ -12,9 +12,10 @@ import { type popUp } from "./warning";
 
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
+  email: string;
 };
 
-function AlterData({ set }: warning) {
+function AlterData({ set, email }: warning) {
   //Declaração do useForm
   const {
     //função que permite adicionar validação aos inputs
@@ -86,13 +87,13 @@ function AlterData({ set }: warning) {
             data.CEP
           ) {
             let newData: AlteredData = {
-              email_logged: "gabriel.izumi@unesp.br",
+              email_logged: email,
               email: data.Email,
               telefone: Number(data.Telefone),
               logradouro: data.Logradouro.toString(),
               numero: Number(data.Numero),
               cidade: data.Cidade,
-              cep: Number(data.CEP),
+              cep: data.CEP,
             };
             if (await UpdateAlteredData(newData)) {
               if (set) {
