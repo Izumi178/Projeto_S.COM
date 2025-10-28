@@ -8,7 +8,7 @@ import Settings from "../components/settings";
 import Messages from "../components/message";
 import PopUp from "../components/warning";
 import { type popUp } from "../components/warning";
-import { verifyAuth } from "../authLogin";
+import { verifyAdm, verifyAuth } from "../authLogin";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -29,7 +29,11 @@ function Home() {
     const getUser = async () => {
       const email = await verifyAuth();
       if (email) {
-        setEmail(email);
+        if (await verifyAdm) {
+          navigate("/admin", { replace: true });
+        } else {
+          setEmail(email);
+        }
       } else {
         navigate("/login", { replace: true });
       }

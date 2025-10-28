@@ -1,4 +1,5 @@
 import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
+import { supabase } from "./supabaseCliente";
 
 export type person = {
   Nome: string;
@@ -31,9 +32,6 @@ type allData = {
 };
 
 export async function CreateAccount({ pers, ad, log }: allData) {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-  const supabase = createClient(supabaseUrl, supabaseKey);
   const { data, error } = await supabase.auth.signUp({
     email: log.email,
     password: log.senha,
@@ -53,9 +51,6 @@ export async function CreateAccount({ pers, ad, log }: allData) {
 }
 
 async function setData({ pers, ad, log, id }: allData) {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-  const supabase = createClient(supabaseUrl, supabaseKey);
   const CPF = pers.CPF;
   const { error } = await supabase.from("pessoas").insert({
     id: id,

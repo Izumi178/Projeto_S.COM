@@ -1,10 +1,8 @@
 import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
 import { type login } from "./createAccount";
+import { supabase } from "./supabaseCliente";
 
 export async function AuthLogin({ email, senha }: login) {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-  const supabase = createClient(supabaseUrl, supabaseKey);
   const password = senha;
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -18,9 +16,6 @@ export async function AuthLogin({ email, senha }: login) {
 }
 
 export async function verifyAuth() {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-  const supabase = createClient(supabaseUrl, supabaseKey);
   const {
     data: { session },
     error,
@@ -37,13 +32,38 @@ export async function verifyAuth() {
 }
 
 export async function logOut() {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-  const supabase = createClient(supabaseUrl, supabaseKey);
   const { error } = await supabase.auth.signOut();
   if (error) {
     return false;
   } else {
     return true;
+  }
+}
+
+export async function verifyAdm() {
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+  if (error) {
+    return null;
+  } else {
+    if (session?.user.id) {
+      const { data, error } = await supabase
+        .from("pessoas")
+        .select("tipo")
+        .match({ id: session.user.id });
+      if (error) {
+        return null;
+      } else {
+        if (data[0] && data[0].tipo === "admin") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } else {
+      return null;
+    }
   }
 }

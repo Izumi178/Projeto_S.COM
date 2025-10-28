@@ -5,11 +5,14 @@ import { type Pessoas } from "../getRegisterData";
 import ConfirmDelete from "../components/confirmDelete";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
+import { verifyAdm } from "../authLogin";
+import { useNavigate } from "react-router-dom";
 export default function AdminPage() {
   const [perfis, setPerfis] = useState<Pessoas[]>();
   const [delUser, setDelUser] = useState<Pessoas>();
   const [closed, close] = useState(true);
   const [warning, setPopUp] = useState<popUp>();
+  const navigate = useNavigate();
   useEffect(() => {
     const setWarning = () => {
       const war: popUp = {
@@ -31,6 +34,14 @@ export default function AdminPage() {
       }
     };
     loadData();
+  }, []);
+  useEffect(() => {
+    const verify = async () => {
+      if (!(await verifyAdm)) {
+        navigate("/login", { replace: true });
+      }
+    };
+    verify();
   }, []);
   return (
     <div>

@@ -5,6 +5,7 @@ import {
   type Pessoas,
   type Endereco,
 } from "./getRegisterData";
+import { supabase } from "./supabaseCliente";
 
 export type AlteredData = {
   email_logged: string;
@@ -17,9 +18,6 @@ export type AlteredData = {
 };
 
 export async function UpdateAlteredData(alteredData: AlteredData) {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-  const supabase = createClient(supabaseUrl, supabaseKey);
   const persData = await GetPersonalData(alteredData.email_logged);
   const adData = await GetAdressData(alteredData.email_logged);
   if (persData) {

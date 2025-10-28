@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import SignIn from "./pages/signIn";
+import AdminPage from "./pages/admin";
 
 function App() {
   if (localStorage.getItem("dark") !== null) {
@@ -14,7 +15,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route path="signIn" element={<SignIn />} />
+      <Route path="/signIn" element={<SignIn />} />
+      <Route path="/admin" element={<AdminPage />} />
     </Routes>
   );
 }

@@ -1,5 +1,6 @@
 import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
 import { GetInstitutionalData } from "./getInstitutionalData";
+import { supabase } from "./supabaseCliente";
 
 export type Pessoas = {
   id: string;
@@ -25,9 +26,6 @@ export type Endereco = {
 export async function GetPersonalData(email: string) {
   const instData = await GetInstitutionalData(email);
   if (instData) {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-    const supabase = createClient(supabaseUrl, supabaseKey);
     const { data, error }: PostgrestResponse<Pessoas> = await supabase
       .from("pessoas")
       .select("*")
@@ -43,9 +41,6 @@ export async function GetPersonalData(email: string) {
 export async function GetAdressData(email: string) {
   const personData = await GetPersonalData(email);
   if (personData) {
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-    const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
-    const supabase = createClient(supabaseUrl, supabaseKey);
     let id = personData[0].id;
     const { data, error }: PostgrestResponse<Endereco> = await supabase
       .from("endereco")
