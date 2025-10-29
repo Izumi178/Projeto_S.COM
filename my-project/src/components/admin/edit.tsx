@@ -3,12 +3,17 @@ import type { popUp } from "../warning";
 import { useForm } from "react-hook-form";
 import { type Endereco, type Pessoas } from "../../../server/getRegisterData";
 import { editUser } from "../../../server/adminActions";
-import type { address, person } from "../../../server/createAccount";
+import type { address } from "../../../server/createAccount";
 
+// Janela de edição de usuário do admin
+
+// Dados que percisam ser fornecidos ao ser chamado
 type userData = {
+  // Dados do usuário
   personalData: Pessoas;
   addressData: Endereco;
   institutionalData: Aluno;
+  // Função de fechar a janela e exibição de feedback
   close: React.Dispatch<React.SetStateAction<boolean>>;
   setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
@@ -26,6 +31,7 @@ export default function EditUser({
     formState: { errors },
   } = useForm({
     defaultValues: {
+      // define os valores padrões dos campos do forms como os fornecidos ao chamar o componente
       Nome: personalData?.name,
       Email: personalData?.email,
       CPF: personalData?.CPF,
@@ -39,6 +45,16 @@ export default function EditUser({
       Cidade: addressData?.cidade,
       Numero: addressData?.numero,
       EmailUNESP: institutionalData?.email,
+      Senha: "",
+      Curso: institutionalData.curso,
+      Semestre: institutionalData.semestre,
+      Carga: institutionalData.horas_curso,
+      Extensao: institutionalData.horas_extensao,
+      Complementares: institutionalData.horas_complementar,
+      Estagio: institutionalData.horas_estagio,
+      Materias: institutionalData.materias,
+      Reprovadas: institutionalData.reprovadas,
+      Cr: institutionalData.cr,
     },
   });
   const span = "text-bold text-red-600 font-md";
@@ -51,6 +67,8 @@ export default function EditUser({
       className="absolute mt-[20px] flex flex-col w-fit p-[40px] justify-center z-1000 rounded-[50px] items-center bg-white dark:bg-(--bg-dark) gap-[10px] drop-shadow-2xl"
       onSubmit={handleSubmit(async (data) => {
         {
+          // Ao clicar no campo de salvar mudanças
+          // Cria os tipos à serem enviados função de edição de perfis
           const newPerson: Pessoas = {
             id: personalData.id,
             name: data.Nome,
@@ -70,7 +88,7 @@ export default function EditUser({
           };
           const newInstitutional: Aluno = {
             RA: 0,
-            pessoa_id: "",
+            pessoa_id: personalData.id,
             email: data.EmailUNESP,
             curso: "",
             semestre: 0,
@@ -78,47 +96,51 @@ export default function EditUser({
             horas_extensao: 0,
             horas_complementar: 0,
             horas_estagio: 0,
+            materias: 0,
+            reprovadas: 0,
+            cr: 0,
           };
-          if (newPerson) {
-            if (
-              await editUser({
-                pers: newPerson,
-                ad: newAddress,
-                log: newInstitutional,
-              })
-            ) {
-              if (setPopUp) {
-                const warn: popUp = {
-                  title: "Sucesso",
-                  content: "Dados atualizados com sucesso",
-                  show: true,
-                  works: true,
-                  set: setPopUp,
-                };
-                setPopUp(warn);
-              }
-              close(true);
-            } else {
-              if (setPopUp) {
-                const warn: popUp = {
-                  title: "Erro",
-                  content: "Houve algo de errado",
-                  show: true,
-                  works: false,
-                  set: setPopUp,
-                };
-                setPopUp(warn);
-              }
-              close(true);
+          // Exibe feedback, analogo ao create.tsx
+          if (
+            await editUser({
+              pers: newPerson,
+              ad: newAddress,
+              log: newInstitutional,
+              password: data.Senha,
+            })
+          ) {
+            if (setPopUp) {
+              const warn: popUp = {
+                title: "Sucesso",
+                content: "Dados atualizados com sucesso",
+                show: true,
+                works: true,
+                set: setPopUp,
+              };
+              setPopUp(warn);
             }
+            close(true);
+          } else {
+            if (setPopUp) {
+              const warn: popUp = {
+                title: "Erro",
+                content: "Houve algo de errado",
+                show: true,
+                works: false,
+                set: setPopUp,
+              };
+              setPopUp(warn);
+            }
+            close(true);
           }
         }
       })}
     >
+      {/*Forms analago ao encontrado em create.tsx*/}
       <h2 className="text-(--primary-color) font-bold text-[40px]">
         Editar perfil
       </h2>
-      <div className="grid grid-cols-2 gap-[20px]">
+      <div className="grid grid-cols-4 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Nome completo</label>
           <input
@@ -255,7 +277,7 @@ export default function EditUser({
           <span className={span}>{errors.Civil?.message}</span>
         </li>
       </div>
-      <div className="grid grid-cols-2 gap-[20px]">
+      <div className="grid grid-cols-4 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>CEP (ex: 18085842)</label>
           <input
@@ -323,9 +345,9 @@ export default function EditUser({
           <span className={span}>{errors.Numero?.message}</span>
         </li>
       </div>
-      <div className="grid grid-cols-2 gap-[20px]">
+      <div className="grid grid-cols-4 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
-          <label className={label}>Email institucional </label>
+          <label className={label}>Email institucional</label>
           <input
             type="text"
             {...register("EmailUNESP", {
@@ -342,6 +364,205 @@ export default function EditUser({
           ></input>
 
           <span className={span}>{errors.Email?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Senha</label>
+          {/*Campo de senha, preenchido apenas se desejar trocar a senha do usuário*/}
+          <input
+            type="password"
+            {...register("Senha", {
+              required: false,
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Senha?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Curso</label>
+          <input
+            type="text"
+            {...register("Curso", {
+              required: {
+                value: true,
+                message: "Digite o nome do curso",
+              },
+              pattern: {
+                value: /^[a-zA-ZÀ-ÿ\s]{10,50}$/i,
+                message: "Curso inválido",
+              },
+            })}
+            className={field}
+          ></input>
+
+          <span className={span}>{errors.Nome?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Semestre Matriculado</label>
+          <input
+            {...register("Semestre", {
+              required: {
+                value: true,
+                message: "Digite o semestre",
+              },
+              min: {
+                value: 1,
+                message: "Semestre inválido",
+              },
+              max: {
+                value: 10,
+                message: "Semestre inválido",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Carga horária</label>
+          <input
+            {...register("Carga", {
+              required: {
+                value: true,
+                message: "Digite a carga horária",
+              },
+              min: {
+                value: 0,
+                message: "Carga horária inválida",
+              },
+              max: {
+                value: 3600,
+                message: "Carga horária inválida",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Horas de extensão</label>
+          <input
+            {...register("Extensao", {
+              required: {
+                value: true,
+                message: "Digite as horas de extensão",
+              },
+              min: {
+                value: 0,
+                message: "Horas inválidas",
+              },
+              max: {
+                value: 360,
+                message: "Horas inválidas",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Horas complementares</label>
+          <input
+            {...register("Complementares", {
+              required: {
+                value: true,
+                message: "Digite as horas comlpementares",
+              },
+              min: {
+                value: 0,
+                message: "Horas inválidas",
+              },
+              max: {
+                value: 120,
+                message: "Horas inválidas",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Horas de estágio</label>
+          <input
+            {...register("Estagio", {
+              required: {
+                value: true,
+                message: "Digite as horas de estágio",
+              },
+              min: {
+                value: 0,
+                message: "Horas inválidas",
+              },
+              max: {
+                value: 120,
+                message: "Horas inválidas",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Materias concluidas</label>
+          <input
+            {...register("Materias", {
+              required: {
+                value: true,
+                message: "Digite a quantidade de materias concluidas",
+              },
+              min: {
+                value: 0,
+                message: "Quantidade inválida",
+              },
+              max: {
+                value: 30,
+                message: "Quantidade inválidas",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Materias concluidas</label>
+          <input
+            {...register("Reprovadas", {
+              required: {
+                value: true,
+                message: "Digite a quantidade materias reprovadas",
+              },
+              min: {
+                value: 0,
+                message: "Quantidade inválida",
+              },
+              max: {
+                value: 30,
+                message: "Quantidade inválidas",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
+        </li>
+        <li className="flex flex-col items-start gap-[5px]">
+          <label className={label}>Coeficiente de rendimento</label>
+          <input
+            {...register("Cr", {
+              required: {
+                value: true,
+                message: "Digite o coeficiente de rendimento",
+              },
+              min: {
+                value: 0,
+                message: "Coeficiente inválido",
+              },
+              max: {
+                value: 10,
+                message: "Coeficiente inválido",
+              },
+            })}
+            className={field}
+          ></input>
+          <span className={span}>{errors.Numero?.message}</span>
         </li>
       </div>
       <div className="flex flex-row justify-center gap-[20px]">

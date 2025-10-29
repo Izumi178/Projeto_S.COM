@@ -28,5 +28,5 @@
     "server/getRegisterData.tsx",
     "server/getRegisterData.tsx",
     "server/adminActions.tsx"
-, "server/message.tsx", "server/authLogin.tsx", "server/createAccount.tsx", "server/getInstitutionalData.tsx", "server/sendEmail.tsx", "server/supabaseCliente.tsx", "server/updateAlteredData.tsx"  ]
+, "server/authLogin.tsx", "server/createAccount.tsx", "server/getInstitutionalData.tsx", "server/sendEmail.tsx", "server/supabaseCliente.tsx", "server/updateAlteredData.tsx"  ]
 }

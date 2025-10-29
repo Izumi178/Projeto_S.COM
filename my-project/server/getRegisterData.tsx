@@ -1,7 +1,7 @@
-import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
-import { GetInstitutionalData } from "./getInstitutionalData";
+import type { PostgrestResponse } from "@supabase/supabase-js";
 import { supabase } from "./supabaseCliente";
 
+// Dados pessoais
 export type Pessoas = {
   id: string;
   name: string;
@@ -14,6 +14,7 @@ export type Pessoas = {
   cidade: string;
 };
 
+// Dados de endereço
 export type Endereco = {
   id: number;
   pessoa_id: string;
@@ -23,7 +24,9 @@ export type Endereco = {
   numero: number;
 };
 
+// Seleciona os dados pessoais do usuário
 export async function GetPersonalData(id: string) {
+  // Seleciona a linha que contém o id do usuário
   const { data, error }: PostgrestResponse<Pessoas> = await supabase
     .from("pessoas")
     .select("*")
@@ -31,17 +34,21 @@ export async function GetPersonalData(id: string) {
   if (error) {
     console.log(error);
   } else {
+    // retorna os dados no formato do tipo pessoas
     return data;
   }
 }
 
+// Seleciona os dados pessoais do usuário
 export async function GetAdressData(id: string) {
+  // Seleciona a linha que contém o id do usuário
   const { data, error }: PostgrestResponse<Endereco> = await supabase
     .from("endereco")
     .select("*")
     .match({ pessoa_id: id });
   if (error) {
   } else {
+    // retorna os dados no formato do tipo pessoas
     return data;
   }
 }

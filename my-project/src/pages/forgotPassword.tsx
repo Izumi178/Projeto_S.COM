@@ -10,6 +10,7 @@ export default function ForgotPassword() {
           Pagina em desenvolvimento, consulte o desenvolvedor para alterar a
           senha
         </p>
+        {/*Elemento analogo ao <a>, disponibilizado pelo react-router-dom*/}
         <Link
           className="mt-[20px] underline text-(--primary-color)"
           to="/login"

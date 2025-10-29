@@ -5,7 +5,6 @@ import NavBar from "../components/home/navBar";
 import ImageSlider from "../components/home/slider";
 import MyData from "../components/home/myData";
 import Settings from "../components/home/settings";
-import Messages from "../../server/message";
 import PopUp from "../components/warning";
 import { type popUp } from "../components/warning";
 import { verifyAdm, verifyAuth } from "../../server/authLogin";
@@ -13,9 +12,11 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
+  // popUp
   const [warning, setPopUp] = useState<popUp>();
   const [id, setId] = useState("");
   useEffect(() => {
+    // Configura o PopUP
     const setWarning = () => {
       const war: popUp = {
         title: undefined,
@@ -26,15 +27,20 @@ function Home() {
       };
       setPopUp(war);
     };
+    // Verifica se o usuário está autenticado
     const getUser = async () => {
       const id = await verifyAuth();
       if (id) {
+        //verifica se é administrador
         const admin = await verifyAdm();
+        //se for, redireciona para a página de administrador
         if (admin != null && admin === true) {
           navigate("/admin", { replace: true });
+          //senão, atribui o id do usuário à variável de controle
         } else {
           setId(id);
         }
+        // se não estiver autenticado, volta ao login
       } else {
         navigate("/login", { replace: true });
       }
@@ -42,6 +48,7 @@ function Home() {
     setWarning();
     getUser();
   }, []);
+  // variavel de controle de pagina
   const [activePage, changePage] = useState("Meus Dados");
 
   return (

@@ -38,9 +38,10 @@ export default function PersonalForm({
       className="py-[20px] "
       onSubmit={handleSubmit(async (data) => {
         {
+          //verifica se o CPF está disponivel na tabela de aprovados
           const cpfTrue = await checkCPF(data.CPF);
-          console.log("tchau");
           if (cpfTrue) {
+            //verifica se o usuario é maior de idade
             const today = new Date();
             const year = today.getFullYear();
             const birth = new Date(data.Nascimento);
@@ -63,7 +64,6 @@ export default function PersonalForm({
               }
             }
           } else {
-            console.log("oi");
             if (setPopUp) {
               const data: popUp = {
                 title: "Falha",

@@ -1,12 +1,6 @@
-import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
-import {
-  GetAdressData,
-  GetPersonalData,
-  type Pessoas,
-  type Endereco,
-} from "./getRegisterData";
 import { supabase } from "./supabaseCliente";
 
+// Dados alterados pelo usuário
 export type AlteredData = {
   id: string;
   email: string;
@@ -17,7 +11,9 @@ export type AlteredData = {
   cep: string;
 };
 
+// Função que  altera os dados pessoais e de endereço do usuário
 export async function UpdateAlteredData(alteredData: AlteredData) {
+  // Atualiza os dados de contato do usuário
   const { error } = await supabase
     .from("pessoas")
     .update({ email: alteredData.email, telefone: alteredData.telefone })
@@ -25,6 +21,7 @@ export async function UpdateAlteredData(alteredData: AlteredData) {
   if (error) {
     return false;
   } else {
+    // Atualiza os dados de endereço do usuário
     const { error } = await supabase
       .from("endereco")
       .update({

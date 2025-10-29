@@ -9,6 +9,8 @@ import AlterData from "./alterData";
 import { useState, type SetStateAction } from "react";
 import { type popUp } from "../warning";
 
+// Página de settings, analogo ao myData.tsx
+
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
   id: string;

@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { type address } from "../../../server/createAccount";
-type seiLa = {
+type data = {
   changePage: React.Dispatch<React.SetStateAction<number>>;
   setAddress: React.Dispatch<React.SetStateAction<address | undefined>>;
 };
-export default function AddressForm({ changePage, setAddress }: seiLa) {
+export default function AddressForm({ changePage, setAddress }: data) {
   const {
     register,
     handleSubmit,
@@ -27,8 +27,9 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
       className="py-[20px] "
       onSubmit={handleSubmit(async (data) => {
         {
-          /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
+          //Se os dados forem preenchidos corretamente, avança página
           changePage(3);
+          //Atribui os valores do forms à variável
           setAddress({
             CEP: data.CEP,
             Logradouro: data.Logradouro,
@@ -108,6 +109,7 @@ export default function AddressForm({ changePage, setAddress }: seiLa) {
       <div className="flex flex-row justify-center gap-[20px]">
         <button
           onClick={() => {
+            //Volta a página
             changePage(1);
           }}
           className="mt-[20px] bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"

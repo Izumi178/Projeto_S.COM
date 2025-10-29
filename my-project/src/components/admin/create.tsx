@@ -1,16 +1,20 @@
 import { type Aluno } from "../../../server/getInstitutionalData";
 import type { popUp } from "../warning";
 import { useForm } from "react-hook-form";
-import { type Endereco, type Pessoas } from "../../../server/getRegisterData";
-import { createAccount, editUser } from "../../../server/adminActions";
+import { createAccount } from "../../../server/adminActions";
 import type { address, person } from "../../../server/createAccount";
 
+// Janela de criação de conta pelo admin
+
 type userData = {
+  // Função que fecha a janela;
   close: React.Dispatch<React.SetStateAction<boolean>>;
+  // Função que configura o popUp de feedback de ação
   setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
 };
 
 export default function CreateUser({ close, setPopUp }: userData) {
+  //Cria o hook useForms, analogo ao encontrado em alterData.tsx
   const {
     register,
     handleSubmit,
@@ -42,6 +46,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
     <form
       className="absolute flex flex-col w-fit mt-[20px] p-[40px] justify-center z-1000 rounded-[50px] items-center bg-gray-700 gap-[10px] drop-shadow-2xl bg-white dark:bg-(--bg-dark)"
       onSubmit={handleSubmit(async (data) => {
+        // Ao clicar em criar usuário, cria variáveis dos tipos exigidos pela função createAccount
         {
           const newPerson: person = {
             Nome: data.Nome,
@@ -69,40 +74,44 @@ export default function CreateUser({ close, setPopUp }: userData) {
             horas_extensao: 0,
             horas_complementar: 0,
             horas_estagio: 0,
+            materias: 0,
+            reprovadas: 0,
+            cr: 0,
           };
-          if (newPerson) {
-            if (
-              await createAccount({
-                pers: newPerson,
-                ad: newAddress,
-                log: { email: data.EmailUNESP, senha: data.Senha },
-                std: newInstitutional,
-              })
-            ) {
-              if (setPopUp) {
-                const warn: popUp = {
-                  title: "Sucesso",
-                  content: "Usuario criado com sucesso",
-                  show: true,
-                  works: true,
-                  set: setPopUp,
-                };
-                setPopUp(warn);
-              }
-              close(true);
-            } else {
-              if (setPopUp) {
-                const warn: popUp = {
-                  title: "Erro",
-                  content: "Houve algo de errado",
-                  show: true,
-                  works: false,
-                  set: setPopUp,
-                };
-                setPopUp(warn);
-              }
-              close(true);
+          // Se createAccount retornar true, exibe feedback de sucesso, e fecha a janela
+          if (
+            await createAccount({
+              pers: newPerson,
+              ad: newAddress,
+              log: { email: data.EmailUNESP, senha: data.Senha },
+              std: newInstitutional,
+            })
+          ) {
+            // verifica se a função é definida
+            if (setPopUp) {
+              const warn: popUp = {
+                title: "Sucesso",
+                content: "Usuario criado com sucesso",
+                show: true,
+                works: true,
+                set: setPopUp,
+              };
+              setPopUp(warn);
             }
+            close(true);
+            // Senão, exibe feedback de erro, e fecha a janela
+          } else {
+            if (setPopUp) {
+              const warn: popUp = {
+                title: "Erro",
+                content: "Houve algo de errado",
+                show: true,
+                works: false,
+                set: setPopUp,
+              };
+              setPopUp(warn);
+            }
+            close(true);
           }
         }
       })}
@@ -113,6 +122,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Nome completo</label>
+          {/*Campo de nome, que permite apenas letras*/}
           <input
             type="text"
             {...register("Nome", {
@@ -127,12 +137,12 @@ export default function CreateUser({ close, setPopUp }: userData) {
             })}
             className={field}
           ></input>
-
+          {/*Exibe mensagem de erro, se existir*/}
           <span className={span}>{errors.Nome?.message}</span>
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Email</label>
-
+          {/*Campo email, que permite apenas valores com @gmail/outlook/yahoo.com*/}
           <input
             type="text"
             {...register("Email", {
@@ -150,7 +160,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>CPF (XXX.XXX.XXX-XX)</label>
-
+          {/*Campo CPF, que permite apenas números, hifen e ponto */}
           <input
             type="text"
             {...register("CPF", {
@@ -167,7 +177,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Telefone</label>
-
+          {/*Campo telefone, que permite apenas números */}
           <input
             type="text"
             {...register("Telefone", {
@@ -183,6 +193,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Cidade Natal</label>
+          {/*Campo de cidade, padrão semelhante ao nome*/}
           <input
             type="text"
             {...register("CidadeNatal", {
@@ -199,6 +210,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Data de nascimento</label>
+          {/*Campo de data de nascimento*/}
           <input
             type="date"
             {...register("Nascimento", {
@@ -213,6 +225,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
           <span className={span}>{errors.Nascimento?.message}</span>
         </li>
         <li className="flex flex-col items-start gap-[5px]">
+          {/*Campo do sexo biológico do usuário, pode ser Masculino, Feminino ou Outro*/}
           <label className={label}>Sexo</label>
           <select
             {...register("Sexo", {
@@ -229,6 +242,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
         </li>
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Estado Civil</label>
+          {/*Campo de estado civil do usuário, pode ser Solteiro, Casado, Divorciado e Viúvo*/}
           <select
             {...register("Civil", {
               required: {
@@ -248,7 +262,8 @@ export default function CreateUser({ close, setPopUp }: userData) {
       </div>
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
-          <label className={label}>CEP (ex: 18085842)</label>
+          <label className={label}>CEP </label>
+          {/*Campo CPF, que permite apenas números e hifen*/}
           <input
             {...register("CEP", {
               required: { value: true, message: "Digite seu CEP" },
@@ -353,6 +368,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
       <div className="flex flex-row justify-center gap-[20px]">
         <button
           onClick={() => {
+            // Ao clicar em cancelar fecha a janela
             close(true);
           }}
           className="mt-[20px] bg-red-500 text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"

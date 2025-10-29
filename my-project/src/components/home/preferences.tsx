@@ -6,6 +6,8 @@ import {
 import { logOut } from "../../../server/authLogin";
 import { useNavigate } from "react-router-dom";
 
+// Card de preferências
+
 function Preferences() {
   const navigate = useNavigate();
   //Funcao que altera o tema do site
@@ -107,10 +109,9 @@ function Preferences() {
           <button
             className="px-[10px] py-[5px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
             onClick={async () => {
-              if (await logOut()) {
-                navigate("/login", { replace: true });
-              } else {
-              }
+              //Realiza o logout, ao ser clicado
+              await logOut();
+              navigate("/login", { replace: true });
             }}
           >
             Sair

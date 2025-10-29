@@ -4,8 +4,13 @@ import { UserIcon } from "@heroicons/react/16/solid";
 import { EnvelopeIcon } from "@heroicons/react/16/solid";
 import { Cog6ToothIcon } from "@heroicons/react/16/solid";
 
+// Barra de navegação
+
+// Propriedades da barra de navegação
 type NavBarProps = {
+  // Função que muda o indice da pagina exibida
   changePage: React.Dispatch<React.SetStateAction<string>>;
+  // Nome da pagina exibida
   activePage: string;
 };
 
@@ -35,11 +40,14 @@ function NavBar({ changePage, activePage }: NavBarProps) {
       ></img>
       <div className="flex flex-row w-fit h-100% justify-start items-center md:gap-[4px] mr-[10px] sm:mr-[40px]">
         {items.map((item) => (
+          // Gera os botões do navBar
+          // Adiciona o underline ao texto da página ativa correspondente
           <button
             type="button"
             className={`px-[5px] sm:px-[20px] md:px-[15px] py-[20px] flex flex-shrink-0 flex-row whitespace-nowrap text-xs sm:text-lg md:text-xl lg:text-2xl big:text-lg big:sm:text-xl big:md:text-2xl big:lg:text-3xl  w-fit items-center text-white dark:text-[color:var(--bg-dark)] font-bold cursor-pointer gap-[4px] md:gap-[7px] transition duration-200 ease-in-out 
    ${item === activePage ? "underline" : "hover:underline"}`}
             onClick={() => {
+              //Ao clicar no botão, muda o indice da pagina
               changePage(item);
             }}
           >

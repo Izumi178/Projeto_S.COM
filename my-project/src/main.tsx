@@ -6,6 +6,7 @@ import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/*Fornece o roteamento do site*/}
     <BrowserRouter>
       <App />
     </BrowserRouter>

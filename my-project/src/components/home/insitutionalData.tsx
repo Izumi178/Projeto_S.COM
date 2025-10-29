@@ -1,25 +1,40 @@
 import { BuildingLibraryIcon, BriefcaseIcon } from "@heroicons/react/16/solid";
 import {
   GetInstitutionalData,
+  GetTurmaCR,
   type Aluno,
 } from "../../../server/getInstitutionalData";
 import { useState, useEffect } from "react";
 
+// Card que exibe dados institucionais
+
 type user = {
+  // id do usuario autenticado
   id: string;
 };
 
 function InstitutionalData({ id }: user) {
+  // Variavel que irá conter os dados institucionais do usuário
   const [institutionalData, setInstitutionalData] = useState<Aluno>();
+  // Variável que irá conter o Cr da Turma
+  const [cr, setCr] = useState(0);
   useEffect(() => {
+    // declara loadData, que vai receber os dados institucionais de GetInstitutionalData
     const loadData = async () => {
       const data = await GetInstitutionalData(id);
       if (data) {
+        // Atribui os dados recebidos às variáveis
         setInstitutionalData(data[0]);
+        const cr = await GetTurmaCR(data[0].semestre);
+        if (cr) {
+          setCr(cr);
+        }
       }
     };
+    // Executa loadData ao carregar a página
     loadData();
   }, []);
+  // interface dos campo
   interface dataLabel {
     label: string;
     data: any;
@@ -39,15 +54,18 @@ function InstitutionalData({ id }: user) {
   ];
 
   const history: dataLabel[] = [
-    { label: "Matérias Concluídas:", data: "20" },
-    { label: "Matérias Reprovadas:", data: "0" },
-    { label: "Coeficiente de rendimento:", data: "5,0" },
-    { label: "Coeficiente de rendimento da turma:", data: "6,0" },
+    {
+      label: "Matérias Concluídas:",
+      data:
+        Number(institutionalData?.materias) -
+        Number(institutionalData?.reprovadas),
+    },
+    { label: "Matérias Reprovadas:", data: institutionalData?.reprovadas },
+    { label: "Coeficiente de rendimento:", data: institutionalData?.cr },
+    { label: "Coeficiente de rendimento da turma:", data: cr },
   ];
 
-  const row =
-    "bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) text-(--primary-color) text-xs big:text-lg";
-  const cell = "py-[10px] px-[5px]";
+  // Estilos de elementos
   const card =
     "flex flex-col min-w-[300px] sm:max-w-[600px] md:max-w-[760px] lg:max-w-[1000px] xl:max-w-[1200px] 2xl:max-w-[1500px] h-auto px-[30px] py-[10px] shadow-md gap-y-[10px]";
   const titleArea =

@@ -1,7 +1,7 @@
-import { createClient, type PostgrestResponse } from "@supabase/supabase-js";
+// Importa o cliente anonimo do supabase
 import { supabase } from "./supabaseCliente";
-import { useState } from "react";
 
+// Dados pessoais
 export type person = {
   Nome: string;
   Email: string;
@@ -13,6 +13,7 @@ export type person = {
   Sexo: string;
 };
 
+// Dados de endereço
 export type address = {
   CEP: string;
   Logradouro: string;
@@ -20,11 +21,13 @@ export type address = {
   Numero: number;
 };
 
+// Dados de login
 export type login = {
   email: string;
   senha: string;
 };
 
+// Dados do registro
 type allData = {
   pers: person;
   ad: address;
@@ -32,7 +35,9 @@ type allData = {
   id?: string;
 };
 
+// Função de criação de conta
 export async function CreateAccount({ pers, ad, log }: allData) {
+  // Cria um usário autenticavel
   const { data, error } = await supabase.auth.signUp({
     email: log.email,
     password: log.senha,
@@ -40,6 +45,7 @@ export async function CreateAccount({ pers, ad, log }: allData) {
   if (error) {
     return false;
   } else {
+    // Caso não haja erros, usa os dados recebidos e o id de usuário para inserir os dados pessoais, de endereço e institucionais
     if (data.user != null) {
       const id = data.user.id;
       if (await setData({ pers, ad, log, id })) {
@@ -51,8 +57,11 @@ export async function CreateAccount({ pers, ad, log }: allData) {
   }
 }
 
+// Função que insere os dados pessoais, de endereço e institucionais nas tabelas
 async function setData({ pers, ad, log, id }: allData) {
+  // Usa CPF para verificar o curso do aprovado
   const CPF = pers.CPF;
+  // Insere os dados pessoais na tabela pessoas
   const { error } = await supabase.from("pessoas").insert({
     id: id,
     name: pers.Nome,
@@ -67,6 +76,7 @@ async function setData({ pers, ad, log, id }: allData) {
   if (error) {
     return false;
   } else {
+    // Insere os dados de endereço na tabela de endereço
     const { error } = await supabase.from("endereco").insert({
       id: Math.floor(Math.random() * (100000 - 0 + 1)),
       CEP: ad.CEP,
@@ -78,12 +88,14 @@ async function setData({ pers, ad, log, id }: allData) {
     if (error) {
       return false;
     } else {
+      // Verifica o curso do usuário
       const { data } = await supabase
         .from("aprovados")
         .select("curso")
         .match({ CPF: CPF });
       console.log(data);
       if (data) {
+        // Insere os dados institucionais do aluno
         const curso = data[0].curso;
         console.log(curso);
         const { error } = await supabase.from("alunos").insert({
@@ -103,12 +115,14 @@ async function setData({ pers, ad, log, id }: allData) {
     }
   }
 }
-
+//Função que verifica se o CPF do aluno está na lista de usuários
 export async function checkCPF(CPF: string) {
+  // Verifica se o CPF existe na tabela
   const { data } = await supabase
     .from("aprovados")
     .select("*")
     .match({ CPF: CPF });
+  // Se o tamanho de data for diferente de zero, significa que o CPF existe
   if (data && data.length != 0) {
     return true;
   } else {

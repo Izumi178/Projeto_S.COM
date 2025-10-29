@@ -6,6 +6,8 @@ import {
 } from "../../../server/updateAlteredData";
 import { type popUp } from "../warning";
 
+// Card de alteração de dados
+
 type warning = {
   set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
   id: string;
@@ -69,6 +71,7 @@ function AlterData({ set, id }: warning) {
               cidade: data.Cidade,
               cep: data.CEP,
             };
+            // Se a função de atualizar dados do usuário retornar true, exibe mensagem de sucesso
             if (await UpdateAlteredData(newData)) {
               if (set) {
                 const data: popUp = {
@@ -80,6 +83,7 @@ function AlterData({ set, id }: warning) {
                 };
                 set(data);
               }
+              // Senão, exibe mensagem de falha
             } else {
               if (set) {
                 const data: popUp = {

@@ -6,7 +6,9 @@ import { type person, type address } from "../../server/createAccount";
 import type { popUp } from "../components/warning";
 import PopUp from "../components/warning";
 export default function SignIn() {
+  // Variável de controle de página, similar aoHome.tsx
   const [activePage, setPage] = useState(1);
+  // Variáveis de controle de dados
   const [person, setPerson] = useState<person>();
   const [address, setAddress] = useState<address>();
   const [warning, setPopUp] = useState<popUp>();
@@ -52,6 +54,7 @@ export default function SignIn() {
           )}
         </div>
         {warning?.show && (
+          // PopUp exibido quando ao warning.set é executado no elementos filhos
           <PopUp
             title={warning?.title}
             content={warning?.content}

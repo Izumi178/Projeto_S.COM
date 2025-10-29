@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PopUp, { type popUp } from "../components/warning";
 export default function Login() {
+  // hook de navegação do react-router-dom
   const navigate = useNavigate();
   const [warning, setPopUp] = useState<popUp>();
   useEffect(() => {
@@ -20,15 +21,11 @@ export default function Login() {
     setWarning();
   }, []);
   const {
-    //função que permite adicionar validação aos inputs
     register,
-    //funcao executada ao submeter o formulario
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
-      //Atribui valores padrões
       Email: "",
       Senha: "",
     },
@@ -45,12 +42,11 @@ export default function Login() {
         <form
           className="py-[20px] gap-[20px]"
           onSubmit={handleSubmit(async (data) => {
-            {
-              /*Se os campos não forem rejeitados, dados preenchidos nos campos são salvos na memória*/
-            }
             if (data.Email && data.Senha) {
+              // Se as credencias corresponderem, o usuário é redirecionado à página principal
               if (await AuthLogin({ email: data.Email, senha: data.Senha })) {
                 navigate("/", { replace: true });
+                //Senão, exibe mensagem de erro
               } else {
                 if (setPopUp) {
                   const data: popUp = {
@@ -67,14 +63,7 @@ export default function Login() {
           })}
         >
           <li className="flex flex-col items-start gap-[5px]">
-            {/*Campo de email*/}
             <label className={label}>Email</label>
-            {/*
-                  - required: true, torna o campo obrigatorio
-                  - pattern: valida o email digitado, neste caso, 
-                  pode incluir letras, simbolos e numero
-                  e deve incluir @xxxxx.com ao final
-                  - message: mensagem de erro*/}
             <input
               type="Email"
               {...register("Email", {
@@ -89,18 +78,10 @@ export default function Login() {
               })}
               className={field}
             ></input>
-            {/*Exibe mensagem de erro, caso nao seja nulo*/}
             <span className={span}>{errors.Email?.message}</span>
           </li>
           <li className="flex flex-col items-start gap-[5px]">
-            {/*Campo de email*/}
             <label className={label}>Senha</label>
-            {/*
-                  - required: true, torna o campo obrigatorio
-                  - pattern: valida o email digitado, neste caso, 
-                  pode incluir letras, simbolos e numero
-                  e deve incluir @xxxxx.com ao final
-                  - message: mensagem de erro*/}
             <input
               type="password"
               {...register("Senha", {
@@ -108,7 +89,6 @@ export default function Login() {
               })}
               className={field}
             ></input>
-            {/*Exibe mensagem de erro, caso nao seja nulo*/}
             <span className={span}>{errors.Senha?.message}</span>
           </li>
           <button

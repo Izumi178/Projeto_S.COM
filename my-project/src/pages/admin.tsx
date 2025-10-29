@@ -1,6 +1,6 @@
 import { PencilSquareIcon, UserMinusIcon } from "@heroicons/react/16/solid";
 import { useEffect, useState, type SetStateAction } from "react";
-import { getUserEmail, getUsers } from "../../server/adminActions";
+import { getUsers } from "../../server/adminActions";
 import {
   GetAdressData,
   GetPersonalData,
@@ -19,11 +19,14 @@ import {
 } from "../../server/getInstitutionalData";
 import CreateUser from "../components/admin/create";
 export default function AdminPage() {
+  //Lista de perfis
   const [perfis, setPerfis] = useState<Pessoas[]>();
+  //variáveis enviadas aos widgets filhos
   const [user, setUSer] = useState<Pessoas>();
   const [personalData, setPersonalData] = useState<Pessoas>();
   const [adressData, setAdressData] = useState<Endereco>();
   const [institutionalData, setInstitutionalData] = useState<Aluno>();
+  //variáveis de controle de páginas
   const [delClosed, closeDel] = useState(true);
   const [createClosed, closeCreate] = useState(true);
   const [editClosed, closeEdit] = useState(true);
@@ -43,6 +46,7 @@ export default function AdminPage() {
     setWarning();
   }, []);
   useEffect(() => {
+    //gera lista de usuários
     const loadData = async () => {
       const dados = await getUsers();
       if (dados) {
@@ -52,6 +56,7 @@ export default function AdminPage() {
     loadData();
   }, []);
   useEffect(() => {
+    //verifica se usuário é administrador
     const verify = async () => {
       const admin = await verifyAdm();
       if (!admin) {
@@ -70,10 +75,8 @@ export default function AdminPage() {
         <button
           className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
           onClick={async () => {
-            if (await logOut()) {
-              navigate("/login", { replace: true });
-            } else {
-            }
+            await logOut();
+            navigate("/login", { replace: true });
           }}
         >
           Sair

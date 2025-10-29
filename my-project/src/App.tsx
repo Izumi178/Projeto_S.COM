@@ -6,6 +6,7 @@ import AdminPage from "./pages/admin";
 import ForgotPassword from "./pages/forgotPassword";
 
 function App() {
+  //Verifica se os modo dark e o modo de fonte aumentada estavam configurados
   if (localStorage.getItem("dark") !== null) {
     document.documentElement.classList.add("dark");
   }
@@ -13,6 +14,7 @@ function App() {
     document.documentElement.classList.add("big");
   }
   return (
+    //Rotas das páginas
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />

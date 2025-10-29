@@ -8,11 +8,14 @@ import RegisterData from "./registerData";
 import InstitutionalData from "./insitutionalData";
 import { useState } from "react";
 
+// Página que vai conter os dados do usuário autenticado
+
 type user = {
   id: string;
 };
 
 function MyData({ id }: user) {
+  // Interface dos cards
   interface cards {
     title: string;
     expanded: boolean;
@@ -21,6 +24,7 @@ function MyData({ id }: user) {
     >;
     cardControl(): void;
   }
+  // Variáveis de controle dos cards, gera layouts diferentes utilizando operadores ternários
   const [cadastroExpanded, cadastroControl] = useState(false);
   const [institucionalExpanded, institucionalControl] = useState(false);
   const dataCard: cards[] = [

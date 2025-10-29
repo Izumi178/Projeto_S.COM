@@ -7,6 +7,8 @@ import {
 } from "../../../server/getRegisterData";
 import { useEffect, useState } from "react";
 
+// Card de dados pessoais e de endereço, analogo ao institutionalData.tsx
+
 type user = {
   id: string;
 };
