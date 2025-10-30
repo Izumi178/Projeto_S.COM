@@ -30,7 +30,7 @@ export async function UpdateAlteredData(alteredData: AlteredData) {
         logradouro: alteredData.logradouro,
         numero: alteredData.numero,
       })
-      .eq("id", alteredData.id);
+      .eq("pessoa_id", alteredData.id);
     if (error) {
       return false;
     } else {
