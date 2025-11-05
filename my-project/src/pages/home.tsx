@@ -9,6 +9,7 @@ import PopUp from "../components/warning";
 import { type popUp } from "../components/warning";
 import { verifyAdm, verifyAuth } from "../../server/authLogin";
 import { useNavigate } from "react-router-dom";
+import ChatBotPage from "../components/home/chatBot";
 
 function Home() {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ function Home() {
       {/*exemplo de renderizacao condicional, 
       caso o estado da pagina ativa corresponda ao componente, este sera renderizado*/}
       {id && activePage === "Meus Dados" && <MyData id={id}></MyData>}
+      {id && activePage === "ChatBot" && <ChatBotPage></ChatBotPage>}
       {id && activePage === "Configurações" && (
         <Settings set={warning?.set} id={id}></Settings>
       )}

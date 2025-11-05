@@ -1,7 +1,6 @@
 import lightLogo from "../../assets/unesp_light.png";
 import darkLogo from "../../assets/unesp_dark.png";
-import { UserIcon } from "@heroicons/react/16/solid";
-import { EnvelopeIcon } from "@heroicons/react/16/solid";
+import { MagnifyingGlassPlusIcon, UserIcon } from "@heroicons/react/16/solid";
 import { Cog6ToothIcon } from "@heroicons/react/16/solid";
 
 // Barra de navegação
@@ -14,7 +13,7 @@ type NavBarProps = {
   activePage: string;
 };
 
-const items = ["Meus Dados", "Configurações"];
+const items = ["Meus Dados", "ChatBot", "Configurações"];
 const iconCustomiztion = "text-(--bg-color) w-[10px] sm:w-[20px] md:w-[30px]";
 function NavBar({ changePage, activePage }: NavBarProps) {
   return (
@@ -53,6 +52,8 @@ function NavBar({ changePage, activePage }: NavBarProps) {
           >
             {item === "Meus Dados" ? (
               <UserIcon className={iconCustomiztion} />
+            ) : item === "ChatBot" ? (
+              <MagnifyingGlassPlusIcon className={iconCustomiztion} />
             ) : (
               <Cog6ToothIcon className={iconCustomiztion} />
             )}

@@ -18,6 +18,7 @@ import {
   type Aluno,
 } from "../../server/getInstitutionalData";
 import CreateUser from "../components/admin/create";
+import Graphs from "../components/admin/graph";
 export default function AdminPage() {
   //Lista de perfis
   const [perfis, setPerfis] = useState<Pessoas[]>();
@@ -30,6 +31,7 @@ export default function AdminPage() {
   const [delClosed, closeDel] = useState(true);
   const [createClosed, closeCreate] = useState(true);
   const [editClosed, closeEdit] = useState(true);
+  const [graphClosed, closeGraphs] = useState(true);
   const [warning, setPopUp] = useState<popUp>();
   const navigate = useNavigate();
   useEffect(() => {
@@ -70,7 +72,7 @@ export default function AdminPage() {
       className="flex flex-col w-full min-h-screen pb-[100px] 
     items-center bg-white dark:bg-(--bg-dark)"
     >
-      <div className="flex flex-row items-center my-[20px]">
+      <div className="flex flex-row items-center my-[20px] gap-[10px]">
         <h1 className="text-[40px] text-(--primary-color) font-bold">Perfis</h1>
         <button
           className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
@@ -80,6 +82,14 @@ export default function AdminPage() {
           }}
         >
           Sair
+        </button>
+        <button
+          className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
+          onClick={() => {
+            closeGraphs(false);
+          }}
+        >
+          Gráfico de desempenho
         </button>
       </div>
       <div className="px-[20px] text-(--primary-color)">
@@ -171,6 +181,7 @@ export default function AdminPage() {
           setPopUp={warning?.set}
         ></ConfirmDelete>
       )}
+      {!graphClosed && <Graphs></Graphs>}
       {warning?.show && (
         <PopUp
           title={warning?.title}
