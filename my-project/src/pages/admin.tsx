@@ -181,7 +181,7 @@ export default function AdminPage() {
           setPopUp={warning?.set}
         ></ConfirmDelete>
       )}
-      {!graphClosed && <Graphs></Graphs>}
+      {!graphClosed && <Graphs close={closeGraphs}></Graphs>}
       {warning?.show && (
         <PopUp
           title={warning?.title}
