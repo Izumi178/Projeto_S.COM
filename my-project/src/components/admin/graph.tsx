@@ -1,39 +1,150 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { useState } from "react";
+import * as ss from "simple-statistics";
+import { analise, type medidas } from "../../../ai/gemini";
+import { useEffect, useState } from "react";
+import { GetCRData } from "../../../server/getCr";
+import {
+  BarPlot,
+  ChartContainer,
+  ChartsAxisHighlight,
+  ChartsTooltip,
+  ChartsXAxis,
+  ChartsYAxis,
+  LineHighlightPlot,
+  LinePlot,
+} from "@mui/x-charts";
+import { useForm } from "react-hook-form";
+import type { popUp } from "../warning";
 type closeWindow = {
+  setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
   close: React.Dispatch<React.SetStateAction<boolean>>;
 };
-interface medidas {
-  nome: string;
-  data: number;
-}
-const central: medidas[] = [
-  { nome: "Média", data: 0 },
-  { nome: "Moda", data: 0 },
-  { nome: "Média", data: 0 },
-];
-const disp: medidas[] = [
-  { nome: "Desvio padrão", data: 0 },
-  { nome: "Variância", data: 0 },
-  { nome: "Coef. de var.", data: 0 },
-];
-const others: medidas[] = [
-  { nome: "Assimetria", data: 0 },
-  { nome: "Curtose", data: 0 },
-];
+const span = "text-bold text-red-600 font-md";
 const title = "text-(--primary-color) font-bold whitespace-nowrap text-[25px]";
 const subtitle =
   "text-(--primary-color) font-bold whitespace-nowrap text-[18px]";
 const label = "text-(--primary-color) font-bold whitespace-nowrap text-[15px]";
 const field =
   "block py-[10px] px-[20px] w-[100px] text-(--primary-color) rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) font-bold";
-export default function Graphs({ close }: closeWindow) {
-  const [qntt, setQntt] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+type data = {
+  rawData: number[];
+  setHistData: React.Dispatch<React.SetStateAction<histData[]>>;
+  setLineData: React.Dispatch<React.SetStateAction<lineData[]>>;
+  setMedidas: React.Dispatch<React.SetStateAction<medidas | undefined>>;
+};
+
+type histData = {
+  interval: string;
+  qntt: number;
+};
+
+type lineData = {
+  value: number;
+  qntt: number;
+};
+
+function setDatas({ rawData, setHistData, setLineData, setMedidas }: data) {
+  const hist = Array.from({ length: 10 }, (_, i) => ({
+    interval: `${i}-${i + 1}`,
+    qntt: 0,
+  }));
+
+  const line = Array.from({ length: 10 }, () => ({
+    value: 0,
+    qntt: 0,
+  }));
+
+  rawData.forEach((value) => {
+    const idx = Math.min(9, Math.ceil(value) - 1);
+    hist[idx].qntt++;
+    line[idx].value += value;
+    line[idx].qntt++;
+  });
+
+  const finalLine = line.map((l) => ({
+    value: l.qntt > 0 ? l.value / l.qntt : 0,
+    qntt: l.qntt,
+  }));
+
+  setHistData(hist);
+  setLineData(finalLine);
+  setMedidas({
+    media: ss.average(rawData),
+    mediana: ss.median(rawData),
+    moda: ss.mode(rawData),
+    desvio_padrao: ss.standardDeviation(rawData),
+    variancia: ss.variance(rawData),
+    coef_variacao: ss.coefficientOfVariation(rawData),
+    assimetria: ss.sampleSkewness(rawData),
+    curtose: ss.sampleKurtosis(rawData),
+  });
+}
+
+export default function Graphs({ close, setPopUp }: closeWindow) {
+  const {
+    //função que permite adicionar validação aos inputs
+    register,
+    //funcao executada ao submeter o formulario
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      //Atribui valores padrões
+      Max: 10,
+      Min: 1,
+    },
+  });
+  const [lineData, setLineData] = useState<lineData[]>([]);
+  const [qntt, setQntt] = useState<histData[]>([]);
+  const [statistics, setStattistics] = useState<medidas>();
+  const [analysis, setAnalysis] = useState<string>();
+  const central = statistics
+    ? [
+        { nome: "Média", data: statistics.media.toFixed(2) },
+        { nome: "Mediana", data: statistics.mediana.toFixed(2) },
+        { nome: "Moda", data: statistics.moda.toFixed(2) },
+      ]
+    : [];
+  const disp = statistics
+    ? [
+        { nome: "Desvio padrão", data: statistics?.desvio_padrao.toFixed(2) },
+        { nome: "Variância", data: statistics?.variancia.toFixed(2) },
+        { nome: "Coef. de var.", data: statistics?.coef_variacao.toFixed(2) },
+      ]
+    : [];
+  const others = statistics
+    ? [
+        { nome: "Assimetria", data: statistics?.assimetria.toFixed(2) },
+        { nome: "Curtose", data: statistics?.curtose.toFixed(2) },
+      ]
+    : [];
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await GetCRData({ max: 10, min: 1 });
+      if (data) {
+        setDatas({
+          rawData: data,
+          setHistData: setQntt,
+          setLineData: setLineData,
+          setMedidas: setStattistics,
+        });
+        const response = await analise({
+          interval: { min: 1, max: 10 },
+          medidas: statistics,
+        });
+        if (response) {
+          setAnalysis(response);
+        }
+      }
+    };
+    // Executa loadData ao carregar a página
+    loadData();
+  }, []);
   return (
-    <div className="fixed flex flex-col justify-start z-1000 w-[1000px] h-[800px] rounded-[50px] bg-(--bg-dark) gap-[10px] drop-shadow-2xl translate-y-[10%] p-[20px]">
+    <div className="fixed flex flex-col overflow-scroll justify-start z-1000 w-[1200px] h-[800px] rounded-[50px] bg-(--bg-dark) gap-[10px] drop-shadow-2xl translate-y-[2%] p-[20px] pb-[50px]">
       <button
-        className="w-fit self-end"
+        className="w-fit h-fit self-end cursor-pointer"
         onClick={() => {
           close(true);
         }}
@@ -47,43 +158,113 @@ export default function Graphs({ close }: closeWindow) {
       <div className="flex flex-row justify-center h-auto gap-[20px]">
         <div>
           <h4 className={title}>Selecione o intervalo do semestre</h4>
-          <BarChart
-            className="w-full h-full"
-            xAxis={[
-              {
-                id: "barCategories",
-                data: [
-                  "0-1",
-                  "1-2",
-                  "2-3",
-                  "3-4",
-                  "4-5",
-                  "5-6",
-                  "7-8",
-                  "8-9",
-                  "9-10",
-                ],
-              },
-            ]}
+          <ChartContainer
             series={[
               {
-                data: qntt,
+                type: "bar",
+                data: qntt.map((i) => i.qntt),
+              },
+              { type: "line", data: lineData.map((i) => i.qntt) },
+            ]}
+            xAxis={[
+              {
+                scaleType: "band",
+                data: qntt.map((i) => i.interval),
               },
             ]}
-          ></BarChart>
-        </div>
+          >
+            <ChartsAxisHighlight x="line" />
+            <BarPlot />
+            <LinePlot />
 
+            <LineHighlightPlot />
+            <ChartsYAxis label="Quantidade" tickLabelStyle={{ fontSize: 10 }} />
+            <ChartsXAxis label="Notas" tickLabelStyle={{ fontSize: 10 }} />
+            <ChartsTooltip />
+          </ChartContainer>
+        </div>
         <div className="flex flex-col items-center gap-[10px] mr-[10px]">
           <h4 className={title}>Selecione o intervalo do semestre</h4>
-          <form className="flex flex-col gap-[20px] items-center">
+          <form
+            onSubmit={handleSubmit(async (data) => {
+              if (data.Min > data.Max) {
+                if (setPopUp) {
+                  const warn: popUp = {
+                    title: "Erro",
+                    content: "Selecione um intervalo válido",
+                    show: true,
+                    works: false,
+                    set: setPopUp,
+                  };
+                  setPopUp(warn);
+                }
+              } else {
+                const result = await GetCRData({
+                  max: data.Max,
+                  min: data.Min,
+                });
+                if (result) {
+                  setDatas({
+                    rawData: result,
+                    setHistData: setQntt,
+                    setLineData: setLineData,
+                    setMedidas: setStattistics,
+                  });
+                  const response = await analise({
+                    interval: { min: data.Min, max: data.Max },
+                    medidas: statistics,
+                  });
+                  if (response) {
+                    setAnalysis(response);
+                  }
+                }
+              }
+            })}
+            className="flex flex-col gap-[20px] items-center"
+          >
             <div className="flex flex-row items-center gap-[10px]">
-              <input type="number" min={1} max={10} className={field}></input>
+              <input
+                type="number"
+                {...register("Min", {
+                  required: {
+                    value: true,
+                    message: "Digite o primeiro semestre",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Semestre inválido",
+                  },
+                  max: {
+                    value: 10,
+                    message: "Semestre inválido",
+                  },
+                })}
+                className={field}
+              ></input>
               <div className="bg-(--primary-color) w-[5px] h-[2px]"></div>
-              <input type="number" min={1} max={10} className={field}></input>
+              <input
+                type="number"
+                {...register("Max", {
+                  required: {
+                    value: true,
+                    message: "Digite o primeiro semestre",
+                  },
+                  min: {
+                    value: 1,
+                    message: "Semestre inválido",
+                  },
+                  max: {
+                    value: 10,
+                    message: "Semestre inválido",
+                  },
+                })}
+                className={field}
+              ></input>
+              <span className={span}>{errors.Min?.message}</span>
             </div>
             <button
               className="bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
-              onClick={() => {}}
+              type="submit"
             >
               Setar intervalo
             </button>
@@ -117,6 +298,10 @@ export default function Graphs({ close }: closeWindow) {
           </ul>
         </div>
       </div>
+      <h4 className={title}>Analise</h4>
+      <p className="whitespace-normal text-start text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
+        {analysis}
+      </p>
     </div>
   );
 }

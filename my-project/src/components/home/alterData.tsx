@@ -21,7 +21,6 @@ function AlterData({ set, id }: warning) {
     //funcao executada ao submeter o formulario
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       //Atribui valores padrões

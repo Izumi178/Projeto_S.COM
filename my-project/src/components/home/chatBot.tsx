@@ -8,8 +8,6 @@ interface message {
   message: string;
 }
 
-const chat: message[] = [];
-
 export default function ChatBotPage() {
   const [chat, setChat] = useState<message[]>([]);
   const {
@@ -46,7 +44,6 @@ export default function ChatBotPage() {
             const newResponse = { writen: false, message: response.toString() };
             setChat((prev) => [...prev, newResponse]);
           }
-          console.log(chat);
         })}
       >
         <input
