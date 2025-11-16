@@ -2,12 +2,12 @@ import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/16/solid";
 import { useNavigate } from "react-router-dom";
 
 export type popUp = {
-  title: string | undefined;
-  content: string | undefined;
-  show: boolean | undefined;
-  works: boolean | undefined;
-  set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
-  goToLogin?: boolean;
+  title: string | undefined; //Titulo da notificação
+  content: string | undefined; //Complemento
+  show: boolean | undefined; //Parametro utilizado na tela principal para renderização condicional
+  works: boolean | undefined; //Boolean se a operação foi bem sucedida
+  set: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined; //useState do popUP, atribui os valores ao popUp
+  goToLogin?: boolean; //Parametro utilizado especificamente para notificação na tela de login
 };
 
 export default function PopUp({

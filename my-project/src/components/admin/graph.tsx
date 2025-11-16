@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import * as ss from "simple-statistics";
-import { analise, type medidas } from "../../../ai/gemini";
+import { analise, feel, test, type medidas } from "../../../ai/gemini";
 import { useEffect, useState } from "react";
 import { GetCRData } from "../../../server/getCr";
 import {
@@ -56,7 +56,7 @@ function setDatas({ rawData, setHistData, setLineData, setMedidas }: data) {
   }));
 
   rawData.forEach((value) => {
-    const idx = Math.min(9, Math.ceil(value) - 1);
+    const idx = Math.max(0, Math.min(9, Math.ceil(value)));
     hist[idx].qntt++;
     line[idx].value += value;
     line[idx].qntt++;
@@ -99,6 +99,7 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
   const [qntt, setQntt] = useState<histData[]>([]);
   const [statistics, setStattistics] = useState<medidas>();
   const [analysis, setAnalysis] = useState<string>();
+  const [feelings, setFeelings] = useState<string>();
   const central = statistics
     ? [
         { nome: "Média", data: statistics.media.toFixed(2) },
@@ -135,6 +136,10 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
         });
         if (response) {
           setAnalysis(response);
+          const feeling = await feel({ message: response });
+          if (feeling) {
+            setFeelings(feeling);
+          }
         }
       }
     };
@@ -216,6 +221,10 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
                   });
                   if (response) {
                     setAnalysis(response);
+                    const feeling = await feel({ message: response });
+                    if (feeling) {
+                      setFeelings(feeling);
+                    }
                   }
                 }
               }
@@ -298,10 +307,20 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
           </ul>
         </div>
       </div>
-      <h4 className={title}>Analise</h4>
-      <p className="whitespace-normal text-start text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
-        {analysis}
-      </p>
+      <div className="flex flex-row gap-[20px] justify-center">
+        <div className="flex flex-col w-[500px] gap-[10px]">
+          <h4 className={title}>Analise de desempenho</h4>
+          <p className="whitespace-normal text-start text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
+            {analysis}
+          </p>
+        </div>
+        <div className="flex flex-col w-[500px] gap-[10px]">
+          <h4 className={title}>Analise de sentimentos</h4>
+          <p className="whitespace-normal text-start text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
+            {feelings}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

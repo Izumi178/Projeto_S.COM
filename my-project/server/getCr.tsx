@@ -11,8 +11,8 @@ export async function GetCRData({ max, min }: interval) {
   const { data, error } = await supabaseAdm
     .from("alunos")
     .select("cr")
-    .gte("cr", min)
-    .lte("cr", max);
+    .gte("semestre", min)
+    .lte("semestre", max);
   if (error) {
     console.log(error);
   } else {
