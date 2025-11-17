@@ -19,13 +19,15 @@ export default function ChatBotPage() {
     handleSubmit,
   } = useForm();
   return (
-    <div className="flex flex-col w-[1200px] h-[500px] p-[10px] justify-end bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
+    <div className="flex flex-col w-[400px] sm:w-[600px] md:w-[700px] lg:w-[1000px] xl:w-[1200px] h-[500px] p-[10px] justify-end bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
       <div className="overflow-auto gap-[10px]">
         {/*Gera as mensagens a partir do vetor*/}
         {chat.map((message) => (
           <div
-            className={`flex max-w-[500px] text-[20px] h-auto dark:bg-gray-900 p-[10px] rounded-[10px] ${
-              message.writen === true ? "ml-[620px]" : ""
+            className={`flex max-w-[150px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-[500px] text-[15px] md:text-[20px] h-auto dark:bg-gray-900 p-[10px] rounded-[10px] ${
+              message.writen === true
+                ? "ml-[180px] sm:ml-[280px] md:ml-[350px] lg:ml-[620px]"
+                : ""
             }`}
           >
             <p className="whitespace-normal text-start text-(--primary-color)">

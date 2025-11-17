@@ -20,7 +20,7 @@ export default function PopUp({
 }: popUp) {
   const navigate = useNavigate();
   return (
-    <div className="fixed flex flex-col justify-center z-1000 w-[500px] h-[300px] rounded-[50px] items-center bg-gray-700 shadow-box-xl shadow-box-black gap-[10px] translate-y-[50%]">
+    <div className="fixed flex flex-col justify-center z-1000 p-[15px] w-[300px] sm:w-[500px] h-auto rounded-[50px] items-center bg-gray-700 shadow-box-xl shadow-box-black gap-[10px] translate-y-[50%]">
       <h3 className="text-(--primary-color) text-[42px] font-bold">{title}</h3>
       {works ? (
         <CheckCircleIcon className="w-[70px] text-green-400"></CheckCircleIcon>

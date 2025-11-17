@@ -73,9 +73,11 @@ export default function AdminPage() {
     items-center bg-white dark:bg-(--bg-dark)"
     >
       <div className="flex flex-row items-center my-[20px] gap-[10px]">
-        <h1 className="text-[40px] text-(--primary-color) font-bold">Perfis</h1>
+        <h1 className="text-[30px] sm:text-[40px] text-(--primary-color) font-bold">
+          Perfis
+        </h1>
         <button
-          className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
+          className="px-[20px] py-[5px] translate-x-[20px] sm:translate-x-[100px] lg:translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
           onClick={async () => {
             await logOut();
             navigate("/login", { replace: true });
@@ -84,7 +86,7 @@ export default function AdminPage() {
           Sair
         </button>
         <button
-          className="px-[20px] py-[5px] translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
+          className="px-[20px] py-[5px] translate-x-[20px] sm:translate-x-[100px] lg:translate-x-[200px] h-fit w-fit rounded-[5px] z-1000 bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) cursor-pointer text-(--primary-color)"
           onClick={() => {
             closeGraphs(false);
           }}
@@ -93,7 +95,7 @@ export default function AdminPage() {
         </button>
       </div>
       <div className="px-[20px] text-(--primary-color)">
-        <div className="flex flex-row w-[950px] bg-(--primary-color) dark:text-white text-(--forms-bg-black)">
+        <div className="flex flex-row w-[350px] sm:w-[600px] md:w-[700px] lg:w-[950px] bg-(--primary-color) dark:text-white text-(--forms-bg-black)">
           <div className="w-[500px]">id</div>
           <div className="w-[300px]">Nome</div>
           <div className="w-[75px]">Editar Perfil</div>
@@ -101,7 +103,7 @@ export default function AdminPage() {
         </div>
         {perfis &&
           perfis.map((perfil) => (
-            <div className="flex flex-row w-[950px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) ">
+            <div className="flex flex-row w-[350px] sm:w-[600px] md:w-[700px] lg:w-[950px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) ">
               <p className="w-[500px]">{perfil.id}</p>
               <p className="w-[300px]">{perfil.name}</p>
               <div className="w-[75px]">
@@ -152,7 +154,7 @@ export default function AdminPage() {
           onClick={() => {
             closeCreate(false);
           }}
-          className="flex flex-row w-[950px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) justify-center cursor-pointer"
+          className="flex flex-row w-[350px] sm:w-[600px] md:w-[700px] lg:w-[950px] bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) justify-center cursor-pointer"
         >
           + Adicionar perfil
         </button>

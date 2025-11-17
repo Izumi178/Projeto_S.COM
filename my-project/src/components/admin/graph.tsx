@@ -23,12 +23,14 @@ type closeWindow = {
   close: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const span = "text-bold text-red-600 font-md";
-const title = "text-(--primary-color) font-bold whitespace-nowrap text-[25px]";
+const title =
+  "text-(--primary-color) font-bold whitespace-nowrap md:text-[18px] lg:text-[25px]";
 const subtitle =
-  "text-(--primary-color) font-bold whitespace-nowrap text-[18px]";
-const label = "text-(--primary-color) font-bold whitespace-nowrap text-[15px]";
+  "text-(--primary-color) font-bold whitespace-nowrap md:text-[13px] text-[18px]";
+const label =
+  "text-(--primary-color) font-bold whitespace-nowrap text-[15px] md:text-[12px]";
 const field =
-  "block py-[10px] px-[20px] w-[100px] text-(--primary-color) rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) font-bold";
+  "block py-[10px] text-[10px] px-[20px] w-[75px] md:w-[100px] text-(--primary-color) rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) font-bold";
 
 // estrutura dos dados dos gráficos
 type data = {
@@ -36,8 +38,6 @@ type data = {
   rawData: number[];
   // atributo para setar os dados do histograma
   setHistData: React.Dispatch<React.SetStateAction<histData[]>>;
-  // atributo para setar os dados do gráfico de linhas
-  setLineData: React.Dispatch<React.SetStateAction<lineData[]>>;
   // atributo para setar medidas de centralidade
   setMedidas: React.Dispatch<React.SetStateAction<medidas | undefined>>;
 };
@@ -50,37 +50,20 @@ type histData = {
   qntt: number;
 };
 
-//
-type lineData = {
-  value: number;
-  qntt: number;
-};
-
-function setDatas({ rawData, setHistData, setLineData, setMedidas }: data) {
+//Função que atribui os cada valor ao seu respectivo intervalo
+function setDatas({ rawData, setHistData, setMedidas }: data) {
+  //gera um array com intervalos de 0-1, 1-2
   const hist = Array.from({ length: 10 }, (_, i) => ({
     interval: `${i}-${i + 1}`,
     qntt: 0,
   }));
-
-  const line = Array.from({ length: 10 }, () => ({
-    value: 0,
-    qntt: 0,
-  }));
-
+  //
   rawData.forEach((value) => {
     const idx = Math.max(0, Math.min(9, Math.ceil(value)));
     hist[idx].qntt++;
-    line[idx].value += value;
-    line[idx].qntt++;
   });
-
-  const finalLine = line.map((l) => ({
-    value: l.qntt > 0 ? l.value / l.qntt : 0,
-    qntt: l.qntt,
-  }));
-
+  //Atribui os valores do histograma e calcula as medidas de centralidade
   setHistData(hist);
-  setLineData(finalLine);
   setMedidas({
     media: ss.average(rawData),
     mediana: ss.median(rawData),
@@ -107,7 +90,6 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
       Min: 1,
     },
   });
-  const [lineData, setLineData] = useState<lineData[]>([]);
   // Varíavel de dados do histograma
   const [qntt, setQntt] = useState<histData[]>([]);
   // Varíavel de medidas de centralidades, dispersão, etc.
@@ -144,7 +126,6 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
         setDatas({
           rawData: data,
           setHistData: setQntt,
-          setLineData: setLineData,
           setMedidas: setStattistics,
         });
         const response = await analise({
@@ -164,7 +145,7 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
     loadData();
   }, []);
   return (
-    <div className="fixed flex flex-col overflow-scroll justify-start z-1000 w-[1200px] h-[800px] rounded-[50px] bg-(--bg-dark) gap-[10px] drop-shadow-2xl translate-y-[2%] p-[20px] pb-[50px]">
+    <div className="fixed flex flex-col overflow-scroll justify-start z-1000 w-[400px] sm:w-[600px] md:w-[700px] lg:w-[1000px] xl:w-[1200px] h-[800px] rounded-[50px] bg-(--bg-dark) gap-[10px] drop-shadow-2xl translate-y-[2%] p-[20px] pb-[50px]">
       <button
         className="w-fit h-fit self-end cursor-pointer"
         onClick={() => {
@@ -173,20 +154,21 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
       >
         <XMarkIcon className="text-(--primary-color) w-[60px]"></XMarkIcon>
       </button>
-      <h3 className="text-(--primary-color) text-[42px] font-bold -mt-[60px]">
+      <h3 className="text-(--primary-color) text-[20px] md:text-[30px] lg:text-[42px] font-bold -mt-[60px]">
         Gráfico de desempenho dos alunos
       </h3>
       <div className="w-full bg-(--primary-color) h-[2px]"></div>
-      <div className="flex flex-row justify-center h-auto gap-[20px]">
+      <div className="flex flex-row justify-center h-[300px] sm:h-[400px] md:h-[500px] lg:h-auto gap-[20px]">
         <div>
           <h4 className={title}>Selecione o intervalo do semestre</h4>
+          {/*Container dos gráficos, contém duas séries, a dos histograma (tipo bar) e de linha (line)*/}
           <ChartContainer
             series={[
               {
                 type: "bar",
                 data: qntt.map((i) => i.qntt),
               },
-              { type: "line", data: lineData.map((i) => i.qntt) },
+              { type: "line", data: qntt.map((i) => i.qntt) },
             ]}
             xAxis={[
               {
@@ -200,7 +182,9 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
             <LinePlot />
 
             <LineHighlightPlot />
+            {/*Label do eixo y*/}
             <ChartsYAxis label="Quantidade" tickLabelStyle={{ fontSize: 10 }} />
+            {/*Label do eixo x*/}
             <ChartsXAxis label="Notas" tickLabelStyle={{ fontSize: 10 }} />
             <ChartsTooltip />
           </ChartContainer>
@@ -232,7 +216,6 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
                   setDatas({
                     rawData: result,
                     setHistData: setQntt,
-                    setLineData: setLineData,
                     setMedidas: setStattistics,
                   });
                   // Gera analise de desempenho
@@ -296,7 +279,7 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
               <span className={span}>{errors.Min?.message}</span>
             </div>
             <button
-              className="bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
+              className="bg-(--primary-color) text-white dark:text-(--bg-dark) big:w-[200px] big:h-[50px] big:text-xl w-[150px] w-[100px] h-[20px] h-[40px] whitespace-nowrap font-bold rounded-xl items-center cursor-pointer transition duration-300 hover:scale-105"
               type="submit"
             >
               Setar intervalo
@@ -331,16 +314,16 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
           </ul>
         </div>
       </div>
-      <div className="flex flex-row gap-[20px] justify-center">
-        <div className="flex flex-col w-[500px] gap-[10px]">
+      <div className="flex flex-row gap-[20px] justify-center mt-[70px] md:mt-[20px]">
+        <div className="flex flex-col md:w-[350px] lg:w-[500px] gap-[10px]">
           <h4 className={title}>Analise de desempenho</h4>
-          <p className="whitespace-normal text-start text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
+          <p className="whitespace-normal text-start md:text-[15px] lg:text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
             {analysis}
           </p>
         </div>
-        <div className="flex flex-col w-[500px] gap-[10px]">
+        <div className="flex flex-col md:w-[350px] lg:w-[500px] gap-[10px]">
           <h4 className={title}>Analise de sentimentos</h4>
-          <p className="whitespace-normal text-start text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
+          <p className="whitespace-normal text-start md:text-[15px] lg:text-[20px] text-(--primary-color) mb-[50px] px-[30px] py-[10px] rounded-[40px] drop-shadow-2xl bg-(--forms-bg-light) dark:bg-(--forms-bg-dark)">
             {feelings}
           </p>
         </div>

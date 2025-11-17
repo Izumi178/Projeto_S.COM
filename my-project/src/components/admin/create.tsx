@@ -41,10 +41,10 @@ export default function CreateUser({ close, setPopUp }: userData) {
   const label =
     "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base big:text-lg";
   const field =
-    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+    "block py-[10px] px-[20px] mx-[5px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) text-[12px] sm:text-[20px] xl:text-sm 2xl:text-xl big:text-3xl big:min-w-[300px] w-[150px] sm:w-[200px] lg:w-[300px]";
   return (
     <form
-      className="absolute flex flex-col w-fit mt-[20px] p-[40px] justify-center z-1000 rounded-[50px] items-center bg-gray-700 gap-[10px] drop-shadow-2xl bg-white dark:bg-(--bg-dark)"
+      className="absolute flex flex-col w-[380px] sm:w-fit mt-[20px] p-[40px] justify-center z-1000 rounded-[50px] items-center bg-gray-700 gap-[10px] drop-shadow-2xl bg-white dark:bg-(--bg-dark)"
       onSubmit={handleSubmit(async (data) => {
         // Ao clicar em criar usuário, cria variáveis dos tipos exigidos pela função createAccount
         {
@@ -331,7 +331,7 @@ export default function CreateUser({ close, setPopUp }: userData) {
       </div>
       <div className="grid grid-cols-2 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
-          <label className={label}>Email institucional (xxxxx@unesp.br)</label>
+          <label className={label}>Email institucional</label>
           <input
             type="text"
             {...register("EmailUNESP", {

@@ -37,7 +37,7 @@ export default function Login() {
     "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
   return (
     <div className="flex flex-col w-full min-h-screen pb-[100px] items-center pt-[200px] bg-white dark:bg-(--bg-dark)">
-      <div className="flex flex-col w-[500px] h-auto items-center justify-center bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
+      <div className="flex flex-col w-[350px] sm:w-[500px] h-auto items-center justify-center bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
         <h2 className="text-(--primary-color) font-bold text-[40px]">Login</h2>
         <form
           className="py-[20px] gap-[20px]"

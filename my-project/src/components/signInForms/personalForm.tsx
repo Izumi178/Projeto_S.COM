@@ -32,7 +32,7 @@ export default function PersonalForm({
   const label =
     "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base big:text-lg";
   const field =
-    "block py-[10px] px-[20px] mx-[5px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+    "block py-[10px] px-[20px] mx-[5px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) text-[12px] sm:text-[20px] xl:text-sm 2xl:text-xl big:text-3xl big:min-w-[300px] w-[150px] sm:w-[200px] lg:w-[300px]";
   return (
     <form
       className="py-[20px] "

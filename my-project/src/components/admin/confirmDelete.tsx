@@ -15,7 +15,7 @@ type data = {
 
 export default function ConfirmDelete({ user, close, setPopUp }: data) {
   return (
-    <div className="fixed flex flex-col justify-center z-1000 w-[500px] h-[300px] rounded-[50px] items-center bg-gray-700 gap-[10px] drop-shadow-2xl translate-y-[50%]">
+    <div className="fixed flex flex-col justify-center p-[15px] z-1000 w-[300px] sm:w-[500px] h-auto rounded-[50px] items-center bg-gray-700 gap-[10px] drop-shadow-2xl translate-y-[50%]">
       <h3 className="text-(--primary-color) text-[42px] font-bold">
         Confirmar ação
       </h3>

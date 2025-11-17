@@ -61,10 +61,10 @@ export default function EditUser({
   const label =
     "text-(--primary-color) font-bold whitespace-nowrap text-xs lg:text-base big:text-lg";
   const field =
-    "block py-[10px] px-[20px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) lg:text-sm xl:text-sm 2xl:text-xl big:text-3xl big:min-w-300px min-w-[300px] sm:min-w-[220px] md:min-w-[300px] lg:min-w-[220px] xl:min-w-[250px] 2xl:min-w-[300px]";
+    "block py-[10px] px-[20px] mx-[5px] font-bold text-(--primary-color) whitespace-nowrap rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) text-[12px] sm:text-[20px] md:text-sm 2xl:text-xl big:text-3xl big:min-w-[300px] w-[150px] sm:w-[200px] xl:w-[250px] 2xl:w-[300px]";
   return (
     <form
-      className="absolute mt-[20px] flex flex-col w-fit p-[40px] justify-center z-1000 rounded-[50px] items-center bg-white dark:bg-(--bg-dark) gap-[10px] drop-shadow-2xl"
+      className="absolute mt-[20px] flex flex-col w-[380px] sm:w-fit h-[900px] overflow-scroll lg:h-auto p-[40px] justify-center z-1000 rounded-[50px] items-center bg-white dark:bg-(--bg-dark) gap-[10px] drop-shadow-2xl"
       onSubmit={handleSubmit(async (data) => {
         {
           // Ao clicar no campo de salvar mudanças
@@ -137,10 +137,10 @@ export default function EditUser({
       })}
     >
       {/*Forms analago ao encontrado em create.tsx*/}
-      <h2 className="text-(--primary-color) font-bold text-[40px]">
+      <h2 className="mt-[200px] lg:mt-[0px] text-(--primary-color) font-bold text-[40px]">
         Editar perfil
       </h2>
-      <div className="grid grid-cols-4 gap-[20px]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Nome completo</label>
           <input
@@ -277,7 +277,7 @@ export default function EditUser({
           <span className={span}>{errors.Civil?.message}</span>
         </li>
       </div>
-      <div className="grid grid-cols-4 gap-[20px]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>CEP (ex: 18085842)</label>
           <input
@@ -345,7 +345,7 @@ export default function EditUser({
           <span className={span}>{errors.Numero?.message}</span>
         </li>
       </div>
-      <div className="grid grid-cols-4 gap-[20px]">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-[20px]">
         <li className="flex flex-col items-start gap-[5px]">
           <label className={label}>Email institucional</label>
           <input
