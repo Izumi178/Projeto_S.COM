@@ -5,9 +5,9 @@ type interval = {
   min: number;
 };
 
-// Calcula o cr da turma
+// Seleciona o cr de alunos dentro de um intervalo de semestres
 export async function GetCRData({ max, min }: interval) {
-  // Calcula seleciona o cr dos alunos do mesmo semestre
+  // Calcula seleciona o cr dos alunos entre um intervalo de semestres
   const { data, error } = await supabaseAdm
     .from("alunos")
     .select("cr")
@@ -16,7 +16,7 @@ export async function GetCRData({ max, min }: interval) {
   if (error) {
     console.log(error);
   } else {
-    // Calcula e retorna media
+    // Mapeia o conteúdo dos dados em
     const crList = data.map((item) => item.cr);
 
     return crList;

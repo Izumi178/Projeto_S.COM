@@ -3,12 +3,14 @@ import { PaperAirplaneIcon } from "@heroicons/react/16/solid";
 import { test } from "../../../ai/gemini";
 import { useState } from "react";
 
+//Interface das mensagens
 interface message {
-  writen: boolean;
-  message: string;
+  writen: boolean; //Verifica se a mensagem foi escrita pelo usuário
+  message: string; //Conteúdo da mensagem
 }
 
 export default function ChatBotPage() {
+  //Vetor que contém as mensagens
   const [chat, setChat] = useState<message[]>([]);
   const {
     //função que permite adicionar validação aos inputs
@@ -19,6 +21,7 @@ export default function ChatBotPage() {
   return (
     <div className="flex flex-col w-[1200px] h-[500px] p-[10px] justify-end bg-white dark:bg-(--bg-dark) rounded-[40px] drop-shadow-2xl p-[20px]">
       <div className="overflow-auto gap-[10px]">
+        {/*Gera as mensagens a partir do vetor*/}
         {chat.map((message) => (
           <div
             className={`flex max-w-[500px] text-[20px] h-auto dark:bg-gray-900 p-[10px] rounded-[10px] ${
@@ -34,11 +37,13 @@ export default function ChatBotPage() {
       <form
         className="flex flex-row w-full h-[auto] mt-[10px]   justify-start gap-[20px]"
         onSubmit={handleSubmit(async (data) => {
+          //Adiciona a mensagem escrita pelo usuário ao vetor
           const newQuestion = {
             writen: true,
             message: data.Request.toString(),
           };
           setChat((prev) => [...prev, newQuestion]);
+          //Gera resposta da IA e a adiciona ao vetor
           const response = await test({ message: data.Request });
           if (response) {
             const newResponse = { writen: false, message: response.toString() };

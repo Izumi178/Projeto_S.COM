@@ -1,6 +1,6 @@
 import { type PostgrestResponse } from "@supabase/supabase-js";
 import { supabase } from "./supabaseCliente";
-import { useState } from "react";
+import * as ss from "simple-statistics";
 
 // Dados do Aluno
 export type Aluno = {
@@ -36,7 +36,6 @@ export async function GetInstitutionalData(id: string) {
 // Calcula o cr da turma
 export async function GetTurmaCR(semestre: number) {
   // Variavel de media
-  const [avg, calcAvg] = useState(0);
   // Calcula seleciona o cr dos alunos do mesmo semestre
   const { data, error } = await supabase
     .from("alunos")
@@ -45,10 +44,8 @@ export async function GetTurmaCR(semestre: number) {
   if (error) {
     console.log(error);
   } else {
-    // Calcula e retorna media
-    for (let i = 0; i < data.length; i++) {
-      calcAvg(avg + data[0].cr);
-    }
-    return avg / data.length;
+    // Mapeia o conteúdo dos dados em
+    const crList = data.map((item) => item.cr);
+    return ss.average(crList);
   }
 }

@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import * as ss from "simple-statistics";
-import { analise, feel, test, type medidas } from "../../../ai/gemini";
+import { analise, feel, type medidas } from "../../../ai/gemini";
 import { useEffect, useState } from "react";
 import { GetCRData } from "../../../server/getCr";
 import {
@@ -15,8 +15,11 @@ import {
 } from "@mui/x-charts";
 import { useForm } from "react-hook-form";
 import type { popUp } from "../warning";
+
 type closeWindow = {
+  //Atributo para setar notificação
   setPopUp: React.Dispatch<React.SetStateAction<popUp | undefined>> | undefined;
+  //Atributo para fechar interface
   close: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const span = "text-bold text-red-600 font-md";
@@ -27,18 +30,27 @@ const label = "text-(--primary-color) font-bold whitespace-nowrap text-[15px]";
 const field =
   "block py-[10px] px-[20px] w-[100px] text-(--primary-color) rounded-full bg-(--forms-bg-light) dark:bg-(--forms-bg-dark) font-bold";
 
+// estrutura dos dados dos gráficos
 type data = {
+  // vetor de dados
   rawData: number[];
+  // atributo para setar os dados do histograma
   setHistData: React.Dispatch<React.SetStateAction<histData[]>>;
+  // atributo para setar os dados do gráfico de linhas
   setLineData: React.Dispatch<React.SetStateAction<lineData[]>>;
+  // atributo para setar medidas de centralidade
   setMedidas: React.Dispatch<React.SetStateAction<medidas | undefined>>;
 };
 
+//estrutura dos dados do histograma
 type histData = {
+  // intervalo dos dados
   interval: string;
+  // quantidade de dados dentro do intervalo
   qntt: number;
 };
 
+//
 type lineData = {
   value: number;
   qntt: number;
@@ -96,17 +108,21 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
     },
   });
   const [lineData, setLineData] = useState<lineData[]>([]);
+  // Varíavel de dados do histograma
   const [qntt, setQntt] = useState<histData[]>([]);
+  // Varíavel de medidas de centralidades, dispersão, etc.
   const [statistics, setStattistics] = useState<medidas>();
+  // Varíavel de analise de desempenho
   const [analysis, setAnalysis] = useState<string>();
+  // Varíavel de analise de sentimentos
   const [feelings, setFeelings] = useState<string>();
   const central = statistics
     ? [
-        { nome: "Média", data: statistics.media.toFixed(2) },
+        { nome: "Média", data: statistics.media.toFixed(2) }, // Arredonda calculo para duas casas decimais
         { nome: "Mediana", data: statistics.mediana.toFixed(2) },
         { nome: "Moda", data: statistics.moda.toFixed(2) },
       ]
-    : [];
+    : []; // Apresenta dados apenas se statistics for definido
   const disp = statistics
     ? [
         { nome: "Desvio padrão", data: statistics?.desvio_padrao.toFixed(2) },
@@ -121,6 +137,7 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
       ]
     : [];
   useEffect(() => {
+    // Seleciona dados a partir de um intervalo padrão
     const loadData = async () => {
       const data = await GetCRData({ max: 10, min: 1 });
       if (data) {
@@ -192,6 +209,7 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
           <h4 className={title}>Selecione o intervalo do semestre</h4>
           <form
             onSubmit={handleSubmit(async (data) => {
+              //Gera um aviso caso o intervalo entre semestres seja inválido
               if (data.Min > data.Max) {
                 if (setPopUp) {
                   const warn: popUp = {
@@ -204,25 +222,31 @@ export default function Graphs({ close, setPopUp }: closeWindow) {
                   setPopUp(warn);
                 }
               } else {
+                //Seleciona os crs dentro do intervalo selecionado
                 const result = await GetCRData({
                   max: data.Max,
                   min: data.Min,
                 });
                 if (result) {
+                  // Rearranja os dados dos gráficos e dados estatísticos
                   setDatas({
                     rawData: result,
                     setHistData: setQntt,
                     setLineData: setLineData,
                     setMedidas: setStattistics,
                   });
+                  // Gera analise de desempenho
                   const response = await analise({
                     interval: { min: data.Min, max: data.Max },
                     medidas: statistics,
                   });
                   if (response) {
+                    // Atribui a resposta à variavel de analise de desempenho
                     setAnalysis(response);
+                    // Gera a analise de sentimentos
                     const feeling = await feel({ message: response });
                     if (feeling) {
+                      // Atribui a resposta à variável de analise de sentimentos
                       setFeelings(feeling);
                     }
                   }
